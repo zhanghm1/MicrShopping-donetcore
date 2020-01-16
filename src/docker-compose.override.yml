@@ -1,0 +1,49 @@
+version: '3.4'
+
+services:
+  micrshopping.orderapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - CapConnectionStrings=${orderapi:-Server=http://sqldata:1439;Database=CapOrderDB;User Id=sa;Password=Admin123456!}
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  micrshopping.payapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - CapConnectionStrings=${payapi:-Server=http://sqldata:1439;Database=CapPayDB;User Id=sa;Password=Admin123456!}
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  micrshopping.identity:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  sqldata:
+    environment:
+      - SA_PASSWORD=Admin123456!
+      - ACCEPT_EULA=Y
+    ports:
+      - "5433:1433"
+    volumes:
+      - ${APPDATA}/sqlserver:/var/opt/mssql:ro
+
+
+# docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=dev@123," -p 14330:1433 --name sqlserver -v D:\docker\sqlserver:/var/opt/mssql  -d microsoft/mssql-server-linux

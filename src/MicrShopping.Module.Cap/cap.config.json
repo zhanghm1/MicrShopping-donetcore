@@ -1,0 +1,4 @@
+{
+  "CapConnectionStrings": "Data Source=.;Initial Catalog=CapDB;Persist Security Info=True;User ID=sa;Password=123456789",
+  "MQConnectionStrings": "http://localhost:15672"
+}

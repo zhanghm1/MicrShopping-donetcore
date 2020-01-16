@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  micrshopping.orderapi:
+    image: ${DOCKER_REGISTRY-}micrshoppingorderapi
+    build:
+      context: .
+      dockerfile: MicrShopping.OrderApi/Dockerfile
+
+  micrshopping.payapi:
+    image: ${DOCKER_REGISTRY-}micrshoppingpayapi
+    build:
+      context: .
+      dockerfile: MicrShopping.PayApi/Dockerfile
+
+
+  micrshopping.identity:
+    image: ${DOCKER_REGISTRY-}micrshoppingidentity
+    build:
+      context: .
+      dockerfile: MicrShopping.Identity/Dockerfile
+
+  sqldata:
+    image: microsoft/mssql-server-linux
+
+    # docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=dev@123," -p 14330:1433 --name sqlserver -v D:\docker\sqlserver:/var/opt/mssql  -d microsoft/mssql-server-linux

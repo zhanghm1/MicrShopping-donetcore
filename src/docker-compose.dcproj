@@ -6,7 +6,7 @@
     <ProjectGuid>65f2211f-069d-4496-b51c-949c16ee7cf4</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/weatherforecast</DockerServiceUrl>
-    <DockerServiceName>micrshopping.orderapi</DockerServiceName>
+    <DockerServiceName>micrshopping.ApiGateway</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

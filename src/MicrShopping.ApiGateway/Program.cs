@@ -21,6 +21,9 @@ namespace MicrShopping.ApiGateway
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                })
+                .ConfigureHostConfiguration(op=> {
+                    op.AddJsonFile("Ocelot.json",false,true);
                 });
     }
 }

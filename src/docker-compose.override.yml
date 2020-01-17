@@ -1,11 +1,41 @@
 version: '3.4'
 
 services:
+  sqldata:
+    container_name: sqlserver
+    environment:
+      - SA_PASSWORD=Admin123456!
+      - ACCEPT_EULA=Y
+    ports:
+      - "14335:1433"
+    volumes:
+      - D://docker/sqlserver:/var/opt/mssql
+
+  rabbitmq:
+    container_name: rabbitmq1
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin123456
+    ports:
+      - "15675:15672"
+      - "5675:5672"
+      - "5676:5671"
+  consul:
+    container_name: consul
+    volumes:
+      - D://docker/consul/data:/consul/data
+      - D://docker/consul/config:/consul/config
+    ports:
+      - "8500:8500"
+
   micrshopping.orderapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - CapConnectionStrings=${orderapi:-Server=http://sqldata:1439;Database=CapOrderDB;User Id=sa;Password=Admin123456!}
+      - OrderConnectionStrings=${orderapi:-Server=sqldata;Database=OrderDB;User Id=sa;Password=Admin123456!}
+      - RabbitMQHost=${RabbitMQHost:-rabbitmq}
+      - RabbitMQUserName=admin
+      - RabbitMQPassword=admin123456
     ports:
       - "80"
       - "443"
@@ -17,13 +47,18 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - CapConnectionStrings=${payapi:-Server=http://sqldata:1439;Database=CapPayDB;User Id=sa;Password=Admin123456!}
+      - PayConnectionStrings=${payapi:-Server=sqldata;Database=PayDB;User Id=sa;Password=Admin123456!}
+      - RabbitMQHost=${RabbitMQHost:-rabbitmq}
+      - RabbitMQUserName=admin
+      - RabbitMQPassword=admin123456
     ports:
       - "80"
       - "443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+
 
   micrshopping.identity:
     environment:
@@ -36,14 +71,24 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
-  sqldata:
+  micrshopping.productapi:
     environment:
-      - SA_PASSWORD=Admin123456!
-      - ACCEPT_EULA=Y
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "5433:1433"
+      - "80"
+      - "443"
     volumes:
-      - ${APPDATA}/sqlserver:/var/opt/mssql:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
-
-# docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=dev@123," -p 14330:1433 --name sqlserver -v D:\docker\sqlserver:/var/opt/mssql  -d microsoft/mssql-server-linux
+  micrshopping.apigateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "80"
+      - "443"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

@@ -1,0 +1,56 @@
+{
+  "ReRoutes": [
+    {
+      "UpstreamPathTemplate": "/order/{controller}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/order/{controller}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "host": "micrshopping.orderapi",
+          "port": 80
+        },
+        {
+          "host": "micrshopping.orderapi",
+          "port": 443
+        }
+      ],
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "ServiceName": "ApiService1",
+      "UseServiceDiscovery": true
+    },
+    {
+      "UpstreamPathTemplate": "/pay/{controller}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamPathTemplate": "/pay/{controller}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "host": "micrshopping.payapi",
+          "port": 80
+        },
+        {
+          "host": "micrshopping.payapi",
+          "port": 443
+        }
+      ],
+      "LoadBalancerOptions": {
+        "Type": "LeastConnection"
+      },
+      "ServiceName": "ApiService2",
+      "UseServiceDiscovery": true
+    }
+  ],
+
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:5000",
+    "ServiceDiscoveryProvider": {
+      "Host": "localhost",
+      "Port": 8500,
+      "Type": "Consul"
+
+    }
+  }
+}

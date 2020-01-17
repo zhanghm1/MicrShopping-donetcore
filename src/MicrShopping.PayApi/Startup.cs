@@ -6,10 +6,14 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MicrShopping.OrderApi.Data;
+using MicrShopping.PayApi.Data;
+using RabbitMQ.Client;
 
 namespace MicrShopping.PayApi
 {
@@ -25,15 +29,32 @@ namespace MicrShopping.PayApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string CapConnectionStrings = Configuration["CapConnectionStrings"];
+
             services.AddControllers();
+
+            services.AddScoped<PayDbContextSeed>();
+
+            string PayConnectionStrings = Configuration["PayConnectionStrings"];
+            services.AddDbContext<PayDbContext>(options =>
+                   options.UseSqlServer(PayConnectionStrings)
+                   );
+
+            string RabbitMQHost = Configuration["RabbitMQHost"];
+            string RabbitMQPassword = Configuration["RabbitMQPassword"];
+            string RabbitMQUserName = Configuration["RabbitMQUserName"];
+            string RabbitMQPort = Configuration["RabbitMQPort"];
+
             services.AddCap(x =>
             {
-                x.UseSqlServer(CapConnectionStrings);
+                x.UseEntityFramework<PayDbContext>();
+
                 x.UseRabbitMQ(options => {
-                    options.HostName = "127.0.0.1";
-                    options.Password = "guest";
-                    options.UserName = "guest";
+
+                    options.HostName = RabbitMQHost;
+                    options.Password = RabbitMQPassword;
+                    options.UserName = RabbitMQUserName;
+                    // docker内部访问使用默认端口就可以
+                    //options.Port = Convert.ToInt32(RabbitMQPort);
                 });
                 x.UseDashboard();
             });

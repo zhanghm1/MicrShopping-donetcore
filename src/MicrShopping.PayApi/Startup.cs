@@ -32,32 +32,32 @@ namespace MicrShopping.PayApi
 
             services.AddControllers();
 
-            services.AddScoped<PayDbContextSeed>();
+            //services.AddScoped<PayDbContextSeed>();
 
-            string PayConnectionStrings = Configuration["PayConnectionStrings"];
-            services.AddDbContext<PayDbContext>(options =>
-                   options.UseSqlServer(PayConnectionStrings)
-                   );
+            //string PayConnectionStrings = Configuration["PayConnectionStrings"];
+            //services.AddDbContext<PayDbContext>(options =>
+            //       options.UseSqlServer(PayConnectionStrings)
+            //       );
 
-            string RabbitMQHost = Configuration["RabbitMQHost"];
-            string RabbitMQPassword = Configuration["RabbitMQPassword"];
-            string RabbitMQUserName = Configuration["RabbitMQUserName"];
-            string RabbitMQPort = Configuration["RabbitMQPort"];
+            //string RabbitMQHost = Configuration["RabbitMQHost"];
+            //string RabbitMQPassword = Configuration["RabbitMQPassword"];
+            //string RabbitMQUserName = Configuration["RabbitMQUserName"];
+            //string RabbitMQPort = Configuration["RabbitMQPort"];
 
-            services.AddCap(x =>
-            {
-                x.UseEntityFramework<PayDbContext>();
+            //services.AddCap(x =>
+            //{
+            //    x.UseEntityFramework<PayDbContext>();
 
-                x.UseRabbitMQ(options => {
+            //    x.UseRabbitMQ(options => {
 
-                    options.HostName = RabbitMQHost;
-                    options.Password = RabbitMQPassword;
-                    options.UserName = RabbitMQUserName;
-                    // docker内部访问使用默认端口就可以
-                    //options.Port = Convert.ToInt32(RabbitMQPort);
-                });
-                x.UseDashboard();
-            });
+            //        options.HostName = RabbitMQHost;
+            //        options.Password = RabbitMQPassword;
+            //        options.UserName = RabbitMQUserName;
+            //        // docker内部访问使用默认端口就可以
+            //        //options.Port = Convert.ToInt32(RabbitMQPort);
+            //    });
+            //    x.UseDashboard();
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

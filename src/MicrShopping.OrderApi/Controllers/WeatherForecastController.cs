@@ -18,14 +18,21 @@ namespace MicrShopping.OrderApi.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-        private readonly ICapPublisher _capBus;
+        //private readonly ICapPublisher _capBus;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, ICapPublisher capPublisher)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger
+            //, ICapPublisher capPublisher
+            )
         {
             _logger = logger;
-            _capBus = capPublisher;
+            //_capBus = capPublisher;
         }
-
+        //[HttpGet]
+        //[Route("Health")]
+        //public IActionResult Health()
+        //{
+        //    return Ok();
+        //}
 
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
@@ -34,7 +41,7 @@ namespace MicrShopping.OrderApi.Controllers
 
             var rng = new Random();
 
-            _capBus.Publish("xxx.services.show.time", DateTime.Now);
+            //_capBus.Publish("xxx.services.show.time", DateTime.Now);
 
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {

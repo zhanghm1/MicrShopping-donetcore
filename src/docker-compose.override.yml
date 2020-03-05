@@ -7,12 +7,12 @@ services:
       - SA_PASSWORD=Admin123456!
       - ACCEPT_EULA=Y
     ports:
-      - "14335:1433"
+      - "14336:1433"
     volumes:
       - D://docker/sqlserver:/var/opt/mssql
 
   rabbitmq:
-    container_name: rabbitmq1
+    container_name: rabbitmq
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=admin123456
@@ -20,6 +20,7 @@ services:
       - "15675:15672"
       - "5675:5672"
       - "5676:5671"
+
   consul:
     container_name: consul
     volumes:
@@ -27,6 +28,7 @@ services:
       - D://docker/consul/config:/consul/config
     ports:
       - "8500:8500"
+    
 
   micrshopping.orderapi:
     environment:
@@ -36,9 +38,16 @@ services:
       - RabbitMQHost=${RabbitMQHost:-rabbitmq}
       - RabbitMQUserName=admin
       - RabbitMQPassword=admin123456
+      
+      - scheme=https
+      - ip=192.168.0.189
+      - port=25668
+      - ConsulAddress=http://192.168.0.189:8500
+      - ServerName=Shopping
+
     ports:
-      - "80"
-      - "443"
+      - "25667:80"
+      - "25668:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -71,24 +80,13 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
-  micrshopping.productapi:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-    ports:
-      - "80"
-      - "443"
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-
   micrshopping.apigateway:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
-      - "80"
-      - "443"
+      - "25660:80"
+      - "25661:443"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

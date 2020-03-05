@@ -6,6 +6,7 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management
+
   consul:
     image: consul:latest
 
@@ -22,24 +23,11 @@ services:
       dockerfile: MicrShopping.PayApi/Dockerfile
 
 
-     ## docker pull mcr.microsoft.com/mssql/server:2017-latest
-     # docker pull microsoft/mssql-server-linux:latest
-    # docker run -e "ACCEPT_EULA=Y" -e "SA_PASSWORD=dev@123" -p 14331:1433 --name sqlserver1 -v D:\docker\sqlserver1:/var/opt/mssql  -d microsoft/mssql-server-linux:latest
-
-
   micrshopping.identity:
     image: ${DOCKER_REGISTRY-}micrshoppingidentity
     build:
       context: .
       dockerfile: MicrShopping.Identity/Dockerfile
-
-
-  micrshopping.productapi:
-    image: ${DOCKER_REGISTRY-}micrshoppingproductapi
-    build:
-      context: .
-      dockerfile: MicrShopping.ProductApi/Dockerfile
-
 
   micrshopping.apigateway:
     image: ${DOCKER_REGISTRY-}micrshoppingapigateway

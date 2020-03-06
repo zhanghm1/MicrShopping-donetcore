@@ -1,0 +1,39 @@
+version: '3.4'
+
+services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin123456
+    ports:
+      - "15675:15672"
+      - "5675:5672"
+      - "5676:5671"
+
+  sqldata:
+    image: mysql:latest
+    container_name: mysqldata
+    network_mode: "bridge"
+    environment:
+        MYSQL_ROOT_PASSWORD: "Admin123456!"
+        MYSQL_USER: 'zhm'
+        MYSQL_PASS: 'Admin123456!'
+    restart: always
+    volumes:
+        - D://docker/mysql/db:/var/lib/mysql
+        - D://docker/mysql/config:/etc/my.cnf
+    ports:
+        - "3307:3306"    
+
+  consul:
+    image: consul:latest
+    container_name: consul
+    volumes:
+      - D://docker/consul/data:/consul/data
+      - D://docker/consul/config:/consul/config
+    ports:
+      - "8500:8500"    
+
+

@@ -1,14 +1,6 @@
 version: '3.4'
 
 services:
-  sqldata:
-    image: microsoft/mssql-server-linux:latest
-
-  rabbitmq:
-    image: rabbitmq:3-management
-
-  consul:
-    image: consul:latest
 
   micrshopping.orderapi:
     image: ${DOCKER_REGISTRY-}micrshoppingorderapi

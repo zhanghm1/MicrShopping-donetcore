@@ -1,6 +1,7 @@
 ﻿
     using System;
-    using System.Linq;
+using System.Collections.Generic;
+using System.Linq;
     using Consul;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
@@ -53,12 +54,27 @@ namespace MicrShopping.Domain.Extensions
                 ID = $"{ServerName}-{uri.Port}",
                 Name = ServerName,
                 Address = $"{uri.Host}",
-                Port = uri.Port
+                Port = uri.Port,
+                Checks = new[] {
+                    new AgentServiceCheck()
+                    {
+                        DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),   //服务启动多久后注册
+                        Interval = TimeSpan.FromSeconds(10),                        //健康检查时间间隔，或者称为心跳间隔
+                        HTTP = $"{uri.Scheme}://{uri.Host}:{uri.Port}/Test/Health", //健康检查地址
+                        Timeout = TimeSpan.FromSeconds(8),
+                        
+                    }
+                },
+                // Meta= new Dictionary<string, string>()
+
             };
+            // registration.Meta.Add("test","11111");
 
             logger.LogInformation("Registering with Consul");
-            consulClient.Agent.ServiceDeregister(registration.ID).ConfigureAwait(true);
+
             consulClient.Agent.ServiceRegister(registration).ConfigureAwait(true);
+
+            
 
             lifetime.ApplicationStopping.Register(() =>
             {

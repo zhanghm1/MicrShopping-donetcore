@@ -33,26 +33,33 @@ namespace MicrShopping.OrderApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //services.AddScoped<OrderDbContextSeed>();
+            services.AddScoped<OrderDbContextSeed>();
 
-            //string OrderConnectionStrings = Configuration["OrderConnectionStrings"];
-            //services.AddDbContext<OrderDbContext>(options =>
-            //       options.UseSqlServer(OrderConnectionStrings)
-            //       );
+            string OrderConnectionStrings = Configuration["OrderConnectionStrings"];
+            services.AddDbContext<OrderDbContext>(options =>
+                   options.UseMySql(OrderConnectionStrings)
+                   );
 
-            //services.AddCap(x =>
-            //{
-            //    x.UseEntityFramework<OrderDbContext>();
+            string RabbitMQHost = Configuration["RabbitMQHost"];
+            string RabbitMQPassword = Configuration["RabbitMQPassword"];
+            string RabbitMQUserName = Configuration["RabbitMQUserName"];
+            string RabbitMQPort = Configuration["RabbitMQPort"];
 
-            //    x.UseRabbitMQ(options =>
-            //    {
-            //        options.HostName = Configuration["RabbitMQHost"];
-            //        options.Password = Configuration["RabbitMQPassword"];
-            //        options.UserName = Configuration["RabbitMQUserName"];
-            //        //options.Port = Convert.ToInt32(Configuration["RabbitMQPort"]);
-            //    });
-            //    x.UseDashboard();
-            //});
+            services.AddCap(x =>
+            {
+                x.UseEntityFramework<OrderDbContext>();
+
+                x.UseRabbitMQ(options =>
+                {
+
+                    options.HostName = RabbitMQHost;
+                    options.Password = RabbitMQPassword;
+                    options.UserName = RabbitMQUserName;
+                    // docker内部访问使用默认端口就可以
+                    options.Port = Convert.ToInt32(RabbitMQPort);
+                });
+                x.UseDashboard();
+            });
 
             services.AddConsulConfig(Configuration);
 

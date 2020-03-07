@@ -8,24 +8,9 @@ services:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=admin123456
     ports:
-      - "15675:15672"
-      - "5675:5672"
-      - "5676:5671"
-
-  sqldata:
-    image: mysql:latest
-    container_name: mysqldata
-    network_mode: "bridge"
-    environment:
-        MYSQL_ROOT_PASSWORD: "Admin123456!"
-        MYSQL_USER: 'zhm'
-        MYSQL_PASS: 'Admin123456!'
-    restart: always
-    volumes:
-        - D://docker/mysql/db:/var/lib/mysql
-        - D://docker/mysql/config:/etc/my.cnf
-    ports:
-        - "3307:3306"    
+      - "15672:15672"
+      - "5672:5672"
+      - "5671:5671"
 
   consul:
     image: consul:latest
@@ -34,6 +19,60 @@ services:
       - D://docker/consul/data:/consul/data
       - D://docker/consul/config:/consul/config
     ports:
-      - "8500:8500"    
+      - "8500:8500" 
+
+  # sqlserver:
+  #   image: microsoft/mssql-server-linux:latest
+  #   container_name: sqlserver
+  #   environment:
+  #     - SA_PASSWORD=Admin123456!
+  #     - ACCEPT_EULA=Y
+  #   ports:
+  #     - "14333:1433"
+  #   volumes:
+  #     - D://docker/sqlserver:/var/opt/mssql           
+
+  # mysql:
+  #   image: mysql:latest
+  #   container_name: mysql
+  #   environment:
+  #       MYSQL_ROOT_PASSWORD: "Admin123456!"
+  #       MYSQL_USER: 'zhm'
+  #       MYSQL_PASS: 'Admin123456!'
+  #   restart: always
+  #   volumes:
+  #       - D://docker/mysql/db:/var/lib/mysql
+  #       - D://docker/mysql/config:/etc/my.cnf
+  #   ports:
+  #       - "3307:3306"    
+
+ 
+
+  postgres:
+    container_name: postgres # //生成的容器名称 
+    restart: always
+    image: postgres:latest #  // postgres 镜像
+    privileged: true
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: Admin123456!
+      POSTGRES_USER: postgres
+      PGDATA: /tmp   # 加上这个就不会容器异常，提示目录非空
+    volumes:
+      - D://docker/postgres:/var/lib/postgresql/data
+
+    
+  pgadmin4:
+    container_name: pgadmin4
+    image: dpage/pgadmin4
+    ports:
+        - 8001:80
+    environment:
+        PGADMIN_DEFAULT_EMAIL: xxx@qq.com
+        PGADMIN_DEFAULT_PASSWORD: 123456
+
+
+
 
 

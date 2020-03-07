@@ -25,15 +25,15 @@ namespace MicrShopping.PayApi
 
                 try
                 {
-                    var context = services.GetRequiredService<PayDbContext>();
+                    var context = services.GetService<PayDbContext>();
                     context.Database.Migrate();
 
-                    var seedData = scope.ServiceProvider.GetRequiredService<PayDbContextSeed>();
+                    var seedData = scope.ServiceProvider.GetService<PayDbContextSeed>();
                     seedData.Init();
                 }
                 catch (Exception ex)
                 {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    var logger = scope.ServiceProvider.GetService<ILogger<Program>>();
 
                     logger.LogError(ex, "An error occurred while migrating or seeding the database.");
                 }

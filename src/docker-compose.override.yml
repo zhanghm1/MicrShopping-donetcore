@@ -6,22 +6,24 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      #- OrderConnectionStrings=${orderapi:-Server=sqldata;Database=OrderDB;User Id=sa;Password=Admin123456!}
-      - OrderConnectionStrings=${orderapi:-Data Source=sqldata;port=3307;Initial Catalog=OrderDB;user id=root;password=Admin123456!;}
-      - RabbitMQHost=${RabbitMQHost:-rabbitmq}
+      - OrderConnectionStrings=Host=192.168.0.189;Port=5432;Database=OrderDB;User ID=postgres;Password=Admin123456!;Pooling=true;
+      #- OrderConnectionStrings=Server=189.168.0.189,14331;Database=OrderDB;User Id=sa;Password=Admin123456!
+      #- OrderConnectionStrings=${orderapi:-Data Source=192.168.0.189;port=3307;Initial Catalog=OrderDB;user id=root;password=Admin123456!;}
+      
+      - RabbitMQHost=localhost
       - RabbitMQUserName=admin
       - RabbitMQPassword=admin123456
-      - RabbitMQPort=5675
+      - RabbitMQPort=5672
       
       - scheme=https
       - ip=192.168.0.189
-      - port=${port:5001}
+      - port=5003
       - ConsulAddress=http://192.168.0.189:8500
       - ServerName=Shopping
 
     ports:
-      - ${port+1}:80
-      - ${port}:443
+      - 5004:80
+      - 5003:443
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -30,22 +32,24 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      #- PayConnectionStrings=${payapi:-Server=sqldata;Database=PayDB;User Id=sa;Password=Admin123456!}
-      - PayConnectionStrings=${payapi:-Data Source=sqldata;port=3307;Initial Catalog=PayDB;user id=root;password=Admin123456!;}
-      - RabbitMQHost=${RabbitMQHost:-rabbitmq}
+      - PayConnectionStrings=Host=192.168.0.189;Port=5432;Database=PayDB;User ID=postgres;Password=Admin123456!;Pooling=true;
+      # - PayConnectionStrings=Server=189.168.0.189,14331;Database=PayDB;User Id=sa;Password=Admin123456!
+      # - PayConnectionStrings=${payapi:-Data Source=189.168.0.189;port=3307;Initial Catalog=PayDB;user id=root;password=Admin123456!;}
+      
+      - RabbitMQHost=localhost
       - RabbitMQUserName=admin
       - RabbitMQPassword=admin123456
-      - RabbitMQPort=5675
+      - RabbitMQPort=5672
 
       - scheme=https
       - ip=192.168.0.189
-      - port=${port:5001}
+      - port=5005
       - ConsulAddress=http://192.168.0.189:8500
       - ServerName=Shopping
 
     ports:
-      - ${port+1}:80
-      - ${port}:443
+      - 5006:80
+      - 5005:443
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -59,13 +63,13 @@ services:
 
       - scheme=https
       - ip=192.168.0.189
-      - port=${port:5001}
+      - port=5007
       - ConsulAddress=http://192.168.0.189:8500
       - ServerName=Shopping
 
     ports:
-      - ${port+1}:80
-      - ${port}:443
+      - 5008:80
+      - 5007:443
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
@@ -77,16 +81,11 @@ services:
 
       - scheme=https
       - ip=192.168.0.189
-      - port=${port:5001}
+      - port=5001
 
     ports:
-      - ${port+1}:80
-      - ${port}:443
+      - 5002:80
+      - 5001:443
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-
-networks:
-  default:
-    external:
-      name: bridge

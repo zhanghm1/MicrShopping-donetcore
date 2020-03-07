@@ -1,7 +1,6 @@
 version: '3.4'
 
 services:
-
   micrshopping.orderapi:
     image: ${DOCKER_REGISTRY-}micrshoppingorderapi
     build:
@@ -26,4 +25,7 @@ services:
     build:
       context: .
       dockerfile: MicrShopping.ApiGateway/Dockerfile
+
+
+
 

@@ -33,7 +33,7 @@ namespace MicrShopping.OrderApi.Controllers
         public string Get()
         {
 
-            //_capBus.Publish("xxx.services.show.time", DateTime.Now);
+            _capBus.Publish("xxx.services.show.time", DateTime.Now);
             return "oderapi:"+DateTime.Now;
 
         }

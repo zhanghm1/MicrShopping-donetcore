@@ -37,9 +37,9 @@ namespace MicrShopping.OrderApi
 
             string OrderConnectionStrings = Configuration["OrderConnectionStrings"];
             services.AddDbContext<OrderDbContext>(options =>
-                   options.UseMySql(OrderConnectionStrings)
+                   options.UseNpgsql(OrderConnectionStrings)
                    );
-
+            services.AddScoped<OrderDbContext>();
             string RabbitMQHost = Configuration["RabbitMQHost"];
             string RabbitMQPassword = Configuration["RabbitMQPassword"];
             string RabbitMQUserName = Configuration["RabbitMQUserName"];
@@ -48,16 +48,17 @@ namespace MicrShopping.OrderApi
             services.AddCap(x =>
             {
                 x.UseEntityFramework<OrderDbContext>();
-
                 x.UseRabbitMQ(options =>
                 {
 
                     options.HostName = RabbitMQHost;
                     options.Password = RabbitMQPassword;
                     options.UserName = RabbitMQUserName;
-                    // docker内部访问使用默认端口就可以
-                    options.Port = Convert.ToInt32(RabbitMQPort);
+                    // docker内部访问使用默认端口就可以 5672使用的端口
+                    //options.Port = Convert.ToInt32(RabbitMQPort);
                 });
+                //x.UseInMemoryStorage();
+                //x.UseInMemoryMessageQueue();
                 x.UseDashboard();
             });
 
@@ -75,6 +76,7 @@ namespace MicrShopping.OrderApi
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
             app.UseConsul(Configuration);
 
             app.UseAuthorization();

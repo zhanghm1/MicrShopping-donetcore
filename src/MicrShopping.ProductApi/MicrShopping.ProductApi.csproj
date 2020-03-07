@@ -8,9 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DotNetCore.CAP" Version="3.0.0" />
-    <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="3.0.0" />
-    <PackageReference Include="DotNetCore.CAP.SqlServer" Version="3.0.0" />
+    <PackageReference Include="DotNetCore.CAP" Version="3.0.2" />
+    <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="3.0.2" />
+    <PackageReference Include="DotNetCore.CAP.SqlServer" Version="3.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
   </ItemGroup>
 

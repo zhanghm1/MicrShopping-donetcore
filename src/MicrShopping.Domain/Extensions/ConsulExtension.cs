@@ -48,23 +48,23 @@ namespace MicrShopping.Domain.Extensions
             Console.WriteLine($"address={serverAddress}");
 
             var uri = new Uri(serverAddress);
-
+            string Health = $"{uri.Scheme}://{uri.Host}:{uri.Port}/Test/Health"; //健康检查地址
             var registration = new AgentServiceRegistration()
             {
                 ID = $"{ServerName}-{uri.Port}",
                 Name = ServerName,
                 Address = $"{uri.Host}",
                 Port = uri.Port,
-                Checks = new[] {
-                    new AgentServiceCheck()
+                Check =  new AgentServiceCheck()
                     {
                         DeregisterCriticalServiceAfter = TimeSpan.FromSeconds(5),   //服务启动多久后注册
                         Interval = TimeSpan.FromSeconds(10),                        //健康检查时间间隔，或者称为心跳间隔
-                        HTTP = $"{uri.Scheme}://{uri.Host}:{uri.Port}/Test/Health", //健康检查地址
+                        HTTP = Health, //健康检查地址
                         Timeout = TimeSpan.FromSeconds(8),
                         
+                        
                     }
-                },
+                ,
                 // Meta= new Dictionary<string, string>()
 
             };

@@ -6,18 +6,18 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - OrderConnectionStrings=Host=192.168.0.189;Port=5432;Database=OrderDB;User ID=postgres;Password=Admin123456!;Pooling=true;
-      #- OrderConnectionStrings=Server=189.168.0.189,14331;Database=OrderDB;User Id=sa;Password=Admin123456!
+      - OrderConnectionStrings=${orderapi:-Host=192.168.0.189;Port=5432;Database=OrderDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
+      #- OrderConnectionStrings=Server=192.168.0.189,14331;Database=OrderDB;User Id=sa;Password=Admin123456!
       #- OrderConnectionStrings=${orderapi:-Data Source=192.168.0.189;port=3307;Initial Catalog=OrderDB;user id=root;password=Admin123456!;}
       
-      - RabbitMQHost=localhost
+      - RabbitMQHost=192.168.0.189
       - RabbitMQUserName=admin
       - RabbitMQPassword=admin123456
       - RabbitMQPort=5672
       
-      - scheme=https
+      - scheme=http
       - ip=192.168.0.189
-      - port=5003
+      - port=5004
       - ConsulAddress=http://192.168.0.189:8500
       - ServerName=Shopping
 
@@ -33,17 +33,17 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
       - PayConnectionStrings=Host=192.168.0.189;Port=5432;Database=PayDB;User ID=postgres;Password=Admin123456!;Pooling=true;
-      # - PayConnectionStrings=Server=189.168.0.189,14331;Database=PayDB;User Id=sa;Password=Admin123456!
+      # - PayConnectionStrings=Server=192.168.0.189,14331;Database=PayDB;User Id=sa;Password=Admin123456!
       # - PayConnectionStrings=${payapi:-Data Source=189.168.0.189;port=3307;Initial Catalog=PayDB;user id=root;password=Admin123456!;}
       
-      - RabbitMQHost=localhost
+      - RabbitMQHost=192.168.0.189
       - RabbitMQUserName=admin
       - RabbitMQPassword=admin123456
       - RabbitMQPort=5672
 
-      - scheme=https
+      - scheme=http
       - ip=192.168.0.189
-      - port=5005
+      - port=5006
       - ConsulAddress=http://192.168.0.189:8500
       - ServerName=Shopping
 

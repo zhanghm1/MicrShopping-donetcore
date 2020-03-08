@@ -3,7 +3,7 @@
     {
       "UseServiceDiscovery": true,
       "DownstreamPathTemplate": "/{url}",
-      "DownstreamScheme": "https",
+      "DownstreamScheme": "http",
       "ServiceName": "Shopping",
       "LoadBalancerOptions": {
         "Type": "RoundRobin"

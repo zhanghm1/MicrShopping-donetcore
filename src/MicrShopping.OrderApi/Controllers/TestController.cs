@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Consul;
 using DotNetCore.CAP;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,13 +15,17 @@ namespace MicrShopping.OrderApi.Controllers
     {
         private readonly ILogger<TestController> _logger;
         private readonly ICapPublisher _capBus;
+        private IConsulClient _consulClient;
 
+        
         public TestController(ILogger<TestController> logger
             , ICapPublisher capPublisher
+            , IConsulClient consulClient
             )
         {
             _logger = logger;
             _capBus = capPublisher;
+            _consulClient = consulClient;
         }
         [HttpGet]
         [Route("Health")]
@@ -30,8 +35,15 @@ namespace MicrShopping.OrderApi.Controllers
         }
 
         [HttpGet]
-        public string Get()
+        public async Task<string> Get()
         {
+            //using (var consulClient=new ConsulClient(a=>a.Address=new Uri("http://192.168.0.189:8500")))
+            //{
+            //    var list = await consulClient.Agent.Checks();
+                
+            //    //var find = list.Response.Where(a => a.Key == "Shoping").Select(a => a.Value);
+            //}
+                
 
             _capBus.Publish("xxx.services.show.time", DateTime.Now);
             return "oderapi:"+DateTime.Now;

@@ -78,7 +78,7 @@ namespace MicrShopping.PayApi
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
             app.UseConsul(Configuration);

@@ -20,6 +20,7 @@ namespace MicrShopping.Domain.Extensions
             {
                 var address = configuration.GetSection("ConsulAddress").Value;
                 consulConfig.Address = new Uri(address);
+
             }));
             return services;
         }
@@ -72,7 +73,7 @@ namespace MicrShopping.Domain.Extensions
 
             logger.LogInformation("Registering with Consul");
 
-            consulClient.Agent.ServiceRegister(registration).ConfigureAwait(true);
+            consulClient.Agent.ServiceRegister(registration).Wait();
 
             
 

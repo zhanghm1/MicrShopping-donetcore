@@ -33,9 +33,9 @@ namespace MicrShopping.OrderApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddScoped<OrderDbContextSeed>();
+            //services.AddScoped<OrderDbContextSeed>();
 
-            string OrderConnectionStrings = Configuration["OrderConnectionStrings"];
+            string OrderConnectionStrings = Configuration["IdentityConnectionStrings"];
             services.AddDbContext<OrderDbContext>(options =>
                    options.UseNpgsql(OrderConnectionStrings)
                    );

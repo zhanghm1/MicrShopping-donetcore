@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -11,11 +11,17 @@
     <PackageReference Include="DotNetCore.CAP" Version="3.0.2" />
     <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="3.0.2" />
     <PackageReference Include="DotNetCore.CAP.SqlServer" Version="3.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.2" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MicrShopping.Identity\MicrShopping.Identity.csproj" />
+    <ProjectReference Include="..\MicrShopping.Domain\MicrShopping.Domain.csproj" />
     <ProjectReference Include="..\MicrShopping.Infrastructure.Common\MicrShopping.Infrastructure.Common.csproj" />
   </ItemGroup>
 

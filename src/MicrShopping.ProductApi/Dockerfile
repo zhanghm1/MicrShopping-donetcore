@@ -8,6 +8,8 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
 COPY ["MicrShopping.ProductApi/MicrShopping.ProductApi.csproj", "MicrShopping.ProductApi/"]
+COPY ["MicrShopping.Domain/MicrShopping.Domain.csproj", "MicrShopping.Domain/"]
+COPY ["MicrShopping.Infrastructure.Common/MicrShopping.Infrastructure.Common.csproj", "MicrShopping.Infrastructure.Common/"]
 RUN dotnet restore "MicrShopping.ProductApi/MicrShopping.ProductApi.csproj"
 COPY . .
 WORKDIR "/src/MicrShopping.ProductApi"

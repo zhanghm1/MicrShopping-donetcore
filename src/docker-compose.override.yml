@@ -6,9 +6,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - OrderConnectionStrings=${orderapi:-Host=192.168.0.189;Port=5432;Database=OrderDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
+      - OrderConnectionStrings=${orderstr:-Host=192.168.0.189;Port=5432;Database=OrderDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
       #- OrderConnectionStrings=Server=192.168.0.189,14331;Database=OrderDB;User Id=sa;Password=Admin123456!
-      #- OrderConnectionStrings=${orderapi:-Data Source=192.168.0.189;port=3307;Initial Catalog=OrderDB;user id=root;password=Admin123456!;}
+      #- OrderConnectionStrings=${orderstr:-Data Source=192.168.0.189;port=3307;Initial Catalog=OrderDB;user id=root;password=Admin123456!;}
       
       - RabbitMQHost=192.168.0.189
       - RabbitMQUserName=admin
@@ -19,7 +19,7 @@ services:
       - ip=192.168.0.189
       - port=5004
       - ConsulAddress=http://192.168.0.189:8500
-      - ServerName=Shopping
+      - ServerName=orderapi
 
     ports:
       - 5004:80
@@ -32,9 +32,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - PayConnectionStrings=Host=192.168.0.189;Port=5432;Database=PayDB;User ID=postgres;Password=Admin123456!;Pooling=true;
+      - PayConnectionStrings=${paystr:-Host=192.168.0.189;Port=5432;Database=PayDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
       # - PayConnectionStrings=Server=192.168.0.189,14331;Database=PayDB;User Id=sa;Password=Admin123456!
-      # - PayConnectionStrings=${payapi:-Data Source=189.168.0.189;port=3307;Initial Catalog=PayDB;user id=root;password=Admin123456!;}
+      # - PayConnectionStrings=${paystr:-Data Source=189.168.0.189;port=3307;Initial Catalog=PayDB;user id=root;password=Admin123456!;}
       
       - RabbitMQHost=192.168.0.189
       - RabbitMQUserName=admin
@@ -45,7 +45,7 @@ services:
       - ip=192.168.0.189
       - port=5006
       - ConsulAddress=http://192.168.0.189:8500
-      - ServerName=Shopping
+      - ServerName=payapi
 
     ports:
       - 5006:80
@@ -60,12 +60,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
+      - IdentityConnectionStrings=${identitystr:-Host=192.168.0.189;Port=5432;Database=IdentityDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
 
-      - scheme=https
+      - scheme=http
       - ip=192.168.0.189
-      - port=5007
+      - port=5008
       - ConsulAddress=http://192.168.0.189:8500
-      - ServerName=Shopping
+      - ServerName=identity
 
     ports:
       - 5008:80
@@ -86,6 +87,31 @@ services:
     ports:
       - 5002:80
       - 5001:443
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  micrshopping.productapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ProductConnectionStrings=${productstr:-Host=192.168.0.189;Port=5432;Database=ProductDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
+
+      
+      - RabbitMQHost=192.168.0.189
+      - RabbitMQUserName=admin
+      - RabbitMQPassword=admin123456
+      - RabbitMQPort=5672
+
+      - scheme=http
+      - ip=192.168.0.189
+      - port=5010
+      - ConsulAddress=http://192.168.0.189:8500
+      - ServerName=productapi
+
+    ports:
+      - 5010:80
+      - 5009:443
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

@@ -20,6 +20,12 @@ services:
       context: .
       dockerfile: MicrShopping.Identity/Dockerfile
 
+  micrshopping.productapi:
+    image: ${DOCKER_REGISTRY-}micrshoppingproductapi
+    build:
+      context: .
+      dockerfile: MicrShopping.ProductApi/Dockerfile
+
   micrshopping.apigateway:
     image: ${DOCKER_REGISTRY-}micrshoppingapigateway
     build:
@@ -27,5 +33,61 @@ services:
       dockerfile: MicrShopping.ApiGateway/Dockerfile
 
 
+  consul1:
+    image: consul
+    container_name: node1
+    command: agent -server -bootstrap-expect=3 -node=node1 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+
+
+  consul2:
+    image: consul
+    container_name: node2
+    command: agent -server -retry-join=node1 -node=node2 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+    depends_on:
+        - consul1
+
+
+  consul3:
+    image: consul
+    container_name: node3
+    command: agent -server -retry-join=node1 -node=node3 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+    depends_on:
+        - consul1
+
+
+  consul4:
+    image: consul
+    container_name: node4
+    command: agent -retry-join=node1 -node=ndoe4 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1 -ui 
+    ports:
+      - 8500:8500
+    depends_on:
+        - consul2
+        - consul3
+
+  postgres:
+    container_name: postgres # //生成的容器名称 
+    restart: always
+    image: postgres:latest #  // postgres 镜像
+    privileged: true
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: Admin123456!
+      POSTGRES_USER: postgres
+      PGDATA: /tmp   # 加上这个就不会容器异常，提示目录非空
+    volumes:
+      - D://docker/postgres:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin123456
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+      - "5671:5671"
 
 

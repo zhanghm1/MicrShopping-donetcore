@@ -73,6 +73,10 @@ namespace MicrShopping.OrderApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseHttpsRedirection();
+            }
             //IP访问的地址会有不安全的提示导致访问失败，在consul的健康检查中也会有这个问题
             //app.UseHttpsRedirection();
 

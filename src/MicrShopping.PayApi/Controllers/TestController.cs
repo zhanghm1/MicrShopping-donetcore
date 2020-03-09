@@ -22,12 +22,6 @@ namespace MicrShopping.PayApi.Controllers
             _consulClient = consulClient;
         }
         [HttpGet]
-        [Route("Health")]
-        public IActionResult Health()
-        {
-            return Content("OK");
-        }
-        [HttpGet]
         public string Get()
         {
             return "payapi:" + DateTime.Now;

@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MicrShopping.Domain\MicrShopping.Domain.csproj" />
+    <ProjectReference Include="..\MicrShopping.Infrastructure.Common\MicrShopping.Infrastructure.Common.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

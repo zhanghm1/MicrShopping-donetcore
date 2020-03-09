@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MicrShopping.Domain.Extensions;
 
 namespace MicrShopping.ProductApi
 {
@@ -26,6 +27,7 @@ namespace MicrShopping.ProductApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddConsulConfig(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,10 +37,15 @@ namespace MicrShopping.ProductApi
             {
                 app.UseDeveloperExceptionPage();
             }
+            else 
+            {
+                app.UseHttpsRedirection();
+            }
 
-            app.UseHttpsRedirection();
+            
 
             app.UseRouting();
+            app.UseConsul(Configuration);
 
             app.UseAuthorization();
 

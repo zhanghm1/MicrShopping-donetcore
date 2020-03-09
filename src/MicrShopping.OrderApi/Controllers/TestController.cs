@@ -27,12 +27,6 @@ namespace MicrShopping.OrderApi.Controllers
             _capBus = capPublisher;
             _consulClient = consulClient;
         }
-        [HttpGet]
-        [Route("Health")]
-        public IActionResult Health()
-        {
-            return Content("OK");
-        }
 
         [HttpGet]
         public async Task<string> Get()

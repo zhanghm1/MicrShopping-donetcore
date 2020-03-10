@@ -65,6 +65,8 @@ namespace MicrShopping.Identity
                 .AddInMemoryClients(Config.Clients)
                 .AddAspNetIdentity<ApplicationUser>();
 
+                // .AddResourceOwnerValidator<ResourceOwnerPasswordValidator>()
+
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
 
@@ -84,6 +86,7 @@ namespace MicrShopping.Identity
 
             app.UseRouting();
             app.UseIdentityServer();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();

@@ -21,6 +21,7 @@ services:
       - ConsulAddress=http://192.168.0.189:8500
       - ServerName=orderapi
 
+      - IdentityUrl=http://192.168.0.189:5008
     ports:
       - 5004:80
       - 5003:443
@@ -112,6 +113,20 @@ services:
     ports:
       - 5010:80
       - 5009:443
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+
+
+
+  micrshopping.mvc:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - 5012:80
+      - 5013:443
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro

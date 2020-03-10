@@ -21,7 +21,10 @@ namespace MicrShopping.Identity
         public static IEnumerable<ApiResource> Apis =>
             new List<ApiResource>
             {
-                new ApiResource("api1", "My API")
+                new ApiResource("orderapi", "My API"),
+                new ApiResource("payapi", "My API"),
+                new ApiResource("productapi", "My API"),
+                new ApiResource("identityapi", "My API"),
             };
 
         public static IEnumerable<Client> Clients =>
@@ -34,20 +37,20 @@ namespace MicrShopping.Identity
                     ClientSecrets = { new Secret("secret".Sha256()) },
 
                     AllowedGrantTypes = GrantTypes.Code,
-                    RequireConsent = false,
+                    RequireConsent = true,
                     RequirePkce = true,
                 
                     // where to redirect to after login
-                    RedirectUris = { "http://localhost:5012/signin-oidc" },
+                    RedirectUris = { "http://192.168.0.189:5012/signin-oidc" },
 
                     // where to redirect to after logout
-                    PostLogoutRedirectUris = { "http://localhost:5012/signout-callback-oidc" },
+                    PostLogoutRedirectUris = { "http://192.168.0.189:5012/signout-callback-oidc" },
 
                     AllowedScopes = new List<string>
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "api1"
+                        "orderapi","payapi","productapi","identityapi",
                     },
 
                     AllowOfflineAccess = true
@@ -61,15 +64,29 @@ namespace MicrShopping.Identity
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris =           { "http://localhost:5013/callback.html" },
-                    PostLogoutRedirectUris = { "http://localhost:5013/index.html" },
-                    AllowedCorsOrigins =     { "http://localhost:5013" },
+                    RedirectUris =           { "http://192.168.0.189:5014/callback.html" },
+                    PostLogoutRedirectUris = { "http://192.168.0.189:5014/index.html" },
+                    AllowedCorsOrigins =     { "http://192.168.0.189:5014" },
 
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "api1"
+                        "orderapi","payapi","productapi","identityapi",
+                    }
+                },
+                // app Client
+                new Client
+                {
+                    ClientId = "app",
+                    ClientName = "app",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "orderapi","payapi","productapi","identityapi",
                     }
                 }
             };

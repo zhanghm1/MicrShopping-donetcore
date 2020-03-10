@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Consul;
 using DotNetCore.CAP;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -29,6 +30,7 @@ namespace MicrShopping.OrderApi.Controllers
         }
 
         [HttpGet]
+        [Route("Get")]
         public async Task<string> Get()
         {
             //using (var consulClient=new ConsulClient(a=>a.Address=new Uri("http://192.168.0.189:8500")))
@@ -43,5 +45,14 @@ namespace MicrShopping.OrderApi.Controllers
             return "oderapi:"+DateTime.Now;
 
         }
+        [HttpGet]
+        [Route("Identity")]
+        [Authorize]
+        public IActionResult Identity()
+        {
+            return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
+
+        }
+        
     }
 }

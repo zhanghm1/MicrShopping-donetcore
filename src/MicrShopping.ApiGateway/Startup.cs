@@ -28,6 +28,14 @@ namespace MicrShopping.ApiGateway
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOcelot().AddConsul();
+            //services.AddAuthentication("Bearer")
+            //     .AddJwtBearer("Bearer", options =>
+            //     {
+            //         options.Authority = "http://192.168.0.189:5008";
+            //         options.RequireHttpsMetadata = false;
+            //         options.Audience = "ServiceA";
+            //     });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -39,7 +39,7 @@ namespace MicrShopping.MVC
                 .AddCookie("Cookies")
                 .AddOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = "http://localhost:5008";
+                    options.Authority = "http://192.168.0.189:5008";
                     options.RequireHttpsMetadata = false;
 
                     options.ClientId = "mvc";
@@ -59,11 +59,11 @@ namespace MicrShopping.MVC
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                //app.UseExceptionHandler("/Home/Error");
+                //// The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                //app.UseHsts();
+                app.UseHttpsRedirection();
             }
-            //app.UseHttpsRedirection();
             app.UseStaticFiles();
 
             app.UseRouting();

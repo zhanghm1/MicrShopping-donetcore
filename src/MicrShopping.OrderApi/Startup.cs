@@ -33,7 +33,7 @@ namespace MicrShopping.OrderApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            //services.AddScoped<OrderDbContextSeed>();
+            services.AddScoped<OrderDbContextSeed>();
 
             string OrderConnectionStrings = Configuration["OrderConnectionStrings"];
             services.AddDbContext<OrderDbContext>(options =>
@@ -64,6 +64,23 @@ namespace MicrShopping.OrderApi
 
             services.AddConsulConfig(Configuration);
 
+            services.AddAuthentication("Bearer")
+                 .AddJwtBearer("Bearer", options =>
+                 {
+                     options.Authority = Configuration["IdentityUrl"];// "http://192.168.0.189:5008";
+                     options.RequireHttpsMetadata = false;
+                     options.Audience = "orderapi";
+                 });
+            services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy("default", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,13 +96,16 @@ namespace MicrShopping.OrderApi
             }
             //IP访问的地址会有不安全的提示导致访问失败，在consul的健康检查中也会有这个问题
             //app.UseHttpsRedirection();
+            app.UseCors("default");
 
+            
             app.UseRouting();
 
-            app.UseConsul(Configuration);
+            //app.UseConsul(Configuration);
 
+            app.UseAuthentication();
             app.UseAuthorization();
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

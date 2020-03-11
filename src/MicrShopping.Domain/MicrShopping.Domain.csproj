@@ -5,8 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Configs\" />
-    <Folder Include="Entities\" />
+    <Compile Remove="Configs\**" />
+    <EmbeddedResource Remove="Configs\**" />
+    <None Remove="Configs\**" />
   </ItemGroup>
 
   <ItemGroup>

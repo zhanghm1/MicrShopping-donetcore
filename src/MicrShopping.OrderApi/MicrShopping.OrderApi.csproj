@@ -24,10 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MicrShopping.Domain\MicrShopping.Domain.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Data\Migrations\" />
+    <ProjectReference Include="..\MicrShopping.Infrastructure.Common\MicrShopping.Infrastructure.Common.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

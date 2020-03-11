@@ -8,9 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="DotNetCore.CAP" Version="3.0.2" />
+    <PackageReference Include="DotNetCore.CAP.Dashboard" Version="3.0.2" />
+    <PackageReference Include="DotNetCore.CAP.PostgreSql" Version="3.0.2" />
     <PackageReference Include="DotNetCore.CAP.RabbitMQ" Version="3.0.2" />
-    <PackageReference Include="DotNetCore.CAP.SqlServer" Version="3.0.2" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.2">

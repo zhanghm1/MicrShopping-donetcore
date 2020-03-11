@@ -87,6 +87,8 @@ services:
     environment:
         PGADMIN_DEFAULT_EMAIL: xxx@qq.com
         PGADMIN_DEFAULT_PASSWORD: 123456
+    volumes:
+      - D://docker/pgadmin4:/var/lib/postgresql/data
 
   rabbitmq:
     image: rabbitmq:3-management

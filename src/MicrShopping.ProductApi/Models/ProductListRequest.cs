@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MicrShopping.OrderApi.Data.Entities
+namespace MicrShopping.ProductApi.Models
 {
-    public class Order: EntityBase
+    public class ProductListRequest: RequestPageBase
     {
     }
 }

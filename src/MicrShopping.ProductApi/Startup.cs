@@ -2,15 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using MicrShopping.Domain.Extensions;
+using MicrShopping.ProductApi.Data;
 
 namespace MicrShopping.ProductApi
 {
@@ -26,8 +29,56 @@ namespace MicrShopping.ProductApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddControllers();
+            services.AddScoped<ProductDbContextSeed>();
+
+            string ProductConnectionStrings = Configuration["ProductConnectionStrings"];
+            services.AddDbContext<ProductDbContext>(options =>
+                   options.UseNpgsql(ProductConnectionStrings)
+                   );
+
+            string RabbitMQHost = Configuration["RabbitMQHost"];
+            string RabbitMQPassword = Configuration["RabbitMQPassword"];
+            string RabbitMQUserName = Configuration["RabbitMQUserName"];
+            string RabbitMQPort = Configuration["RabbitMQPort"];
+
+            services.AddCap(x =>
+            {
+                x.UseEntityFramework<ProductDbContext>();
+                x.UseRabbitMQ(options =>
+                {
+
+                    options.HostName = RabbitMQHost;
+                    options.Password = RabbitMQPassword;
+                    options.UserName = RabbitMQUserName;
+                    // 
+                    //options.Port = Convert.ToInt32(RabbitMQPort);
+                });
+                //x.UseInMemoryStorage();
+                //x.UseInMemoryMessageQueue();
+                x.UseDashboard();
+            });
+
             services.AddConsulConfig(Configuration);
+
+            services.AddAuthentication("Bearer")
+                 .AddJwtBearer("Bearer", options =>
+                 {
+                     options.Authority = Configuration["IdentityUrl"];// "http://192.168.0.189:5008";
+                     options.RequireHttpsMetadata = false;
+                     options.Audience = "productapi";
+                 });
+            services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy("default", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,16 +88,20 @@ namespace MicrShopping.ProductApi
             {
                 app.UseDeveloperExceptionPage();
             }
-            else 
+            else
             {
                 app.UseHttpsRedirection();
             }
+            //
+            //app.UseHttpsRedirection();
+            app.UseCors("default");
 
-            
 
             app.UseRouting();
-            app.UseConsul(Configuration);
 
+            //app.UseConsul(Configuration);
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -54,5 +109,6 @@ namespace MicrShopping.ProductApi
                 endpoints.MapControllers();
             });
         }
+
     }
 }

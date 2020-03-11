@@ -15,7 +15,17 @@ namespace MicrShopping.OrderApi.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreateTime = table.Column<DateTime>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false)
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    Code = table.Column<string>(nullable: true),
+                    TotalPrice = table.Column<decimal>(nullable: false),
+                    Address = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
+                    ExpressNumber = table.Column<string>(nullable: true),
+                    PayTime = table.Column<DateTime>(nullable: true),
+                    SendTime = table.Column<DateTime>(nullable: true),
+                    ReceiptTime = table.Column<DateTime>(nullable: true),
+                    CommentTime = table.Column<DateTime>(nullable: true),
+                    AfterSaleTime = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -29,7 +39,15 @@ namespace MicrShopping.OrderApi.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreateTime = table.Column<DateTime>(nullable: false),
-                    IsDeleted = table.Column<bool>(nullable: false)
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    OrderCode = table.Column<string>(nullable: true),
+                    Code = table.Column<string>(nullable: true),
+                    ProducName = table.Column<string>(nullable: true),
+                    ProductId = table.Column<int>(nullable: false),
+                    RealPrice = table.Column<decimal>(nullable: false),
+                    FormerPrice = table.Column<decimal>(nullable: false),
+                    Number = table.Column<int>(nullable: false),
+                    TotalPrice = table.Column<decimal>(nullable: false)
                 },
                 constraints: table =>
                 {

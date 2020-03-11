@@ -54,7 +54,7 @@ namespace MicrShopping.OrderApi
                     options.HostName = RabbitMQHost;
                     options.Password = RabbitMQPassword;
                     options.UserName = RabbitMQUserName;
-                    // docker内部访问使用默认端口就可以 5672使用的端口
+                    // docker锟节诧拷锟斤拷锟斤拷使锟斤拷默锟较端口就匡拷锟斤拷 5672使锟矫的端匡拷
                     //options.Port = Convert.ToInt32(RabbitMQPort);
                 });
                 //x.UseInMemoryStorage();
@@ -94,7 +94,7 @@ namespace MicrShopping.OrderApi
             {
                 app.UseHttpsRedirection();
             }
-            //IP访问的地址会有不安全的提示导致访问失败，在consul的健康检查中也会有这个问题
+            //
             //app.UseHttpsRedirection();
             app.UseCors("default");
 

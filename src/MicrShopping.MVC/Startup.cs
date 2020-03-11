@@ -47,6 +47,8 @@ namespace MicrShopping.MVC
                     options.ResponseType = "code";
 
                     options.SaveTokens = true;
+                    options.Scope.Add("orderapi");
+                    options.Scope.Add("productapi");
                 });
         }
 

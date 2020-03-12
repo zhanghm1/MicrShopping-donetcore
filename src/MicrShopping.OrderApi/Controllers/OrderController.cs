@@ -37,7 +37,7 @@ namespace MicrShopping.OrderApi.Controllers
             _consulClient = consulClient;
             _orderDbContext = orderDbContext;
         }
-
+        [Authorize(Roles = "admin")]
         [HttpPost]
         [Route("CreateOrder")]
         public async Task<ResponseBase> CreateOrder(CreateOrderRequest request)
@@ -90,8 +90,12 @@ namespace MicrShopping.OrderApi.Controllers
 
                 _orderDbContext.SaveChanges();
 
+                ReduceProductModel productModel = new ReduceProductModel() {
+                OrderCode=order.Code,
+                ProductItem= orderItemList.Select(a => new ReduceProductItemModel { Id = a.ProductId, Number = a.Number }).ToList()
+                };
 
-                _capBus.Publish(CapStatic.ReduceProductCount, orderItemList.Select(a=> new ReduceProductModel { Id = a.ProductId, Number = a.Number }) );
+                _capBus.Publish(CapStatic.ReduceProductCount, productModel);
 
                 //trans.Commit();
             }
@@ -101,7 +105,6 @@ namespace MicrShopping.OrderApi.Controllers
         }
         [HttpGet]
         [Route("Identity")]
-        [Authorize]
         public IActionResult Identity()
         {
             return new JsonResult(from c in User.Claims select new { c.Type, c.Value });

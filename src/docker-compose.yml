@@ -39,20 +39,20 @@ services:
     command: agent -server -bootstrap-expect=3 -node=node1 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
 
 
-#  consul2:
-#    image: consul
-#    container_name: node2
-#    command: agent -server -retry-join=node1 -node=node2 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
-#    depends_on:
-#        - consul1
-#
-#
-#  consul3:
-#    image: consul
-#    container_name: node3
-#    command: agent -server -retry-join=node1 -node=node3 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
-#    depends_on:
-#        - consul1
+  consul2:
+    image: consul
+    container_name: node2
+    command: agent -server -retry-join=node1 -node=node2 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+    depends_on:
+        - consul1
+
+
+  consul3:
+    image: consul
+    container_name: node3
+    command: agent -server -retry-join=node1 -node=node3 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1
+    depends_on:
+        - consul1
 
 
   consul4:
@@ -61,9 +61,9 @@ services:
     command: agent -retry-join=node1 -node=ndoe4 -bind=0.0.0.0 -client=0.0.0.0 -datacenter=dc1 -ui 
     ports:
       - 8500:8500
-#    depends_on:
-#        - consul2
-#        - consul3
+    depends_on:
+        - consul2
+        - consul3
 
   postgres:
     container_name: postgres # //生成的容器名称 
@@ -83,7 +83,7 @@ services:
     container_name: pgadmin4
     image: dpage/pgadmin4
     ports:
-        - 8001:80
+        - 5430:80
     environment:
         PGADMIN_DEFAULT_EMAIL: xxx@qq.com
         PGADMIN_DEFAULT_PASSWORD: 123456

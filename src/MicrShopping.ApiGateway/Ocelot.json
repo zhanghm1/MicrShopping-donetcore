@@ -1,6 +1,24 @@
 {
   "ReRoutes": [
     {
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "http",
+      "ServiceName": "orderapi",
+      "LoadBalancer": "RoundRobin",
+      "UseServiceDiscovery": true,
+      "UpstreamPathTemplate": "/orderapi/swagger/v1/swagger.json",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/swagger/v1/swagger.json",
+      "DownstreamScheme": "http",
+      "ServiceName": "productapi",
+      "LoadBalancer": "RoundRobin",
+      "UseServiceDiscovery": true,
+      "UpstreamPathTemplate": "/productapi/swagger/v1/swagger.json",
+      "UpstreamHttpMethod": [ "GET", "POST", "DELETE", "PUT" ]
+    },
+    {
       "UseServiceDiscovery": true,
       "DownstreamPathTemplate": "/{url}", //具体服务的请求地址
       "DownstreamScheme": "http",
@@ -28,7 +46,7 @@
       "UseServiceDiscovery": true,
       "DownstreamPathTemplate": "/{url}",
       "DownstreamScheme": "http",
-      "ServiceName": "product",
+      "ServiceName": "productapi",
       "LoadBalancerOptions": {
         "Type": "RoundRobin"
       },

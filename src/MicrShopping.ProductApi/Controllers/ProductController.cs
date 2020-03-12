@@ -82,10 +82,10 @@ namespace MicrShopping.ProductApi.Controllers
 
         [NonAction]
         [CapSubscribe(CapStatic.ReduceProductCount)]
-        public async Task ReduceProductCount(List<ReduceProductModel> list)
+        public async Task ReduceProductCount(ReduceProductModel reduceProductModel)
         {
-            Console.WriteLine("CapStatic.ReduceProductCount:" + JsonConvert.SerializeObject(list));
-            foreach (var item in list)
+            Console.WriteLine("CapStatic.ReduceProductCount:" + JsonConvert.SerializeObject(reduceProductModel));
+            foreach (var item in reduceProductModel.ProductItem)
             {
                 var productInfo = _productDbContext.Product.Where(a => a.Id == item.Id).FirstOrDefault();
                 if (productInfo.NowCount < item.Number)

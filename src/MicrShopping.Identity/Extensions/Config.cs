@@ -2,6 +2,7 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
 using System.Collections.Generic;
@@ -21,10 +22,10 @@ namespace MicrShopping.Identity
         public static IEnumerable<ApiResource> Apis =>
             new List<ApiResource>
             {
-                new ApiResource("orderapi", "My API"),
-                new ApiResource("payapi", "My API"),
-                new ApiResource("productapi", "My API"),
-                new ApiResource("identityapi", "My API"),
+                new ApiResource("orderapi", "order",new List<string>{JwtClaimTypes.Role }),
+                new ApiResource("payapi", "pay",new List<string>{JwtClaimTypes.Role }),
+                new ApiResource("productapi", "product",new List<string>{JwtClaimTypes.Role }),
+                new ApiResource("identityapi", "identity",new List<string>{JwtClaimTypes.Role }),
             };
 
         public static IEnumerable<Client> Clients =>
@@ -50,7 +51,7 @@ namespace MicrShopping.Identity
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "orderapi","payapi","productapi","identityapi",
+                        "orderapi","payapi","productapi"
                     },
 
                     AllowOfflineAccess = true

@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Provider.Consul;
@@ -27,6 +28,7 @@ namespace MicrShopping.ApiGateway
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
             services.AddOcelot().AddConsul();
             //services.AddAuthentication("Bearer")
             //     .AddJwtBearer("Bearer", options =>
@@ -35,6 +37,13 @@ namespace MicrShopping.ApiGateway
             //         options.RequireHttpsMetadata = false;
             //         options.Audience = "ServiceA";
             //     });
+
+            services.AddMvc();
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("ApiGateWay", new OpenApiInfo { Title = "ApiGateWay", Version = "v1" });
+            });
 
         }
 
@@ -45,9 +54,16 @@ namespace MicrShopping.ApiGateway
             {
                 app.UseDeveloperExceptionPage();
             }
-            //loggerFactory.
-            //loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            app.UseRouting();
+
+            app.UseSwagger().UseSwaggerUI(c =>
+            {
+                
+                c.SwaggerEndpoint("/orderapi/swagger/v1/swagger.json", "orderapi");
+                c.SwaggerEndpoint("/productapi/swagger/v1/swagger.json", "productapi");
+            });
             app.UseOcelot().Wait();
+
         }
     }
 }

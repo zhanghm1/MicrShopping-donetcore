@@ -51,12 +51,9 @@ namespace MicrShopping.OrderApi
                 x.UseEntityFramework<OrderDbContext>();
                 x.UseRabbitMQ(options =>
                 {
-
                     options.HostName = RabbitMQHost;
                     options.Password = RabbitMQPassword;
                     options.UserName = RabbitMQUserName;
-                    // docker�ڲ�����ʹ��Ĭ�϶˿ھͿ��� 5672ʹ�õĶ˿�
-                    //options.Port = Convert.ToInt32(RabbitMQPort);
                 });
                 //x.UseInMemoryStorage();
                 //x.UseInMemoryMessageQueue();
@@ -74,6 +71,21 @@ namespace MicrShopping.OrderApi
                      options.RequireHttpsMetadata = false;
                      options.Audience = "orderapi";
                  });
+
+            //设置Authorize的policy,可以添加多个
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("admin", policyAdmin =>
+                {
+                    policyAdmin.RequireClaim("role", "admin");
+                });
+                options.AddPolicy("user_admin", policyAdmin =>
+                {
+                    policyAdmin.RequireClaim("role", "user_admin");
+                });
+            });
+
+
             services.AddCors(options =>
             {
                 // this defines a CORS policy called "default"

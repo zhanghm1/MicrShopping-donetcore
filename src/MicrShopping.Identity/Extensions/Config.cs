@@ -59,15 +59,15 @@ namespace MicrShopping.Identity
                 // JavaScript Client
                 new Client
                 {
-                    ClientId = "js",
+                    ClientId = "js-vue",
                     ClientName = "JavaScript Client",
                     AllowedGrantTypes = GrantTypes.Code,
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris =           { "http://192.168.0.189:5014/callback.html" },
-                    PostLogoutRedirectUris = { "http://192.168.0.189:5014/index.html" },
-                    AllowedCorsOrigins =     { "http://192.168.0.189:5014" },
+                    RedirectUris =           { "http://192.168.0.189:5015/#/callback" },
+                    PostLogoutRedirectUris = { "http://192.168.0.189:5015/" },
+                    AllowedCorsOrigins =     { "http://192.168.0.189:5015" },
 
                     AllowedScopes =
                     {

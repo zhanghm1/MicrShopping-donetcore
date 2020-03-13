@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MicrShopping.Identity.Certificates;
 
 namespace MicrShopping.Identity
 {
@@ -69,7 +70,7 @@ namespace MicrShopping.Identity
 
 
             // not recommended for production - you need to store your key material somewhere secure
-            builder.AddDeveloperSigningCredential();
+            builder.AddSigningCredential(Certificate.Get());
 
 
 

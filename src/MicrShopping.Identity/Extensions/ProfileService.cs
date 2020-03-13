@@ -64,12 +64,14 @@ namespace MicrShopping.Identity
 
         /// <summary>
         /// This method is called whenever claims about the user are requested (e.g. during token creation or via the userinfo endpoint)
+        /// 
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns></returns>
         public virtual async Task GetProfileDataAsync(ProfileDataRequestContext context)
         {
             var sub = context.Subject?.GetSubjectId();
+            //context.Subject.Claims  为ResourceOwnerPasswordValidator设置的Claims，此处直接用数据库中的claims,忽略context.Subject.Claims
             if (sub == null) throw new Exception("No sub claim present");
 
             var user = await UserManager.FindByIdAsync(sub);

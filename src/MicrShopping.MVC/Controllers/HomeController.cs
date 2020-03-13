@@ -32,7 +32,7 @@ namespace MicrShopping.MVC.Controllers
 
             var client = new HttpClient();
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            var content = await client.GetStringAsync("http://192.168.0.189:5004/test/identity");
+            var content = await client.GetStringAsync("http://192.168.0.189:5004/order/identity");
 
             ViewBag.Json = JArray.Parse(content).ToString();
             return View();

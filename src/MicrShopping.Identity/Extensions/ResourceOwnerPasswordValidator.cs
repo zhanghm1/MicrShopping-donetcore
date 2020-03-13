@@ -111,7 +111,7 @@ namespace MicrShopping.Identity
         {
             List<Claim> claims = new List<Claim>()
             {
-            new Claim("UserId", user.Id),
+            new Claim("UserId", user.Id.ToString()),
             new Claim("Role", "admin")
             };
             

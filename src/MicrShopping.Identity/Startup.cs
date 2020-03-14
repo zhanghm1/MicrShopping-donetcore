@@ -12,6 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MicrShopping.Identity.Certificates;
+using MicrShopping.Domain.Extensions;
 
 namespace MicrShopping.Identity
 {
@@ -73,7 +74,27 @@ namespace MicrShopping.Identity
             builder.AddSigningCredential(Certificate.Get());
 
 
+            services.AddConsulConfig(Configuration);
 
+            string IdentityUrl = Configuration["IdentityUrl"];// "http://192.168.0.189:5008";
+
+            services.AddAuthentication("Bearer")
+                 .AddJwtBearer("Bearer", options =>
+                 {
+                     options.Authority = IdentityUrl;
+                     options.RequireHttpsMetadata = false;
+                     options.Audience = "identityapi";
+                 });
+            services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy("default", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app)
@@ -83,8 +104,9 @@ namespace MicrShopping.Identity
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
-
+            app.UseCors("default");
             app.UseStaticFiles();
+            app.UseConsul(Configuration);
 
             app.UseRouting();
             app.UseIdentityServer();

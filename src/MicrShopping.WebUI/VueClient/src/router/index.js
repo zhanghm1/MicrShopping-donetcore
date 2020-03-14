@@ -7,11 +7,11 @@ Vue.use(Router);
 const routes = [
     {
         path: '/callback',
-        component: () => import('../components/Callback.vue'),
+        component: () => import('../components/LoginCallBack.vue'),
     },
     {
         path: '/',
-        component: () => import('../components/HelloWorld.vue'),
+        component: () => import('../pages/Index.vue'),
     }
 
 ];

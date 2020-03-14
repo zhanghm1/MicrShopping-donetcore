@@ -45,6 +45,17 @@ namespace MicrShopping.ApiGateway
                 c.SwaggerDoc("ApiGateWay", new OpenApiInfo { Title = "ApiGateWay", Version = "v1" });
             });
 
+            services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy("default", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -55,6 +66,7 @@ namespace MicrShopping.ApiGateway
                 app.UseDeveloperExceptionPage();
             }
             app.UseRouting();
+            app.UseCors("default");
 
             app.UseSwagger().UseSwaggerUI(c =>
             {

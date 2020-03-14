@@ -8,12 +8,13 @@ import Oidc from "oidc-client" ;
 
 
 export default {
-  name: 'Callback',
+  name: 'LoginCallBack',
 
   created(){
       var that=this;
-       new Oidc.UserManager({ response_mode: "query" }).signinRedirectCallback().then(function () {
+       new Oidc.UserManager({ response_mode: "query" }).signinRedirectCallback().then(function (e) {
             //window.location = "index.html";
+            window.console.log("LoginCallBack",e);
             that.$router.push("/");
         }).catch(function (e) {
             console.error(e);

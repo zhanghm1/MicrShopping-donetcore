@@ -58,7 +58,7 @@
       "UseServiceDiscovery": true,
       "DownstreamPathTemplate": "/{url}",
       "DownstreamScheme": "http",
-      "ServiceName": "identity",
+      "ServiceName": "identityapi",
       "LoadBalancerOptions": {
         "Type": "RoundRobin"
       },

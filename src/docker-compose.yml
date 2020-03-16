@@ -106,3 +106,10 @@ services:
     build:
       context: .
       dockerfile: MicrShopping.MVC/Dockerfile
+
+  micrshopping.usermanageapi:
+    image: ${DOCKER_REGISTRY-}micrshoppingusermanageapi
+    build:
+      context: .
+      dockerfile: MicrShopping.UserManageApi/Dockerfile
+

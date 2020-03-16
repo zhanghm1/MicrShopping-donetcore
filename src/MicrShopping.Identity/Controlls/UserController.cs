@@ -13,7 +13,7 @@ namespace MicrShopping.Identity.Controlls
     
     public class UserController : ControllerBase
     {
-        // GET: api/User
+        // GET: /User
         [HttpGet]
         public IEnumerable<string> Get()
         {
@@ -21,7 +21,7 @@ namespace MicrShopping.Identity.Controlls
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/User/5
+        // GET: User/5
         [HttpGet("{id}", Name = "Get")]
         [Authorize]
         public string Get(int id)
@@ -31,19 +31,19 @@ namespace MicrShopping.Identity.Controlls
             return "value";
         }
 
-        // POST: api/User
+        // POST: /User
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT: api/User/5
+        // PUT: /User/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE: api/ApiWithActions/5
+        // DELETE: /ApiWithActions/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

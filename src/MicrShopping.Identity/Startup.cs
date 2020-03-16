@@ -1,9 +1,6 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-
-using MicrShopping.Identity.Data;
-using MicrShopping.Identity.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +10,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MicrShopping.Identity.Certificates;
 using MicrShopping.Domain.Extensions;
+using MicrShopping.Domain;
+using MicrShopping.Infrastructure.EFCore;
 
 namespace MicrShopping.Identity
 {
@@ -29,31 +28,10 @@ namespace MicrShopping.Identity
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers();
             services.AddControllersWithViews();
 
-            //// configures IIS out-of-proc settings (see https://github.com/aspnet/AspNetCore/issues/14882)
-            //services.Configure<IISOptions>(iis =>
-            //{
-            //    iis.AuthenticationDisplayName = "Windows";
-            //    iis.AutomaticAuthentication = false;
-            //});
-
-            //// configures IIS in-proc settings
-            //services.Configure<IISServerOptions>(iis =>
-            //{
-            //    iis.AuthenticationDisplayName = "Windows";
-            //    iis.AutomaticAuthentication = false;
-            //});
-
-            //services.AddDbContext<ApplicationDbContext>(options =>
-            //    options.UseSqlite(Configuration.GetConnectionString("IdentityConnectionStrings")));
-
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("IdentityConnectionStrings")));
-
-            services.AddIdentity<ApplicationUser, ApplicationRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+            services.AddIdentityEFCore(Configuration);
 
             var builder = services.AddIdentityServer(options =>
             {
@@ -109,8 +87,11 @@ namespace MicrShopping.Identity
             app.UseConsul(Configuration);
 
             app.UseRouting();
+            
+            
             app.UseIdentityServer();
             app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();

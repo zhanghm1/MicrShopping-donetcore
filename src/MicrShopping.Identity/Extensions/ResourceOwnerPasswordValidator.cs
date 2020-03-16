@@ -13,7 +13,7 @@ using IdentityServer4.Events;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
-using MicrShopping.Identity.Models;
+using MicrShopping.Domain;
 
 namespace MicrShopping.Identity
 {

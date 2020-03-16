@@ -25,7 +25,8 @@ namespace MicrShopping.Identity
                 new ApiResource("orderapi", "order",new List<string>{JwtClaimTypes.Role }),
                 new ApiResource("payapi", "pay",new List<string>{JwtClaimTypes.Role }),
                 new ApiResource("productapi", "product",new List<string>{JwtClaimTypes.Role }),
-                new ApiResource("identityapi", "identity",new List<string>{JwtClaimTypes.Role }),
+                new ApiResource("usermanageapi", "usermanage api "),
+                
             };
 
         public static IEnumerable<Client> Clients =>
@@ -51,7 +52,7 @@ namespace MicrShopping.Identity
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "orderapi","payapi","productapi"
+                        "orderapi","payapi","productapi","usermanageapi"
                     },
 
                     AllowOfflineAccess = true
@@ -73,7 +74,7 @@ namespace MicrShopping.Identity
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "orderapi","payapi","productapi","identityapi",
+                        "orderapi","payapi","productapi","usermanageapi"
                     }
                 },
                 // app Client
@@ -82,12 +83,12 @@ namespace MicrShopping.Identity
                     ClientId = "app",
                     ClientName = "app",
                     ClientSecrets = { new Secret("secret".Sha256()) },
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "orderapi","payapi","productapi","identityapi",
+                        "orderapi","payapi","productapi","usermanageapi"
                     }
                 }
             };

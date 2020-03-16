@@ -6,15 +6,13 @@ using System;
 using System.Linq;
 using System.Security.Claims;
 using IdentityModel;
-using MicrShopping.Identity.Data;
-using MicrShopping.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Serilog;
 using System.Collections.Generic;
+using MicrShopping.Domain;
 
-namespace MicrShopping.Identity
+namespace MicrShopping.Infrastructure.EFCore
 {
     public class SeedData
     {
@@ -60,11 +58,11 @@ namespace MicrShopping.Identity
                         {
                             throw new Exception(result.Errors.First().Description);
                         }
-                        Log.Debug("alice created");
+                        //Log.Debug("alice created");
                     }
                     else
                     {
-                        Log.Debug("alice already exists");
+                        //Log.Debug("alice already exists");
                     }
 
 

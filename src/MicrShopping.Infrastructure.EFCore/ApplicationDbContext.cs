@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using MicrShopping.Identity.Models;
+using MicrShopping.Domain;
 
-namespace MicrShopping.Identity.Data
+namespace MicrShopping.Infrastructure.EFCore
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, int>
     {

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 using Microsoft.AspNetCore.Builder;
@@ -28,7 +28,6 @@ namespace MicrShopping.Identity
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.AddControllersWithViews();
 
             services.AddIdentityEFCore(Configuration);
@@ -54,25 +53,7 @@ namespace MicrShopping.Identity
 
             services.AddConsulConfig(Configuration);
 
-            string IdentityUrl = Configuration["IdentityUrl"];// "http://192.168.0.189:5008";
-
-            services.AddAuthentication("Bearer")
-                 .AddJwtBearer("Bearer", options =>
-                 {
-                     options.Authority = IdentityUrl;
-                     options.RequireHttpsMetadata = false;
-                     options.Audience = "identityapi";
-                 });
-            services.AddCors(options =>
-            {
-                // this defines a CORS policy called "default"
-                options.AddPolicy("default", policy =>
-                {
-                    policy.AllowAnyOrigin()
-                        .AllowAnyHeader()
-                        .AllowAnyMethod();
-                });
-            });
+            
         }
 
         public void Configure(IApplicationBuilder app)
@@ -82,7 +63,6 @@ namespace MicrShopping.Identity
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
             }
-            app.UseCors("default");
             app.UseStaticFiles();
             app.UseConsul(Configuration);
 

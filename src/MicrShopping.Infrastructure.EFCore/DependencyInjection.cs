@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MicrShopping.Domain;
@@ -12,8 +13,14 @@ namespace MicrShopping.Infrastructure.EFCore
     {
         public static IServiceCollection AddIdentityEFCore(this IServiceCollection services, IConfiguration configuration)
         {
+            string ConnectionString = configuration["IdentityConnectionStrings"];
             services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseNpgsql(configuration.GetConnectionString("IdentityConnectionStrings")));
+                    options.UseNpgsql(ConnectionString));
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
 
             return services;
         }

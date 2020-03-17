@@ -14,7 +14,7 @@ using MicrShopping.Domain;
 
 namespace MicrShopping.Infrastructure.EFCore
 {
-    public class SeedData
+    public class ApplicationDbSeedData
     {
         public static void EnsureSeedData(IServiceProvider serviceProvider)
         {

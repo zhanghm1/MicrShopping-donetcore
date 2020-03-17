@@ -1,4 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
@@ -25,7 +25,7 @@ namespace MicrShopping.Identity
                 new ApiResource("orderapi", "order",new List<string>{JwtClaimTypes.Role }),
                 new ApiResource("payapi", "pay",new List<string>{JwtClaimTypes.Role }),
                 new ApiResource("productapi", "product",new List<string>{JwtClaimTypes.Role }),
-                new ApiResource("usermanageapi", "usermanage api "),
+                new ApiResource("usermanageapi", "usermanage api ",new List<string>{JwtClaimTypes.Role }),
                 
             };
 
@@ -52,7 +52,7 @@ namespace MicrShopping.Identity
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "orderapi","payapi","productapi","usermanageapi"
+                        "orderapi","usermanageapi","productapi","payapi"
                     },
 
                     AllowOfflineAccess = true
@@ -74,7 +74,7 @@ namespace MicrShopping.Identity
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "orderapi","payapi","productapi","usermanageapi"
+                        "orderapi","usermanageapi","productapi","payapi"
                     }
                 },
                 // app Client
@@ -83,12 +83,12 @@ namespace MicrShopping.Identity
                     ClientId = "app",
                     ClientName = "app",
                     ClientSecrets = { new Secret("secret".Sha256()) },
-                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "orderapi","payapi","productapi","usermanageapi"
+                        "orderapi","usermanageapi","productapi","payapi"
                     }
                 }
             };

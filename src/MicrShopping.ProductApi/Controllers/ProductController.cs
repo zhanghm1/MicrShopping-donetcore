@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using DotNetCore.CAP;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using MicrShopping.Domain.Base;
@@ -96,6 +97,14 @@ namespace MicrShopping.ProductApi.Controllers
             }
             
             _productDbContext.SaveChanges();
+
+        }
+        [HttpGet]
+        [Route("Identity")]
+        [Authorize]
+        public IActionResult Identity()
+        {
+            return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
 
         }
     }

@@ -39,7 +39,6 @@ namespace MicrShopping.PayApi
             services.AddDbContext<PayDbContext>(options =>
                    options.UseNpgsql(PayConnectionStrings)
                    );
-            services.AddScoped<PayDbContext>();
 
             string RabbitMQHost = Configuration["RabbitMQHost"];
             string RabbitMQPassword = Configuration["RabbitMQPassword"];
@@ -68,6 +67,14 @@ namespace MicrShopping.PayApi
             });
 
             services.AddConsulConfig(Configuration);
+
+            services.AddAuthentication("Bearer")
+                 .AddJwtBearer("Bearer", options =>
+                 {
+                     options.Authority =  "http://192.168.0.189:5008";
+                     options.RequireHttpsMetadata = false;
+                     options.Audience = "usermanageapi";
+                 });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -86,6 +93,7 @@ namespace MicrShopping.PayApi
             app.UseRouting();
             app.UseConsul(Configuration);
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

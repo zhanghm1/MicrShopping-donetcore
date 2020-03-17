@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Consul;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -71,7 +70,6 @@ namespace MicrShopping.OrderApi
                      options.RequireHttpsMetadata = false;
                      options.Audience = "orderapi";
                  });
-
             //设置Authorize的policy,可以添加多个
             services.AddAuthorization(options =>
             {

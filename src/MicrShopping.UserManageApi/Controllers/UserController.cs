@@ -10,12 +10,12 @@ namespace MicrShopping.UserManageApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class UserController : ControllerBase
     {
         
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<UserController> _logger;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public UserController(ILogger<UserController> logger)
         {
             _logger = logger;
         }
@@ -25,11 +25,19 @@ namespace MicrShopping.UserManageApi.Controllers
         {
             return new string[] { "111","222","333"};
         }
-        [HttpGet]
-        [Authorize]
+        [HttpGet("{id}", Name = "Get")]
+        [Authorize(Roles = "admin")]
         public string Get(int id)
         {
             return "11111"+ id;
+        }
+        [HttpGet]
+        [Route("Identity")]
+        [Authorize]
+        public IActionResult Identity()
+        {
+            return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
+
         }
     }
 }

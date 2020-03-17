@@ -13,6 +13,12 @@ services:
       context: .
       dockerfile: MicrShopping.PayApi/Dockerfile
 
+  micrshopping.usermanageapi:
+    image: ${DOCKER_REGISTRY-}micrshoppingusermanageapi
+    build:
+      context: .
+      dockerfile: MicrShopping.UserManageApi/Dockerfile
+
 
   micrshopping.identity:
     image: ${DOCKER_REGISTRY-}micrshoppingidentity
@@ -107,9 +113,5 @@ services:
       context: .
       dockerfile: MicrShopping.MVC/Dockerfile
 
-  micrshopping.usermanageapi:
-    image: ${DOCKER_REGISTRY-}micrshoppingusermanageapi
-    build:
-      context: .
-      dockerfile: MicrShopping.UserManageApi/Dockerfile
+
 

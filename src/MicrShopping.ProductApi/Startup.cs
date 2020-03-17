@@ -53,8 +53,6 @@ namespace MicrShopping.ProductApi
                     options.HostName = RabbitMQHost;
                     options.Password = RabbitMQPassword;
                     options.UserName = RabbitMQUserName;
-                    // 
-                    //options.Port = Convert.ToInt32(RabbitMQPort);
                 });
                 //x.UseInMemoryStorage();
                 //x.UseInMemoryMessageQueue();
@@ -66,7 +64,7 @@ namespace MicrShopping.ProductApi
             services.AddAuthentication("Bearer")
                  .AddJwtBearer("Bearer", options =>
                  {
-                     options.Authority = Configuration["IdentityUrl"];// "http://192.168.0.189:5008";
+                     options.Authority = "http://192.168.0.189:5008";
                      options.RequireHttpsMetadata = false;
                      options.Audience = "productapi";
                  });
@@ -81,12 +79,12 @@ namespace MicrShopping.ProductApi
                 });
             });
 
-            services.AddMvc();
+            //services.AddMvc();
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-            });
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -109,8 +107,8 @@ namespace MicrShopping.ProductApi
 
             app.UseConsul(Configuration);
 
-            app.UseSwagger();
-            // Éú³É×Ô¼ºµÄSwaggerUI  ÕâÀïÒÑ¾­ÒòÎªÔÚApiGatewayÏîÄ¿¼¯³É¶à¸ö·þÎñµÄSwaggerUI£¬¾Í×¢ÊÍÁË£»Ö»ÐèÒªÉú³É/swagger/v1/swagger.jsonÎÄ¼þÈÃApiGatewayÄÜ»ñÈ¡µ½
+            //app.UseSwagger();
+            // ç”Ÿæˆè‡ªå·±çš„SwaggerUI  è¿™é‡Œå·²ç»å› ä¸ºåœ¨ApiGatewayé¡¹ç›®é›†æˆå¤šä¸ªæœåŠ¡çš„SwaggerUIï¼Œå°±æ³¨é‡Šäº†ï¼›åªéœ€è¦ç”Ÿæˆ/swagger/v1/swagger.jsonæ–‡ä»¶è®©ApiGatewayèƒ½èŽ·å–åˆ°
             //app.UseSwaggerUI(c =>
             //{
             //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");

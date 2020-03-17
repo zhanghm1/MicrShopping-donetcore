@@ -14,6 +14,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MicrShopping.Domain.Extensions;
+using MicrShopping.Infrastructure.Common.ApiFilters;
 using MicrShopping.ProductApi.Data;
 
 namespace MicrShopping.ProductApi
@@ -79,8 +80,10 @@ namespace MicrShopping.ProductApi
                         .AllowAnyMethod();
                 });
             });
-
-            //services.AddMvc();
+            services.AddMvc(options => {
+                options.Filters.Add<ApiExceptionFilter>();
+                options.Filters.Add<ApiResultFilter>();
+            });
 
             //services.AddSwaggerGen(c =>
             //{

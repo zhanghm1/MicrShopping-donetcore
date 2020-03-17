@@ -7,7 +7,6 @@ using DotNetCore.CAP;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MicrShopping.Domain.Base;
 using MicrShopping.Domain.Entities.Orders;
 using MicrShopping.Domain.Entities.Products;
 using MicrShopping.Infrastructure.Common;

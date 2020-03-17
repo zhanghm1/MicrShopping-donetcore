@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MicrShopping.Domain.Base
+namespace MicrShopping.Infrastructure.Common
 {
     public class RequestPageBase
     {

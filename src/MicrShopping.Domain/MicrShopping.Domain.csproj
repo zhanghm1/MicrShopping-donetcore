@@ -15,9 +15,14 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.HealthChecks" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="3.1.2" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MicrShopping.Infrastructure.Common\MicrShopping.Infrastructure.Common.csproj" />
   </ItemGroup>
 
 </Project>

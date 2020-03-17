@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace MicrShopping.Domain.Base
+namespace MicrShopping.Infrastructure.Common
 {
     public interface IEntityBase
     {

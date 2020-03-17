@@ -16,6 +16,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using MicrShopping.Domain;
 using MicrShopping.Domain.Extensions;
+using MicrShopping.Infrastructure.Common.ApiFilters;
 using MicrShopping.OrderApi.Data;
 
 namespace MicrShopping.OrderApi
@@ -95,7 +96,10 @@ namespace MicrShopping.OrderApi
                 });
             });
 
-            services.AddMvc();
+            services.AddMvc(options => {
+                options.Filters.Add<ApiExceptionFilter>();
+                options.Filters.Add<ApiResultFilter>();
+            });
 
             services.AddSwaggerGen(c =>
             {
@@ -128,10 +132,10 @@ namespace MicrShopping.OrderApi
 
             app.UseSwagger();
             // 生成自己的SwaggerUI  这里已经因为在ApiGateway项目集成多个服务的SwaggerUI，就注释了；只需要生成/swagger/v1/swagger.json文件让ApiGateway能获取到
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            //});
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {

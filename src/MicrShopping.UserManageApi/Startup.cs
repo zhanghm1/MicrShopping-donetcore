@@ -17,6 +17,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MicrShopping.Domain;
 using MicrShopping.Domain.Extensions;
+using MicrShopping.Infrastructure.Common.ApiFilters;
 using MicrShopping.Infrastructure.EFCore;
 
 namespace MicrShopping.UserManageApi
@@ -102,6 +103,10 @@ namespace MicrShopping.UserManageApi
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
+            });
+            services.AddMvc(options => {
+                options.Filters.Add<ApiExceptionFilter>();
+                options.Filters.Add<ApiResultFilter>();
             });
         }
 

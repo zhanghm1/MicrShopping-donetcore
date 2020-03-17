@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MicrShopping.Domain.Base
+namespace MicrShopping.Infrastructure.Common
 {
-    public class ResponseBase
+    public interface IResponseBase
+    {
+        string Status { get; set; }
+        string Message { get; set; }
+    }
+    public class ResponseBase: IResponseBase
     {
         public string Status { get; set; } = "OK";
         public string Message { get; set; }

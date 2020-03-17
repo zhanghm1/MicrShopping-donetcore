@@ -7,7 +7,6 @@ using DotNetCore.CAP;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MicrShopping.Domain.Base;
 using MicrShopping.Domain.Entities.Products;
 using MicrShopping.Infrastructure.Common;
 using MicrShopping.Infrastructure.Common.CapModels;
@@ -27,43 +26,40 @@ namespace MicrShopping.ProductApi.Controllers
 
         public ProductController(ILogger<ProductController> logger, ProductDbContext productDbContext, IMapper mapper)
         {
+            
             _logger = logger;
             _productDbContext = productDbContext;
             _mapper = mapper;
         }
         [HttpGet]
         [Route("ProductList")]
-        public ResponseBase<PageBase<ProductListResponse>> GetProductList([FromQuery]ProductListRequest request)
+        public PageBase<ProductListResponse> GetProductList([FromQuery]ProductListRequest request)
         {
-            ResponseBase<PageBase<ProductListResponse>> resp = new ResponseBase<PageBase<ProductListResponse>>();
-
+            
             var list = _productDbContext.Product.OrderBy(a => a.Id).ToList();
-            PageBase<ProductListResponse> page = new PageBase<ProductListResponse>();
-            page.List = _mapper.Map<List<ProductListResponse>>(list.ToList());
+            PageBase<ProductListResponse> resp = new PageBase<ProductListResponse>();
+            resp.List = _mapper.Map<List<ProductListResponse>>(list.ToList());
 
-            resp.Data = page;
             return resp;
         }
 
         [HttpGet]
         [Route("ProductClassList")]
-        public ResponseBase<PageBase<ProductClassResponse>> GetProductClassList()
+        public PageBase<ProductClassResponse> GetProductClassList()
         {
-            ResponseBase<PageBase<ProductClassResponse>> resp = new ResponseBase<PageBase<ProductClassResponse>>();
-
+            
             var list = _productDbContext.ProductClass.OrderBy(a => a.Id).ToList();
-            PageBase<ProductClassResponse> page = new PageBase<ProductClassResponse>();
-            page.List = _mapper.Map<List<ProductClassResponse>>(list.ToList());
+            PageBase<ProductClassResponse> resp = new PageBase<ProductClassResponse>();
+            resp.List = _mapper.Map<List<ProductClassResponse>>(list.ToList());
 
-            resp.Data = page;
             return resp;
 
         }
         [HttpGet]
         [Route("ProductDetail/{id}")]
-        public ResponseBase<ProductDetailResponse> GetProductDetail(int id)
+        public ProductDetailResponse GetProductDetail(int id)
         {
-            ResponseBase<ProductDetailResponse> resp = new ResponseBase<ProductDetailResponse>();
+            ProductDetailResponse resp = new ProductDetailResponse();
 
             var product = _productDbContext.Product.FirstOrDefault(a=>a.Id==id);
 
@@ -76,8 +72,8 @@ namespace MicrShopping.ProductApi.Controllers
                        Description=pc.Description,
                        Name=pc.Name
                        };
-            resp.Data = _mapper.Map<ProductDetailResponse>(product);
-            resp.Data.ProductClass= _mapper.Map<List<ProductClassResponse>>(linq.ToList());
+            resp = _mapper.Map<ProductDetailResponse>(product);
+            resp.ProductClass= _mapper.Map<List<ProductClassResponse>>(linq.ToList());
             return resp;
         }
 

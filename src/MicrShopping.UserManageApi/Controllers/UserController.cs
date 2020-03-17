@@ -6,7 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MicrShopping.Domain.Base;
+using MicrShopping.Infrastructure.Common;
 using MicrShopping.Infrastructure.EFCore;
 using MicrShopping.UserManageApi.Models;
 
@@ -32,21 +32,33 @@ namespace MicrShopping.UserManageApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}", Name = "Get")]
-        public async Task<ResponseBase<UserDetailResponse>> Get(int id)
+        public async Task<UserDetailResponse> Get(int id)
         {
-            ResponseBase<UserDetailResponse> resp = new ResponseBase<UserDetailResponse>();
+            UserDetailResponse resp = new UserDetailResponse();
 
             var user = _dbContext.Users.Where(a => a.Id == id).FirstOrDefault();
             //user.NormalizedUserName
-            resp.Data = _mapper.Map<UserDetailResponse>(user);
+            resp = _mapper.Map<UserDetailResponse>(user);
             return resp;
         }
         [HttpGet]
         [Route("Identity")]
         [Authorize]
-        public IActionResult Identity()
+        public UserDetailResponse Identity()
         {
-            return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
+            UserDetailResponse resp = new UserDetailResponse();
+
+            var user = _dbContext.Users.Where(a => a.Id == 1).FirstOrDefault();
+            //user.NormalizedUserName
+            resp = _mapper.Map<UserDetailResponse>(user);
+            return resp;
+
+        }
+        [HttpGet]
+        [Route("exception")]
+        public IActionResult exception()
+        {
+            throw new ApiExceptionBase("ccccc","错误的");
 
         }
     }

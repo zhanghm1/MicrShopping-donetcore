@@ -30,7 +30,13 @@ namespace MicrShopping.Identity
         {
             services.AddControllersWithViews();
 
-            services.AddIdentityEFCore(Configuration);
+            string ConnectionString = Configuration["IdentityConnectionStrings"];
+            services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseNpgsql(ConnectionString));
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             var builder = services.AddIdentityServer(options =>
             {

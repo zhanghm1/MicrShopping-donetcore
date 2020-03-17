@@ -6,7 +6,7 @@ namespace MicrShopping.Domain.Base
 {
     public class ResponseBase
     {
-        public string Status { get; set; }
+        public string Status { get; set; } = "OK";
         public string Message { get; set; }
     }
     public class ResponseBase<T>: ResponseBase

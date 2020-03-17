@@ -14,7 +14,10 @@ services:
       - RabbitMQUserName=admin
       - RabbitMQPassword=admin123456
       - RabbitMQPort=5672
-      
+
+#      - RabbitMQ__Host=rabbitmq  对象形式的参数写法 等同 RabbitMQ:{Host:"rabbitmq"}
+#      - RabbitMQ__0__UserName=admin  数组形式的参数写法 等同 RabbitMQ:[{UserName:"admin"}]
+
       - scheme=http
       - ip=micrshopping.orderapi
       - port=80

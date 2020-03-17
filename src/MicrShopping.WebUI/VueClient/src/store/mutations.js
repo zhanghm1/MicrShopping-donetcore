@@ -8,7 +8,7 @@ export default {
         state.UserPermission=userPermission;
     },
     [LoginOut](state){
-        state.UserInfo={};
+        state.UserInfo=null;
         state.UserPermission=[];
     }
 }

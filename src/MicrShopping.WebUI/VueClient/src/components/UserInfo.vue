@@ -1,6 +1,6 @@
 <template>
   <div class="hello">
-    <div v-if="IsLogin">
+    <div v-if="UserInfo!=null&&UserInfo!=undefined">
       {{UserInfo.UserName}}
       <button @click="GetUserInfo">获取用户信息</button>
       <button @click="logout">退出</button>
@@ -15,16 +15,10 @@
 <script>
 import Oidc from "oidc-client" ;
 import {mapState,mapMutations} from 'vuex';
+import {OidcConfig} from '../configs/config';
 import userService from "../service/userService" ;
 
-var config = {
-    authority: "http://192.168.0.189:5008/",
-    client_id: "js-vue",
-    redirect_uri: "http://192.168.0.189:5015/#/callback",
-    response_type: "code",
-    scope:"openid profile orderapi productapi identityapi",
-    post_logout_redirect_uri : "http://192.168.0.189:5015/",
-};
+
 
 
 export default {
@@ -34,7 +28,6 @@ export default {
   },
   data(){
     return {
-      IsLogin:false,
       OidcManager:{},
     }
   },
@@ -58,20 +51,19 @@ export default {
     },
 
     logout() {
-        this.LoginOut();
-        localStorage.setItem("access_token",'');
-        localStorage.setItem("user_name",'');
+        this.LoginOut(); //清除store内存
+        localStorage.setItem("access_token",''); //清除缓存
+        localStorage.setItem("user_name",''); //清除缓存
 
         this.OidcManager.signoutRedirect();
         
     }
   },
   created(){
-    var that=this;
-    this.OidcManager = new Oidc.UserManager(config);
-    this.OidcManager.getUser().then(function (user) {
+    //var that=this;
+    this.OidcManager = new Oidc.UserManager(OidcConfig);
+    this.OidcManager.getUser().then((user)=> {
         if (user) {
-          that.IsLogin=true;
             localStorage.setItem("id_token",user.id_token);
             localStorage.setItem("access_token",user.access_token);
             localStorage.setItem("user_name",user.profile.name);
@@ -86,7 +78,7 @@ export default {
               UserName:user.profile.name,
               UserId:user.profile.sub,
             };
-            that.SaveUserInfo(userInfo);
+            this.SaveUserInfo(userInfo);
         }
         else {
             window.console.log("User not logged in");

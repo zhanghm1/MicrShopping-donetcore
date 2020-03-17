@@ -25,12 +25,12 @@ namespace MicrShopping.Infrastructure.EFCore
                 var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
                 List<AddUser> users = new List<AddUser>()
                 {
-                    new AddUser(){UserName="admin",Password="Admin123456!",Claims=new List<Claim>{
+                    new AddUser(){UserName="admin",Password="Admin123456!",NickName="哈哈哈",Claims=new List<Claim>{
                         new Claim(JwtClaimTypes.Name, "admin"),
                         new Claim(JwtClaimTypes.Role, "admin"),
                         }
                     },
-                    new AddUser(){UserName="admin1",Password="Admin123456!",Claims=new List<Claim>{
+                    new AddUser(){UserName="admin1",Password="Admin123456!",NickName="嘻嘻嘻",Claims=new List<Claim>{
                         new Claim(JwtClaimTypes.Name, "admin1"),
                         new Claim(JwtClaimTypes.Role, "admin1"),
                         }
@@ -39,7 +39,7 @@ namespace MicrShopping.Infrastructure.EFCore
                 };
                 foreach (var item in users)
                 {
-                    
+
                     var alice = userMgr.FindByNameAsync(item.UserName).Result;
                     if (alice == null)
                     {
@@ -68,12 +68,13 @@ namespace MicrShopping.Infrastructure.EFCore
 
                 }
             }
-        } 
+        }
     }
     public class AddUser
     {
         public string UserName { get; set; }
         public string Password { get; set; }
+        public string NickName { get; set; }
 
         public List<Claim> Claims { get; set; }
 

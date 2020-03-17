@@ -2,11 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,11 +33,42 @@ namespace MicrShopping.UserManageApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddControllers();
 
-            //string ConnectionString = Configuration["UserManageConnectionStrings"];
 
-            services.AddIdentityEFCore(Configuration);
+            string ConnectionString = Configuration["IdentityConnectionStrings"];
+            services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseNpgsql(ConnectionString));
+
+            services.AddIdentity<ApplicationUser, ApplicationRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
+
+            string IdentityUrl = Configuration["IdentityUrl"];// "http://192.168.0.189:5008";
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultForbidScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+            })
+                .AddIdentityServerAuthentication(options =>
+                {
+                    options.Authority = IdentityUrl;
+                    options.ApiName = "usermanageapi";
+                    options.RequireHttpsMetadata = false;
+                });
+            // 原生写法
+            //.AddJwtBearer("Bearer", options =>
+            // {
+            //     options.Authority = IdentityUrl;
+            //     options.RequireHttpsMetadata = false;
+            //     options.Audience = "usermanageapi";
+            // });
 
             string RabbitMQHost = Configuration["RabbitMQHost"];
             string RabbitMQPassword = Configuration["RabbitMQPassword"];
@@ -57,25 +91,18 @@ namespace MicrShopping.UserManageApi
 
             services.AddConsulConfig(Configuration);
 
-            string IdentityUrl =  "http://192.168.0.189:5008";
-            services.AddAuthentication("Bearer")
-                 .AddJwtBearer("Bearer", options =>
-                 {
-                     options.Authority = IdentityUrl;
-                     options.RequireHttpsMetadata = false;
-                     options.Audience = "payapi";
-                 });
             
-            //services.AddCors(options =>
-            //{
-            //    // this defines a CORS policy called "default"
-            //    options.AddPolicy("default", policy =>
-            //    {
-            //        policy.AllowAnyOrigin()
-            //            .AllowAnyHeader()
-            //            .AllowAnyMethod();
-            //    });
-            //});
+
+            services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy("default", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,7 +118,7 @@ namespace MicrShopping.UserManageApi
             }
             // https 访问的地址会提示不安全的时候不要使用这个自动跳转，
             //app.UseHttpsRedirection();
-            //app.UseCors("default");
+            app.UseCors("default");
 
 
             app.UseRouting();

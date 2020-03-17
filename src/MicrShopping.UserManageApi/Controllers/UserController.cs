@@ -2,9 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MicrShopping.Domain.Base;
+using MicrShopping.Infrastructure.EFCore;
+using MicrShopping.UserManageApi.Models;
 
 namespace MicrShopping.UserManageApi.Controllers
 {
@@ -12,24 +16,30 @@ namespace MicrShopping.UserManageApi.Controllers
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        
+        private readonly IMapper _mapper;
         private readonly ILogger<UserController> _logger;
-
-        public UserController(ILogger<UserController> logger)
+        private ApplicationDbContext _dbContext;
+        public UserController(ILogger<UserController> logger, ApplicationDbContext dbContext, IMapper mapper)
         {
             _logger = logger;
+            _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "111","222","333"};
-        }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet("{id}", Name = "Get")]
-        [Authorize(Roles = "admin")]
-        public string Get(int id)
+        public async Task<ResponseBase<UserDetailResponse>> Get(int id)
         {
-            return "11111"+ id;
+            ResponseBase<UserDetailResponse> resp = new ResponseBase<UserDetailResponse>();
+
+            var user = _dbContext.Users.Where(a => a.Id == id).FirstOrDefault();
+            //user.NormalizedUserName
+            resp.Data = _mapper.Map<UserDetailResponse>(user);
+            return resp;
         }
         [HttpGet]
         [Route("Identity")]

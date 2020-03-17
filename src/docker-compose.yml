@@ -112,6 +112,3 @@ services:
     build:
       context: .
       dockerfile: MicrShopping.MVC/Dockerfile
-
-
-

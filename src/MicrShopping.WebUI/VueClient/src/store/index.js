@@ -5,7 +5,7 @@ import mutations from './mutations'
 Vue.use(Vuex)
 //这里是具体的状态值
 const state = {
-    UserInfo: {},
+    UserInfo: null,
     UserPermission:[]
 };
 

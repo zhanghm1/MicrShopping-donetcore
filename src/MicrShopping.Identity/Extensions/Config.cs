@@ -26,6 +26,7 @@ namespace MicrShopping.Identity
                 new ApiResource("payapi", "pay",new List<string>{JwtClaimTypes.Role }),
                 new ApiResource("productapi", "product",new List<string>{JwtClaimTypes.Role }),
                 new ApiResource("usermanageapi", "usermanage api ",new List<string>{JwtClaimTypes.Role }),
+                new ApiResource("testapi", "test api ",new List<string>{JwtClaimTypes.Role }),
                 
             };
 
@@ -52,7 +53,7 @@ namespace MicrShopping.Identity
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "orderapi","usermanageapi","productapi","payapi"
+                        "orderapi","usermanageapi","productapi","testapi","payapi"
                     },
 
                     AllowOfflineAccess = true
@@ -74,7 +75,7 @@ namespace MicrShopping.Identity
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "orderapi","usermanageapi","productapi","payapi"
+                        "orderapi","usermanageapi","productapi","testapi","payapi"
                     }
                 },
                 // app Client
@@ -88,7 +89,7 @@ namespace MicrShopping.Identity
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
-                        "orderapi","usermanageapi","productapi","payapi"
+                        "orderapi","usermanageapi","productapi","testapi","payapi"
                     }
                 }
             };

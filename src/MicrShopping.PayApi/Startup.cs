@@ -68,12 +68,13 @@ namespace MicrShopping.PayApi
 
             services.AddConsulConfig(Configuration);
 
+            string IdentityUrl = Configuration["IdentityUrl"];// "http://192.168.0.189:5008";
             services.AddAuthentication("Bearer")
                  .AddJwtBearer("Bearer", options =>
                  {
-                     options.Authority =  "http://192.168.0.189:5008";
+                     options.Authority = IdentityUrl;
                      options.RequireHttpsMetadata = false;
-                     options.Audience = "usermanageapi";
+                     options.Audience = "payapi";
                  });
         }
 

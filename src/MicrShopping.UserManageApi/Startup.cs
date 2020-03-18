@@ -35,7 +35,10 @@ namespace MicrShopping.UserManageApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup).Assembly);
-            services.AddControllers();
+            services.AddControllersWithViews(options => {
+                options.Filters.Add<ApiExceptionFilter>();
+                options.Filters.Add<ApiResultFilter>();
+            }).AddWebApiConventions();//处理返回HttpResponseMessage
 
 
             string ConnectionString = Configuration["IdentityConnectionStrings"];
@@ -104,10 +107,7 @@ namespace MicrShopping.UserManageApi
                         .AllowAnyMethod();
                 });
             });
-            services.AddMvc(options => {
-                options.Filters.Add<ApiExceptionFilter>();
-                options.Filters.Add<ApiResultFilter>();
-            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

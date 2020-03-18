@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,7 +33,11 @@ namespace MicrShopping.PayApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddControllersWithViews(options => {
+                options.Filters.Add<ApiExceptionFilter>();
+                options.Filters.Add<ApiResultFilter>();
+            }).AddWebApiConventions();//´¦Àí·µ»ØHttpResponseMessage
 
             services.AddScoped<PayDbContextSeed>();
 

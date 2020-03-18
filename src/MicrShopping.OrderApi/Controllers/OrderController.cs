@@ -39,7 +39,7 @@ namespace MicrShopping.OrderApi.Controllers
         [Authorize(Roles = "admin")]
         [HttpPost]
         [Route("CreateOrder")]
-        public async Task<ResponseBase> CreateOrder(CreateOrderRequest request)
+        public async Task<string> CreateOrder(CreateOrderRequest request)
         {
             // 准备productList
             List<Product> products = new List<Product>();
@@ -48,8 +48,8 @@ namespace MicrShopping.OrderApi.Controllers
                 Product product = new Product() {Id=item.ProductId };
                 products.Add(product);
             }
-
-            ResponseBase responseBase = new ResponseBase();
+            string OrderNo = string.Empty;
+            //ResponseBase responseBase = new ResponseBase();
             using (var trans = _orderDbContext.Database.BeginTransaction(_capBus, autoCommit: true))
             {
                 Order order = new Order()
@@ -63,8 +63,6 @@ namespace MicrShopping.OrderApi.Controllers
                 
 
                 List<OrderItem> orderItemList = new List<OrderItem>(); 
-
-
 
                 foreach (var item in products)
                 {
@@ -96,10 +94,11 @@ namespace MicrShopping.OrderApi.Controllers
 
                 _capBus.Publish(CapStatic.ReduceProductCount, productModel);
 
+                OrderNo = order.Code;
                 //trans.Commit();
             }
             
-            return responseBase;
+            return OrderNo;
 
         }
         [HttpGet]

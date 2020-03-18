@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -59,6 +60,16 @@ namespace MicrShopping.UserManageApi.Controllers
         public IActionResult exception()
         {
             throw new ApiExceptionBase("ccccc","错误的");
+
+        }
+        [HttpGet]
+        [Route("GetHtml")]
+        public async Task<HttpResponseMessage> GetHtml()
+        {
+            HttpClient httpClient = new HttpClient();
+            HttpResponseMessage resp = await httpClient.GetAsync("https://www.baidu.com/");
+
+            return resp;
 
         }
     }

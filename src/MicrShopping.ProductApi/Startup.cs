@@ -32,7 +32,11 @@ namespace MicrShopping.ProductApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup).Assembly);
-            services.AddControllers();
+            services.AddControllersWithViews(options => {
+                options.Filters.Add<ApiExceptionFilter>();
+                options.Filters.Add<ApiResultFilter>();
+            }).AddWebApiConventions();//处理返回HttpResponseMessage
+
             services.AddScoped<ProductDbContextSeed>();
 
             string ProductConnectionStrings = Configuration["ProductConnectionStrings"];
@@ -79,10 +83,6 @@ namespace MicrShopping.ProductApi
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
-            });
-            services.AddMvc(options => {
-                options.Filters.Add<ApiExceptionFilter>();
-                options.Filters.Add<ApiResultFilter>();
             });
 
             //services.AddSwaggerGen(c =>

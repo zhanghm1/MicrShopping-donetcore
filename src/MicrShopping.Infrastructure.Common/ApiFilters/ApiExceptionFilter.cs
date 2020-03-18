@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-using MicrShopping.Infrastructure.Common.ApiResults;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -11,12 +11,27 @@ namespace MicrShopping.Infrastructure.Common.ApiFilters
     {
         public void OnException(ExceptionContext context)
         {
-            HttpStatusCode status = HttpStatusCode.InternalServerError;
-            string Status = "Fail";
-            //处理各种异常
-
             context.ExceptionHandled = true;
-            context.Result = new ApiExceptionResult((int)status, Status, context.Exception.Message);
+            HttpStatusCode status = HttpStatusCode.InternalServerError;
+            string Status = "SERVER_ERROR";
+            string Message = "未知错误";
+            ResponseBase resp = new ResponseBase();
+            if (context.Exception is ApiExceptionBase)
+            {
+                ApiExceptionBase apiException = context.Exception as ApiExceptionBase;
+
+                resp.Status = apiException.Status;
+                resp.Message = apiException.Message;
+
+            }
+            else 
+            {
+                resp.Status = Status;
+                resp.Message = Message;
+            }
+
+
+            context.Result = new JsonResult(resp) {StatusCode= (int)status };
         }
     }
 }

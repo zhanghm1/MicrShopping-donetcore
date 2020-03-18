@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -33,7 +34,12 @@ namespace MicrShopping.OrderApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddAutoMapper(typeof(Startup).Assembly);
+            services.AddControllersWithViews(options => {
+                options.Filters.Add<ApiExceptionFilter>();
+                options.Filters.Add<ApiResultFilter>();
+            }).AddWebApiConventions();//处理返回HttpResponseMessage
+
             services.AddScoped<OrderDbContextSeed>();
 
             string OrderConnectionStrings = Configuration["OrderConnectionStrings"];
@@ -96,10 +102,6 @@ namespace MicrShopping.OrderApi
                 });
             });
 
-            services.AddMvc(options => {
-                options.Filters.Add<ApiExceptionFilter>();
-                options.Filters.Add<ApiResultFilter>();
-            });
 
             services.AddSwaggerGen(c =>
             {

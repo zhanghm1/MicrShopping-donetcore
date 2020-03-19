@@ -1,14 +1,14 @@
 apiVersion: v1
-name: MicrShopping
+name: micr-shoppong
 version: 0.1.1
 appVersion: 0.1.1
 description: 微服务项目
-icon: file://../MicrShopping.png
+icon: file://../micr-shoppong.png
 keywords:
-- MicrShopping
+- micr-shoppong
 - web
 - application
-home: http://www.wordpress.com/
+home: http://www.micr-shoppong.com/
 sources:
 - https://github.com/zhanghm1/MicrShopping-donetcore.git
 maintainers:

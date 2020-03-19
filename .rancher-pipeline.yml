@@ -1,0 +1,11 @@
+stages:
+- name: build
+  steps:
+  - publishImageConfig:
+      dockerfilePath: src/MicrShopping.OrderApi/Dockerfile
+      buildContext: .
+      tag: MicrShopping.OrderApi
+      pushRemote: true
+      registry: http://192.168.232.131:6001/
+timeout: 60
+notification: {}

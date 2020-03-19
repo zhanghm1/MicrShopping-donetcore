@@ -4,7 +4,7 @@ stages:
   - publishImageConfig:
       dockerfilePath: src/MicrShopping.OrderApi/Dockerfile
       buildContext: .
-      tag: MicrShopping.OrderApi
+      tag: micrshopping/MicrShopping.OrderApi:${CICD_LOCAL_REGISTRY}
       pushRemote: true
       registry: https://192.168.232.131:30003/
 timeout: 60

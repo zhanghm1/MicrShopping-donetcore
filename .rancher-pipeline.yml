@@ -6,6 +6,6 @@ stages:
       buildContext: .
       tag: MicrShopping.OrderApi
       pushRemote: true
-      registry: http://192.168.232.131:6001/
+      registry: https://192.168.232.131:30003/
 timeout: 60
 notification: {}

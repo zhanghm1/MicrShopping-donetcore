@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "MicrShopping.MVC": {
+    "MicrShopping.WebMVC": {
       "commandName": "Project",
       "launchBrowser": true,
       "applicationUrl": "https://localhost:5013;http://localhost:5012",

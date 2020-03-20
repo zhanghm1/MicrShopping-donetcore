@@ -1,6 +1,6 @@
 using System;
 
-namespace MicrShopping.MVC.Models
+namespace MicrShopping.WebMVC.Models
 {
     public class ErrorViewModel
     {

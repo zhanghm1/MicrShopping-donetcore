@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MicrShopping.MVC.Models;
+using MicrShopping.WebMVC.Models;
 using Newtonsoft.Json.Linq;
 
-namespace MicrShopping.MVC.Controllers
+namespace MicrShopping.WebMVC.Controllers
 {
     public class HomeController : Controller
     {

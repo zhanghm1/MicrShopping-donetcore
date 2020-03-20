@@ -10,7 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.IdentityModel.Tokens.Jwt;
 
-namespace MicrShopping.MVC
+namespace MicrShopping.WebMVC
 {
     public class Startup
     {
@@ -30,7 +30,7 @@ namespace MicrShopping.MVC
             // ...
 
             JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
-
+            string IdentityUrl = Configuration["IdentityUrl"];
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = "Cookies";
@@ -39,7 +39,7 @@ namespace MicrShopping.MVC
                 .AddCookie("Cookies")
                 .AddOpenIdConnect("oidc", options =>
                 {
-                    options.Authority = "http://192.168.0.189:5008";
+                    options.Authority = IdentityUrl;
                     options.RequireHttpsMetadata = false;
 
                     options.ClientId = "mvc";

@@ -7,16 +7,16 @@ EXPOSE 443
 
 FROM mcr.azk8s.cn/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["MicrShopping.MVC/MicrShopping.MVC.csproj", "MicrShopping.MVC/"]
-RUN dotnet restore "MicrShopping.MVC/MicrShopping.MVC.csproj"
+COPY ["MicrShopping.WebMVC/MicrShopping.WebMVC.csproj", "MicrShopping.WebMVC/"]
+RUN dotnet restore "MicrShopping.WebMVC/MicrShopping.WebMVC.csproj"
 COPY . .
-WORKDIR "/src/MicrShopping.MVC"
-RUN dotnet build "MicrShopping.MVC.csproj" -c Release -o /app/build
+WORKDIR "/src/MicrShopping.WebMVC"
+RUN dotnet build "MicrShopping.WebMVC.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "MicrShopping.MVC.csproj" -c Release -o /app/publish
+RUN dotnet publish "MicrShopping.WebMVC.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MicrShopping.MVC.dll"]
+ENTRYPOINT ["dotnet", "MicrShopping.WebMVC.dll"]

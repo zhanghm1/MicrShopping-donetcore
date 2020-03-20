@@ -6,6 +6,6 @@ stages:
       buildContext: .
       tag: micrshopping/MicrShopping.OrderApi:${CICD_LOCAL_REGISTRY}
       pushRemote: true
-      registry: https://192.168.232.131:30003/
+      registry: https://192.168.232.128:30003/
 timeout: 100
 notification: {}

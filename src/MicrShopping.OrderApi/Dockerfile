@@ -7,11 +7,11 @@ EXPOSE 443
 
 FROM mcr.azk8s.cn/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["MicrShopping.OrderApi/MicrShopping.OrderApi.csproj", "MicrShopping.OrderApi/"]
-COPY ["MicrShopping.Domain/MicrShopping.Domain.csproj", "MicrShopping.Domain/"]
-RUN dotnet restore "MicrShopping.OrderApi/MicrShopping.OrderApi.csproj"
+COPY ["src/MicrShopping.OrderApi/MicrShopping.OrderApi.csproj", "src/MicrShopping.OrderApi/"]
+COPY ["src/MicrShopping.Domain/MicrShopping.Domain.csproj", "src/MicrShopping.Domain/"]
+RUN dotnet restore "src/MicrShopping.OrderApi/MicrShopping.OrderApi.csproj"
 COPY . .
-WORKDIR "/src/MicrShopping.OrderApi"
+WORKDIR "/src/src/MicrShopping.OrderApi"
 RUN dotnet build "MicrShopping.OrderApi.csproj" -c Release -o /app/build
 
 FROM build AS publish

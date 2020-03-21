@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    field.cattle.io/publicEndpoints: '[{"addresses":["172.31.136.0"],"port":32302,"protocol":"TCP","serviceName":"default:micrshoppingidentityapi-nodeport","allNodes":true},{"addresses":["172.31.136.0"],"port":30402,"protocol":"TCP","serviceName":"default:micrshoppingidentityapi-nodeport","allNodes":true}]'
+    field.cattle.io/targetWorkloadIds: '["deployment:default:micrshoppingidentityapi"]'
+    workload.cattle.io/targetWorkloadIdNoop: "true"
+    workload.cattle.io/workloadPortBased: "true"
+  creationTimestamp: "2020-03-21T05:08:33Z"
+  labels:
+    cattle.io/creator: norman
+  name: micrshoppingidentityapi-nodeport
+  namespace: default
+  ownerReferences:
+  - apiVersion: apps/v1beta2
+    controller: true
+    kind: deployment
+    name: micrshoppingidentityapi
+    uid: 5d351d08-9c89-4610-b7a5-58a25155f646
+  resourceVersion: "24625"
+  selfLink: /api/v1/namespaces/default/services/micrshoppingidentityapi-nodeport
+  uid: 42c94fbc-c7d0-4765-ab39-182723deec9e
+spec:
+  clusterIP: 10.43.158.30
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: 80tcp01
+    nodePort: 32302
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  - name: 443tcp01
+    nodePort: 30402
+    port: 443
+    protocol: TCP
+    targetPort: 443
+  selector:
+    workload.user.cattle.io/workloadselector: deployment-default-micrshoppingidentityapi
+  sessionAffinity: None
+  type: NodePort
+status:
+  loadBalancer: {}

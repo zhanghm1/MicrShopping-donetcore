@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    field.cattle.io/creatorId: user-jrcqx
+  creationTimestamp: "2020-03-21T05:02:24Z"
+  generation: 1
+  labels:
+    cattle.io/creator: norman
+    workload.user.cattle.io/workloadselector: deployment-default-micrshoppingorderspi
+  name: micrshoppingorderspi
+  namespace: default
+  resourceVersion: "23764"
+  selfLink: /apis/apps/v1/namespaces/default/deployments/micrshoppingorderspi
+  uid: 71bd69d0-83ef-4ba2-b448-c40c74a845cf
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: deployment-default-micrshoppingorderspi
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        cattle.io/timestamp: "2020-03-21T05:02:21Z"
+        field.cattle.io/ports: '[[{"containerPort":80,"dnsName":"micrshoppingorderspi","hostPort":0,"kind":"ClusterIP","name":"80tcp02","protocol":"TCP","sourcePort":0},{"containerPort":443,"dnsName":"micrshoppingorderspi","hostPort":0,"kind":"ClusterIP","name":"443tcp02","protocol":"TCP","sourcePort":0}]]'
+      creationTimestamp: null
+      labels:
+        workload.user.cattle.io/workloadselector: deployment-default-micrshoppingorderspi
+    spec:
+      containers:
+      - image: micrshopping.orderapi
+        imagePullPolicy: Never
+        name: micrshoppingorderspi
+        ports:
+        - containerPort: 80
+          name: 80tcp02
+          protocol: TCP
+        - containerPort: 443
+          name: 443tcp02
+          protocol: TCP
+        resources: {}
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities: {}
+          privileged: false
+          readOnlyRootFilesystem: false
+          runAsNonRoot: false
+        stdin: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        tty: true
+      dnsConfig: {}
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2020-03-21T05:02:26Z"
+    lastUpdateTime: "2020-03-21T05:02:26Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  - lastTransitionTime: "2020-03-21T05:02:24Z"
+    lastUpdateTime: "2020-03-21T05:02:26Z"
+    message: ReplicaSet "micrshoppingorderspi-8559f794db" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

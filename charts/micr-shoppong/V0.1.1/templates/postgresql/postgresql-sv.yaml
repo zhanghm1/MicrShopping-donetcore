@@ -1,0 +1,34 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    field.cattle.io/targetWorkloadIds: '["deployment:default:postgresql"]'
+    workload.cattle.io/targetWorkloadIdNoop: "true"
+    workload.cattle.io/workloadPortBased: "true"
+  creationTimestamp: "2020-03-21T04:38:40Z"
+  labels:
+    cattle.io/creator: norman
+  name: postgresql
+  namespace: default
+  ownerReferences:
+  - apiVersion: apps/v1beta2
+    controller: true
+    kind: deployment
+    name: postgresql
+    uid: 8f16cca1-baa8-41cf-bd6e-17d47db6778c
+  resourceVersion: "20354"
+  selfLink: /api/v1/namespaces/default/services/postgresql
+  uid: 01f304a2-bf27-449e-a00d-5291808d99fc
+spec:
+  clusterIP: 10.43.203.42
+  ports:
+  - name: 5432tcp02
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    workload.user.cattle.io/workloadselector: deployment-default-postgresql
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}

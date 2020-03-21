@@ -1,7 +1,0 @@
-dependencies:
-- name: mariadb
-  version: 6.x.x
-  repository: "file://./charts/mariadb"
-  condition: mariadb.enabled
-  tags:
-    - wordpress-database

@@ -15,5 +15,9 @@
 
 ~/MicrShopping-donetcore/src/MicrShopping.OrderApi# docker build . --no-cache   这是错误的，会提示没有文件目录
 
-~/MicrShopping-donetcore/src# docker build -f MicrShopping.OrderApi/Dockerfile -t exam . --no-cache  ##这样就没问题
+~/MicrShopping-donetcore/src# docker build -f MicrShopping.OrderApi/Dockerfile -t MicrShopping.OrderApi . --no-cache  ##这样就没问题
+
+ -f  文件位置
+ 
+ -t  镜像名称
 

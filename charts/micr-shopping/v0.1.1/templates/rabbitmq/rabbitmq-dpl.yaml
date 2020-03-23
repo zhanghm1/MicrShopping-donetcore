@@ -28,7 +28,7 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.rabbitmq.image.repository }}:{{ .Values.rabbitmq.image.tag }}"
           imagePullPolicy: {{ .Values.imagePullPolicy }}
-        - env:
+          env:
           - name: RABBITMQ_DEFAULT_PASS
             value: admin123456
           - name: RABBITMQ_DEFAULT_USER

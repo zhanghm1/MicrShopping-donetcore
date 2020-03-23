@@ -39,7 +39,7 @@ spec:
           #     secretKeyRef:
           #       name: {{ template "micrshopping.fullname" . }}
           #       key: secret
-        - env:
+          env:
           - name: POSTGRES_PASSWORD
             value: Admin123456
           - name: POSTGRES_USER

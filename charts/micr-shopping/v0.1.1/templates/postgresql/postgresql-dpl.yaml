@@ -33,7 +33,7 @@ spec:
             valueFrom:
               secretKeyRef:
                 name: {{ template "micrshopping.fullname" . }}
-                key: secret
+                key: secret  # 其实这个值为空，取POSTGRES_PASSWORD值
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:

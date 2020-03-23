@@ -8,6 +8,7 @@ replicaCount: 1
 imagePullPolicy: IfNotPresent
 imagePullSecrets: []
 nameOverride: ""
+secret: ""
 fullnameOverride: ""
 
 serviceAccount:

@@ -1,38 +1,20 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    field.cattle.io/targetWorkloadIds: '["deployment:default:micrshoppingidentityapi"]'
-    workload.cattle.io/targetWorkloadIdNoop: "true"
-    workload.cattle.io/workloadPortBased: "true"
-  creationTimestamp: "2020-03-21T05:08:33Z"
+  name: {{ include "micrshopping.fullname" . }}
   labels:
-    cattle.io/creator: norman
-  name: micrshoppingidentityapi
-  namespace: default
-  ownerReferences:
-  - apiVersion: apps/v1beta2
-    controller: true
-    kind: deployment
-    name: micrshoppingidentityapi
-    uid: 5d351d08-9c89-4610-b7a5-58a25155f646
-  resourceVersion: "24624"
-  selfLink: /api/v1/namespaces/default/services/micrshoppingidentityapi
-  uid: c8444f21-beac-479c-9415-19b008dd04e7
+{{ include "micrshopping.labels" . | indent 4 }}
 spec:
-  clusterIP: 10.43.77.57
+  type: {{ .Values.identity.service.type }}
   ports:
-  - name: 80tcp01-micrshoppingidentityapi
-    port: 80
-    protocol: TCP
-    targetPort: 80
-  - name: 443tcp01-micrshoppingidentityapi
-    port: 443
-    protocol: TCP
-    targetPort: 443
+    - port: {{ .Values.identity.service.httpPort }}
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: {{ .Values.identity.service.httpsPort }}
+      targetPort: http
+      protocol: TCP
+      name: http
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-micrshoppingidentityapi
-  sessionAffinity: None
-  type: ClusterIP
-status:
-  loadBalancer: {}
+    app.kubernetes.io/name: {{ include "micrshopping.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

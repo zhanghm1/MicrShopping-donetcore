@@ -1,38 +1,20 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    field.cattle.io/targetWorkloadIds: '["deployment:default:micrshoppingorderspi"]'
-    workload.cattle.io/targetWorkloadIdNoop: "true"
-    workload.cattle.io/workloadPortBased: "true"
-  creationTimestamp: "2020-03-21T05:02:24Z"
+  name: {{ include "micrshopping.fullname" . }}
   labels:
-    cattle.io/creator: norman
-  name: micrshoppingorderspi
-  namespace: default
-  ownerReferences:
-  - apiVersion: apps/v1beta2
-    controller: true
-    kind: deployment
-    name: micrshoppingorderspi
-    uid: 71bd69d0-83ef-4ba2-b448-c40c74a845cf
-  resourceVersion: "23739"
-  selfLink: /api/v1/namespaces/default/services/micrshoppingorderspi
-  uid: c0640750-1308-4bfc-95d1-c499a0692bc9
+{{ include "micrshopping.labels" . | indent 4 }}
 spec:
-  clusterIP: 10.43.232.142
+  type: {{ .Values.orderapi.service.type }}
   ports:
-  - name: 80tcp02
-    port: 80
-    protocol: TCP
-    targetPort: 80
-  - name: 443tcp02
-    port: 443
-    protocol: TCP
-    targetPort: 443
+    - port: {{ .Values.orderapi.service.httpPort }}
+      targetPort: http
+      protocol: TCP
+      name: http
+    - port: {{ .Values.orderapi.service.httpsPort }}
+      targetPort: http
+      protocol: TCP
+      name: http
   selector:
-    workload.user.cattle.io/workloadselector: deployment-default-micrshoppingorderspi
-  sessionAffinity: None
-  type: ClusterIP
-status:
-  loadBalancer: {}
+    app.kubernetes.io/name: {{ include "micrshopping.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

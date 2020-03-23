@@ -65,7 +65,7 @@ identity:
     repository: nginx
     tag: stable
 
-  server:
+  service:
     type: ClusterIP
     httpPort: 80
     httpsPort: 443
@@ -86,7 +86,7 @@ orderapi:
     repository: nginx
     tag: stable
 
-  server:
+  service:
     type: ClusterIP
     httpPort: 80
     httpsPort: 443
@@ -96,7 +96,7 @@ pgsql:
     repository: postgres
     tag: latest
 
-  server:
+  service:
     type: ClusterIP
     port: 5432
   env:
@@ -108,7 +108,7 @@ rabbitmq:
     repository: rabbitmq
     tag: 3-management
 
-  server:
+  service:
     type: ClusterIP
     port: [15672,5672,5671]
   env:

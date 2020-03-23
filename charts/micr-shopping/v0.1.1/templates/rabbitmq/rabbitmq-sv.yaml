@@ -7,18 +7,20 @@ metadata:
 spec:
   type: {{ .Values.rabbitmq.service.type }}
   ports:
-  - port: {{ .Values.rabbitmq.httpPort1 }}
-      targetPort: http
+    - name: "httpPort1"
+      port: 5672
       protocol: TCP
-      name: http
-  - port: {{ .Values.rabbitmq.httpPort2 }}
-      targetPort: http
+      targetPort: {{ .Values.rabbitmq.service.httpPort1 }}
+
+    - name: "httpPort2"
+      port: 15672
       protocol: TCP
-      name: http
-  - port: {{ .Values.rabbitmq.httpPort3 }}
-      targetPort: http
+      targetPort: {{ .Values.rabbitmq.service.httpPort2 }}
+
+    - name: "httpPort3"
+      port: 5671
       protocol: TCP
-      name: http
+      targetPort: {{ .Values.rabbitmq.service.httpPort3 }}
     
   selector:
     app.kubernetes.io/name: {{ include "micrshopping.name" . }}

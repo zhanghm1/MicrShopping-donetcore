@@ -7,14 +7,14 @@ metadata:
 spec:
   type: {{ .Values.orderapi.service.type }}
   ports:
-    - port: {{ .Values.orderapi.service.httpPort }}
-      targetPort: http
+    - name: "http"
+      port: 80
       protocol: TCP
-      name: http
-    - port: {{ .Values.orderapi.service.httpsPort }}
-      targetPort: http
+      targetPort: {{ .Values.orderapi.service.httpPort }}
+    - name: "https"
+      port: 443
       protocol: TCP
-      name: http
+      targetPort: {{ .Values.orderapi.service.httpsPort }}      
   selector:
     app.kubernetes.io/name: {{ include "micrshopping.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

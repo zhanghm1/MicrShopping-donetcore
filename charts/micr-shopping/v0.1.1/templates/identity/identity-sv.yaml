@@ -7,14 +7,15 @@ metadata:
 spec:
   type: {{ .Values.identity.service.type }}
   ports:
-    - port: {{ .Values.identity.service.httpPort }}
-      targetPort: http
+    - name: "http"
+      port: 80
       protocol: TCP
-      name: http
-    - port: {{ .Values.identity.service.httpsPort }}
-      targetPort: http
+      targetPort: {{ .Values.identity.service.httpPort }}
+    - name: "https"
+      port: 443
       protocol: TCP
-      name: http
+      targetPort: {{ .Values.identity.service.httpsPort }}
+      
   selector:
     app.kubernetes.io/name: {{ include "micrshopping.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

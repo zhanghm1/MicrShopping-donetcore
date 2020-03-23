@@ -7,10 +7,10 @@ metadata:
 spec:
   type: {{ .Values.pgsql.service.type }}
   ports:
-    - port: {{ .Values.pgsql.service.port }}
-      targetPort: http
+    - name: "http"
+      port: 5432
       protocol: TCP
-      name: http
+      targetPort: {{ .Values.pgsql.service.port }}     
   selector:
     app.kubernetes.io/name: {{ include "micrshopping.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}

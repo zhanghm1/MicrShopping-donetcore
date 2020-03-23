@@ -63,8 +63,8 @@ affinity: {}
 
 identity:
   image:
-    repository: nginx
-    tag: stable
+    repository: micrshopping.identity
+    tag: latest
 
   service:
     type: ClusterIP
@@ -84,8 +84,8 @@ identity:
 
 orderapi:
   image:
-    repository: nginx
-    tag: stable
+    repository: micrshopping.orderapi
+    tag: latest
 
   service:
     type: ClusterIP

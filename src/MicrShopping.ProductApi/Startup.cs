@@ -29,7 +29,7 @@ namespace MicrShopping.ProductApi
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
         {
             services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddControllersWithViews(options => {
@@ -64,7 +64,7 @@ namespace MicrShopping.ProductApi
                 x.UseDashboard();
             });
 
-            services.AddConsulConfig(Configuration);
+            
 
             string IdentityUrl = Configuration["IdentityUrl"];// "http://192.168.0.189:5008";
             services.AddAuthentication("Bearer")
@@ -89,6 +89,10 @@ namespace MicrShopping.ProductApi
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             //});
+            if (env.IsDevelopment())
+            {
+                services.AddConsulConfig(Configuration);
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -97,19 +101,16 @@ namespace MicrShopping.ProductApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseConsul(Configuration);
             }
             else
             {
                 app.UseHttpsRedirection();
             }
-            //
-            //app.UseHttpsRedirection();
             app.UseCors("default");
 
 
             app.UseRouting();
-
-            app.UseConsul(Configuration);
 
             //app.UseSwagger();
             // 生成自己的SwaggerUI  这里已经因为在ApiGateway项目集成多个服务的SwaggerUI，就注释了；只需要生成/swagger/v1/swagger.json文件让ApiGateway能获取到

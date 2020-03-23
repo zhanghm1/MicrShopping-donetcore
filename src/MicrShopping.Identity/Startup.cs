@@ -17,16 +17,14 @@ namespace MicrShopping.Identity
 {
     public class Startup
     {
-        public IWebHostEnvironment Environment { get; }
         public IConfiguration Configuration { get; }
 
-        public Startup(IWebHostEnvironment environment, IConfiguration configuration)
+        public Startup( IConfiguration configuration)
         {
-            Environment = environment;
             Configuration = configuration;
         }
 
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
         {
             services.AddControllersWithViews();
 
@@ -56,21 +54,25 @@ namespace MicrShopping.Identity
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddSigningCredential(Certificate.Get());
 
+            if (env.IsDevelopment())
+            {
+                services.AddConsulConfig(Configuration);
+            }
 
-            services.AddConsulConfig(Configuration);
 
-            
+
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (Environment.IsDevelopment())
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                app.UseConsul(Configuration);
             }
             app.UseStaticFiles();
-            app.UseConsul(Configuration);
+            
 
             app.UseRouting();
             

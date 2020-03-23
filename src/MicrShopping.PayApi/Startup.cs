@@ -30,7 +30,7 @@ namespace MicrShopping.PayApi
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
         {
 
             services.AddAutoMapper(typeof(Startup).Assembly);
@@ -72,7 +72,7 @@ namespace MicrShopping.PayApi
                 x.UseDashboard();
             });
 
-            services.AddConsulConfig(Configuration);
+            
 
             string IdentityUrl = Configuration["IdentityUrl"];// "http://192.168.0.189:5008";
             services.AddAuthentication("Bearer")
@@ -87,6 +87,11 @@ namespace MicrShopping.PayApi
                 options.Filters.Add<ApiExceptionFilter>();
                 options.Filters.Add<ApiResultFilter>();
             });
+
+            if (env.IsDevelopment())
+            {
+                services.AddConsulConfig(Configuration);
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -95,6 +100,7 @@ namespace MicrShopping.PayApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseConsul(Configuration);
             }
             else
             {
@@ -103,7 +109,6 @@ namespace MicrShopping.PayApi
             
 
             app.UseRouting();
-            app.UseConsul(Configuration);
 
             app.UseAuthentication();
             app.UseAuthorization();

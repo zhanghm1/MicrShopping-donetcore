@@ -24,15 +24,14 @@ namespace MicrShopping.OrderApi
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-        
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
         {
             services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddControllersWithViews(options => {
@@ -65,8 +64,7 @@ namespace MicrShopping.OrderApi
                 //x.UseInMemoryMessageQueue();
                 x.UseDashboard();
             });
-
-            services.AddConsulConfig(Configuration);
+            
 
             string IdentityUrl= Configuration["IdentityUrl"];// "http://192.168.0.189:5008";
 
@@ -107,6 +105,11 @@ namespace MicrShopping.OrderApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
             });
+
+            if (env.IsDevelopment())
+            {
+                services.AddConsulConfig(Configuration);
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -115,6 +118,7 @@ namespace MicrShopping.OrderApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseConsul(Configuration);
             }
             else
             {
@@ -124,10 +128,7 @@ namespace MicrShopping.OrderApi
             //app.UseHttpsRedirection();
             app.UseCors("default");
 
-            
             app.UseRouting();
-
-            app.UseConsul(Configuration);
 
             app.UseAuthentication();
             app.UseAuthorization();

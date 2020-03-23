@@ -32,7 +32,7 @@ namespace MicrShopping.UserManageApi
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
         {
             services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddControllersWithViews(options => {
@@ -93,10 +93,6 @@ namespace MicrShopping.UserManageApi
                 x.UseDashboard();
             });
 
-            services.AddConsulConfig(Configuration);
-
-            
-
             services.AddCors(options =>
             {
                 // this defines a CORS policy called "default"
@@ -107,7 +103,12 @@ namespace MicrShopping.UserManageApi
                         .AllowAnyMethod();
                 });
             });
-            
+
+            if (env.IsDevelopment())
+            {
+                services.AddConsulConfig(Configuration);
+            }
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,19 +117,17 @@ namespace MicrShopping.UserManageApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseConsul(Configuration);
             }
             else
             {
+                // https 访问的ip地址会提示不安全,时候不要使用这个自动跳转，
                 app.UseHttpsRedirection();
             }
-            // https 访问的地址会提示不安全的时候不要使用这个自动跳转，
-            //app.UseHttpsRedirection();
             app.UseCors("default");
 
-
             app.UseRouting();
-
-            app.UseConsul(Configuration);
 
             app.UseAuthentication();
             app.UseAuthorization();

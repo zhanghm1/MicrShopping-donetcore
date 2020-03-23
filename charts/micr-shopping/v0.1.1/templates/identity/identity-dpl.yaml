@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Chart.Name  }}
+  name: micrshoppingidentityapi
   labels:
 {{ include "micrshopping.labels" . | indent 4 }}
 spec:

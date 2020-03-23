@@ -7,12 +7,18 @@ metadata:
 spec:
   type: {{ .Values.rabbitmq.service.type }}
   ports:
-  {{range $element := .Values.rabbitmq.service.port }}
-    - port: {{ $element }}
+  - port: {{ .Values.rabbitmq.httpPort1 }}
       targetPort: http
       protocol: TCP
       name: http
-  {{ end }}
+  - port: {{ .Values.rabbitmq.httpPort2 }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  - port: {{ .Values.rabbitmq.httpPort3 }}
+      targetPort: http
+      protocol: TCP
+      name: http
     
   selector:
     app.kubernetes.io/name: {{ include "micrshopping.name" . }}

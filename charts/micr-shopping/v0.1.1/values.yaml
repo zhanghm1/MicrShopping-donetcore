@@ -110,7 +110,9 @@ rabbitmq:
 
   service:
     type: ClusterIP
-    port: [15672,5672,5671]
+    httpPort1: 5672
+    httpPort2: 15672
+    httpPort3: 5671
   env:
     username: admin
     password: admin123456

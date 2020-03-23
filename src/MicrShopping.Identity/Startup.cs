@@ -18,13 +18,14 @@ namespace MicrShopping.Identity
     public class Startup
     {
         public IConfiguration Configuration { get; }
-
-        public Startup( IConfiguration configuration)
+        public IWebHostEnvironment env { get; }
+        public Startup( IConfiguration configuration, IWebHostEnvironment _env)
         {
+            env = _env;
             Configuration = configuration;
         }
 
-        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
 

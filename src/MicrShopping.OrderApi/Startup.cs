@@ -25,13 +25,14 @@ namespace MicrShopping.OrderApi
     public class Startup
     {
         public IConfiguration Configuration { get; }
-        public Startup(IConfiguration configuration)
+        public IWebHostEnvironment env { get; }
+        public Startup(IConfiguration configuration, IWebHostEnvironment _env)
         {
+            env = _env;
             Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services, IWebHostEnvironment env)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup).Assembly);
             services.AddControllersWithViews(options => {

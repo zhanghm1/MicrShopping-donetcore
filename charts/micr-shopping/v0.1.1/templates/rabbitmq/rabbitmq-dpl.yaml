@@ -28,18 +28,21 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.rabbitmq.image.repository }}:{{ .Values.rabbitmq.image.tag }}"
           imagePullPolicy: {{ .Values.imagePullPolicy }}
+        - env:
+          - name: RABBITMQ_DEFAULT_PASS
+            value: admin123456
+          - name: RABBITMQ_DEFAULT_USER
+            value: admin
           ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
+          - containerPort: 5672
+            name: 5672tcp02
+            protocol: TCP
+          - containerPort: 15672
+            name: 15672tcp02
+            protocol: TCP
+          - containerPort: 5671
+            name: 5671tcp02
+            protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

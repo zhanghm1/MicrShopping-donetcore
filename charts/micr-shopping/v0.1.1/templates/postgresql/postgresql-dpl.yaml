@@ -28,29 +28,26 @@ spec:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.pgsql.image.repository }}:{{ .Values.pgsql.image.tag }}"
           imagePullPolicy: {{ .Values.imagePullPolicy }}
-          env:
+          # env:
+          # - name: POSTGRES_PASSWORD
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: {{ template "micrshopping.fullname" . }}
+          #       key: secret  # 其实这个值为空，取POSTGRES_PASSWORD值
+          # - name: POSTGRES_USER
+          #   valueFrom:
+          #     secretKeyRef:
+          #       name: {{ template "micrshopping.fullname" . }}
+          #       key: secret
+        - env:
           - name: POSTGRES_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "micrshopping.fullname" . }}
-                key: secret  # 其实这个值为空，取POSTGRES_PASSWORD值
+            value: Admin123456
           - name: POSTGRES_USER
-            valueFrom:
-              secretKeyRef:
-                name: {{ template "micrshopping.fullname" . }}
-                key: secret
+            value: postgres
           ports:
             - name: http
-              containerPort: 80
+              containerPort: 5432
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

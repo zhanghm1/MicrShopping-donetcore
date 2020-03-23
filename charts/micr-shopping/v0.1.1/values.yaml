@@ -101,7 +101,7 @@ pgsql:
     port: 5432
   env:
     username: postgres
-    password: Admin123456!
+    password: Admin123456
 
 rabbitmq:
   image:

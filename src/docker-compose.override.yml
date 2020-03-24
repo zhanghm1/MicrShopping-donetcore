@@ -88,8 +88,8 @@ services:
 
   micrshopping.identity:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_ENVIRONMENT=Development  # 生成环境 Product 不要使用https ,但是在IIS中部署必须使用https
+      - ASPNETCORE_URLS=https://+:443;http://+:80  
       - IdentityConnectionStrings=${identitystr:-Host=postgres;Port=5432;Database=IdentityDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
 
       - scheme=http
@@ -151,15 +151,16 @@ services:
 
 
 
-  micrshopping.mvc:
+
+
+
+  micrshopping.webmvc:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
     ports:
       - 5012:80
-      - 5013:443
+      - 5011:443
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-
-

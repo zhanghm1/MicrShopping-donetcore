@@ -107,8 +107,10 @@ services:
       - "5672:5672"
       - "5671:5671"
 
-  micrshopping.mvc:
-    image: ${DOCKER_REGISTRY-}micrshoppingmvc
+
+  micrshopping.webmvc:
+    image: ${DOCKER_REGISTRY-}micrshoppingwebmvc
     build:
       context: .
-      dockerfile: MicrShopping.MVC/Dockerfile
+      dockerfile: MicrShopping.WebMVC/Dockerfile
+

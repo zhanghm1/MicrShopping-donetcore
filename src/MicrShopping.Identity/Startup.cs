@@ -27,6 +27,15 @@ namespace MicrShopping.Identity
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<IISServerOptions>(options =>
+            {
+                options.AutomaticAuthentication = false;
+            });
+            services.Configure<IISOptions>(options =>
+            {
+                options.ForwardClientCertificate = false;
+            });
+
             services.AddControllersWithViews();
 
             string ConnectionString = Configuration["IdentityConnectionStrings"];

@@ -20,9 +20,9 @@
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Product"
       },
-      "applicationUrl": "http://localhost:5008"
+      "applicationUrl": "http://localhost:5008;https://localhost:5007;"
     },
     "Docker": {
       "commandName": "Docker",

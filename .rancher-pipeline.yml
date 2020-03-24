@@ -11,8 +11,6 @@ stages:
 
         cd /app/identity/publish
         ls
-
-        /usr/local/bin/docker build -f /app/identity/publish/Dockerfile zzzz/sss:latest .
 - name: docker-build
   steps:
   - publishImageConfig:

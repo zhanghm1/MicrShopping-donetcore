@@ -14,7 +14,7 @@ stages:
 - name: docker-build
   steps:
   - publishImageConfig:
-      dockerfilePath: /app/identity/publish
+      dockerfilePath: /app/identity/publish/Dockerfile
       buildContext: .
       tag: micrshopping/micrshopping.identity:${CICD_EXECUTION_ID}
       pushRemote: true

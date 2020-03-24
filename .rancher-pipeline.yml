@@ -1,11 +1,11 @@
 stages:
 - name: build
   steps:
-  - publishImageConfig:
-      dockerfilePath: src/MicrShopping.OrderApi/Dockerfile
-      buildContext: .
-      tag: micrshopping/MicrShopping.OrderApi:${CICD_LOCAL_REGISTRY}
-      pushRemote: true
-      registry: https://rancher.zhanghaiming.site:30003/
+  - runScriptConfig:
+      image: mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim
+      shellScript: |-
+        pwd
+        cd MicrShopping-donetcore/src
+        docker build -f MicrShopping.OrderApi/Dockerfile -t micrshopping.orderapi . --no-cache
 timeout: 100
 notification: {}

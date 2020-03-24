@@ -5,8 +5,16 @@ stages:
       image: mcr.microsoft.com/dotnet/core/sdk:3.1-buster
       shellScript: |+
         cd src
-        dotnet publish "MicrShopping.Identity/MicrShopping.Identity.csproj" -c Release -o /app/publish
+        dotnet publish "MicrShopping.Identity/MicrShopping.Identity.csproj" -c Release -o /app/identity/publish
 
 
+- name: docker-build
+  steps:
+  - publishImageConfig:
+      dockerfilePath: /app/identity/publish
+      buildContext: .
+      tag: micrshopping/micrshopping.identity:${CICD_EXECUTION_ID}
+      pushRemote: true
+      registry: https://rancher.zhanghaiming.site:30003/
 timeout: 100
 notification: {}

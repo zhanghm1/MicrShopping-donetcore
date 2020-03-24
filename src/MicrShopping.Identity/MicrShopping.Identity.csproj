@@ -40,4 +40,10 @@
     <ProjectReference Include="..\MicrShopping.Infrastructure.Common\MicrShopping.Infrastructure.Common.csproj" />
     <ProjectReference Include="..\MicrShopping.Infrastructure.EFCore\MicrShopping.Infrastructure.EFCore.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Dockerfile">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 </Project>

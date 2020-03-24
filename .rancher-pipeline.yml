@@ -6,6 +6,6 @@ stages:
       shellScript: |-
         pwd
         cd src
-        docker build -f MicrShopping.OrderApi/Dockerfile -t micrshopping.orderapi . --no-cache
+        sudo docker build -f MicrShopping.OrderApi/Dockerfile -t micrshopping.orderapi . --no-cache
 timeout: 100
 notification: {}

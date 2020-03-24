@@ -7,6 +7,9 @@ stages:
         cd src
         dotnet publish "MicrShopping.Identity/MicrShopping.Identity.csproj" -c Release -o /app/identity/publish
 
+        cd /app/identity/publish
+        ls
+
 
 - name: docker-build
   steps:

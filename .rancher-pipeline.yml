@@ -1,11 +1,12 @@
 stages:
-- name: build
+- name: publish
   steps:
   - runScriptConfig:
-      image: mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim
-      shellScript: |-
-        pwd
+      image: mcr.microsoft.com/dotnet/core/sdk:3.1-buster
+      shellScript: |+
         cd src
-        sudo docker build -f MicrShopping.OrderApi/Dockerfile -t micrshopping.orderapi . --no-cache
+        dotnet publish "MicrShopping.Identity/MicrShopping.Identity.csproj" -c Release -o /app/publish
+
+
 timeout: 100
 notification: {}

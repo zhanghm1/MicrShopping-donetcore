@@ -3,14 +3,16 @@ stages:
   steps:
   - runScriptConfig:
       image: mcr.microsoft.com/dotnet/core/sdk:3.1-buster
-      shellScript: |+
+      shellScript: |
         cd src
+        pwd
+
         dotnet publish "MicrShopping.Identity/MicrShopping.Identity.csproj" -c Release -o /app/identity/publish
 
         cd /app/identity/publish
         ls
 
-
+        /usr/local/bin/docker build -f /app/identity/publish/Dockerfile zzzz/sss:latest .
 - name: docker-build
   steps:
   - publishImageConfig:

@@ -31,7 +31,7 @@ namespace MicrShopping.Identity
 
             .ConfigureAppConfiguration(config =>
             {
-                config.AddEnvironmentVariables();
+                config.AddEnvironmentVariables(prefix: "");
             })
             .ConfigureWebHostDefaults(webBuilder =>
             {

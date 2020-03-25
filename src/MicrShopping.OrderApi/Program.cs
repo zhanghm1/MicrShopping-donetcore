@@ -47,7 +47,7 @@ namespace MicrShopping.OrderApi
                 
             .ConfigureAppConfiguration(config =>
             {
-                config.AddEnvironmentVariables();
+                config.AddEnvironmentVariables(prefix:"");
             })
             .ConfigureWebHostDefaults(webBuilder =>
             {

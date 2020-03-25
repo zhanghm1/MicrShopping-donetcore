@@ -21,6 +21,7 @@ namespace MicrShopping.Identity
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine(string.Join('-', args));
             var host = CreateHostBuilder(args).Build();
             host.Run();
         }

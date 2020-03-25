@@ -16,6 +16,7 @@ namespace MicrShopping.OrderApi
     {
         public static void Main(string[] args)
         {
+            Console.WriteLine(string.Join('-', args));
             var host = CreateHostBuilder(args).Build();
 
             using (var scope = host.Services.CreateScope())
@@ -51,5 +52,6 @@ namespace MicrShopping.OrderApi
             {
                 op.AddCommandLine(args);
             });
+        
     }
 }

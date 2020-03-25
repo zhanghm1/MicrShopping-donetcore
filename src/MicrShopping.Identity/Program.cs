@@ -28,13 +28,14 @@ namespace MicrShopping.Identity
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                })
-             .ConfigureHostConfiguration(config =>
-             {
-                 config.AddEnvironmentVariables();
-             });
+
+            .ConfigureAppConfiguration(config =>
+            {
+                config.AddEnvironmentVariables();
+            })
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+            });
     }
 }

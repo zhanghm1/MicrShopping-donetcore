@@ -44,13 +44,14 @@ namespace MicrShopping.OrderApi
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                })
-            .ConfigureHostConfiguration(config =>
+                
+            .ConfigureAppConfiguration(config =>
             {
                 config.AddEnvironmentVariables();
+            })
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
             });
         
     }

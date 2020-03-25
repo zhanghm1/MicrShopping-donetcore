@@ -88,7 +88,7 @@ services:
 
     
   pgadmin4:
-    container_name: pgadmin4
+    container_name: pgadmin41
     image: dpage/pgadmin4
     ports:
         - 8001:80

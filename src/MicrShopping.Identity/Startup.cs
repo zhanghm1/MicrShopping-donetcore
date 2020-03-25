@@ -38,10 +38,17 @@ namespace MicrShopping.Identity
 
             services.AddControllersWithViews();
 
-            string ConnectionString = Configuration["IdentityConnectionStrings"];
-            System.Console.WriteLine(ConnectionString);
+            string Host = Configuration["ConnectionStrings:Host"];
+            string Port = Configuration["ConnectionStrings:Port"];
+            string Database = Configuration["ConnectionStrings:Database"];
+            string Password = Configuration["ConnectionStrings:Password"];
+            string UserID = Configuration["ConnectionStrings:UserID"];
+
+
+            string ConnectionStrings = $"Host={Host};Port={Port};Database={Database};User ID={UserID};Password={Password};";
+            System.Console.WriteLine(ConnectionStrings);
             services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseNpgsql(ConnectionString));
+                    options.UseNpgsql(ConnectionStrings));
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

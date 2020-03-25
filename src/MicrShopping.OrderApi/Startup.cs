@@ -40,18 +40,28 @@ namespace MicrShopping.OrderApi
                 options.Filters.Add<ApiResultFilter>();
             }).AddWebApiConventions();//处理返回HttpResponseMessage
 
+
             services.AddScoped<OrderDbContextSeed>();
 
-            string OrderConnectionStrings = Configuration["OrderConnectionStrings"];
-            Console.WriteLine(OrderConnectionStrings);
+            string Host = Configuration["ConnectionStrings:Host"];
+            string Port = Configuration["ConnectionStrings:Port"];
+            string Database = Configuration["ConnectionStrings:Database"];
+            string Password = Configuration["ConnectionStrings:Password"];
+            string UserID = Configuration["ConnectionStrings:UserID"];
+
+
+            string ConnectionStrings = $"Host={Host};Port={Port};Database={Database};User ID={UserID};Password={Password};";
+
+            Console.WriteLine(ConnectionStrings);
             services.AddDbContext<OrderDbContext>(options =>
-                   options.UseNpgsql(OrderConnectionStrings)
+                   options.UseNpgsql(ConnectionStrings)
                    );
             services.AddScoped<OrderDbContext>();
-            string RabbitMQHost = Configuration["RabbitMQHost"];
-            string RabbitMQPassword = Configuration["RabbitMQPassword"];
-            string RabbitMQUserName = Configuration["RabbitMQUserName"];
-            string RabbitMQPort = Configuration["RabbitMQPort"];
+
+            string RabbitMQHost = Configuration["RabbitMQ:Host"];
+            string RabbitMQPassword = Configuration["RabbitMQ:Password"];
+            string RabbitMQUserName = Configuration["RabbitMQ:UserName"];
+            string RabbitMQPort = Configuration["RabbitMQ:Port"];
 
             services.AddCap(x =>
             {

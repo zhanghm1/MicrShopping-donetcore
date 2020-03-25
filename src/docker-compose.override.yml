@@ -6,14 +6,18 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - OrderConnectionStrings=${orderstr:-Host=postgres;Port=5432;Database=OrderDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
-      #- OrderConnectionStrings=Server=192.168.0.189,14331;Database=OrderDB;User Id=sa;Password=Admin123456!
-      #- OrderConnectionStrings=${orderstr:-Data Source=192.168.0.189;port=3307;Initial Catalog=OrderDB;user id=root;password=Admin123456!;}
+      #- OrderConnectionStrings=${orderstr:-Host=postgres;Port=5432;Database=OrderDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
+
+      - ConnectionStrings__Host=postgres
+      - ConnectionStrings__Port=5432
+      - ConnectionStrings__Database=OrderDB
+      - ConnectionStrings__UserID=postgres
+      - ConnectionStrings__Password=Admin123456!
       
-      - RabbitMQHost=rabbitmq
-      - RabbitMQUserName=admin
-      - RabbitMQPassword=admin123456
-      - RabbitMQPort=5672
+      - RabbitMQ__Host=rabbitmq
+      - RabbitMQ__UserName=admin
+      - RabbitMQ__Password=admin123456
+      - RabbitMQ__Port=5672
 
 #      - RabbitMQ__Host=rabbitmq  对象形式的参数写法 等同 RabbitMQ:{Host:"rabbitmq"}
 #      - RabbitMQ__0__UserName=admin  数组形式的参数写法 等同 RabbitMQ:[{UserName:"admin"}]
@@ -36,14 +40,18 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - PayConnectionStrings=${paystr:-Host=postgres;Port=5432;Database=PayDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
-      # - PayConnectionStrings=Server=192.168.0.189,14331;Database=PayDB;User Id=sa;Password=Admin123456!
-      # - PayConnectionStrings=${paystr:-Data Source=189.168.0.189;port=3307;Initial Catalog=PayDB;user id=root;password=Admin123456!;}
+      #- PayConnectionStrings=${paystr:-Host=postgres;Port=5432;Database=PayDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
+
+      - ConnectionStrings__Host=postgres
+      - ConnectionStrings__Port=5432
+      - ConnectionStrings__Database=PayDB
+      - ConnectionStrings__UserID=postgres
+      - ConnectionStrings__Password=Admin123456!
       
-      - RabbitMQHost=rabbitmq
-      - RabbitMQUserName=admin
-      - RabbitMQPassword=admin123456
-      - RabbitMQPort=5672
+      - RabbitMQ__Host=rabbitmq
+      - RabbitMQ__UserName=admin
+      - RabbitMQ__Password=admin123456
+      - RabbitMQ__Port=5672
 
       - scheme=http
       - ip=micrshopping.payapi
@@ -65,12 +73,18 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
 
-      - IdentityConnectionStrings=${usermanagestr:-Host=postgres;Port=5432;Database=IdentityDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
+      #- IdentityConnectionStrings=${usermanagestr:-Host=postgres;Port=5432;Database=IdentityDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
 
-      - RabbitMQHost=rabbitmq
-      - RabbitMQUserName=admin
-      - RabbitMQPassword=admin123456
-      - RabbitMQPort=5672
+      - ConnectionStrings__Host=postgres
+      - ConnectionStrings__Port=5432
+      - ConnectionStrings__Database=IdentityDB
+      - ConnectionStrings__UserID=postgres
+      - ConnectionStrings__Password=Admin123456!
+      
+      - RabbitMQ__Host=rabbitmq
+      - RabbitMQ__UserName=admin
+      - RabbitMQ__Password=admin123456
+      - RabbitMQ__Port=5672
       
       - scheme=http
       - ip=micrshopping.usermanageapi
@@ -90,7 +104,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development  # 生成环境 Product 不要使用https ,但是在IIS中部署必须使用https
       - ASPNETCORE_URLS=https://+:443;http://+:80  
-      - IdentityConnectionStrings=${identitystr:-Host=postgres;Port=5432;Database=IdentityDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
+      #- IdentityConnectionStrings=${identitystr:-Host=postgres;Port=5432;Database=IdentityDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
+
+      - ConnectionStrings__Host=postgres
+      - ConnectionStrings__Port=5432
+      - ConnectionStrings__Database=IdentityDB
+      - ConnectionStrings__UserID=postgres
+      - ConnectionStrings__Password=Admin123456!
 
       - scheme=http
       - ip=micrshopping.identity
@@ -126,13 +146,19 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      - ProductConnectionStrings=${productstr:-Host=postgres;Port=5432;Database=ProductDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
+      #- ProductConnectionStrings=${productstr:-Host=postgres;Port=5432;Database=ProductDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
 
       
-      - RabbitMQHost=rabbitmq
-      - RabbitMQUserName=admin
-      - RabbitMQPassword=admin123456
-      - RabbitMQPort=5672
+      - ConnectionStrings__Host=postgres
+      - ConnectionStrings__Port=5432
+      - ConnectionStrings__Database=ProductDB
+      - ConnectionStrings__UserID=postgres
+      - ConnectionStrings__Password=Admin123456!
+      
+      - RabbitMQ__Host=rabbitmq
+      - RabbitMQ__UserName=admin
+      - RabbitMQ__Password=admin123456
+      - RabbitMQ__Port=5672
 
       - scheme=http
       - ip=micrshopping.productapi

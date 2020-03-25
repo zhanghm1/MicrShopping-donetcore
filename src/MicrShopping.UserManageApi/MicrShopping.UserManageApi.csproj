@@ -30,5 +30,7 @@
     <ProjectReference Include="..\MicrShopping.Infrastructure.EFCore\MicrShopping.Infrastructure.EFCore.csproj" />
   </ItemGroup>
 
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="http://json.schemastore.org/2.0.0-csd.2.beta.2018-10-10.json" /></VisualStudio></ProjectExtensions>
+
 
 </Project>

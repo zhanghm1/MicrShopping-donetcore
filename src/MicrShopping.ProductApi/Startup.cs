@@ -105,7 +105,7 @@ namespace MicrShopping.ProductApi
             }
             else
             {
-                app.UseHttpsRedirection();
+                //app.UseHttpsRedirection();
             }
             app.UseCors("default");
 

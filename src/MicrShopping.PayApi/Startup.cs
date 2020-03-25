@@ -104,7 +104,7 @@ namespace MicrShopping.PayApi
             }
             else
             {
-                app.UseHttpsRedirection();
+                //app.UseHttpsRedirection();
             }
             
 

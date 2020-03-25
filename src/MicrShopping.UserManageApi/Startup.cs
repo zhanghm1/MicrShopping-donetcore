@@ -123,7 +123,7 @@ namespace MicrShopping.UserManageApi
             else
             {
                 // https 访问的ip地址会提示不安全,时候不要使用这个自动跳转，
-                app.UseHttpsRedirection();
+                //app.UseHttpsRedirection();
             }
             app.UseCors("default");
 

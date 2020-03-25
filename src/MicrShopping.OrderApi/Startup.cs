@@ -124,7 +124,7 @@ namespace MicrShopping.OrderApi
             }
             else
             {
-                app.UseHttpsRedirection();
+                //app.UseHttpsRedirection();
             }
             // https 访问的地址会提示不安全的时候不要使用这个自动跳转，
             //app.UseHttpsRedirection();

@@ -39,6 +39,7 @@ namespace MicrShopping.Identity
             services.AddControllersWithViews();
 
             string ConnectionString = Configuration["IdentityConnectionStrings"];
+            System.Console.WriteLine(ConnectionString);
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseNpgsql(ConnectionString));
 

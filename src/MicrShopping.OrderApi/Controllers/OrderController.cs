@@ -22,19 +22,22 @@ namespace MicrShopping.OrderApi.Controllers
     {
         private readonly ILogger<OrderController> _logger;
         private readonly ICapPublisher _capBus;
-        private IConsulClient _consulClient;
 
         private OrderDbContext _orderDbContext;
         public OrderController(ILogger<OrderController> logger
             , ICapPublisher capPublisher
-            , IConsulClient consulClient
             , OrderDbContext orderDbContext
             )
         {
             _logger = logger;
             _capBus = capPublisher;
-            _consulClient = consulClient;
             _orderDbContext = orderDbContext;
+        }
+        [HttpGet]
+        public IActionResult Get()
+        {
+            return Ok();
+
         }
         [Authorize(Roles = "admin")]
         [HttpPost]

@@ -12,7 +12,7 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "test",
+      "launchUrl": "Order",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
@@ -20,18 +20,18 @@
     "MicrShopping.OrderApi": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "test",
+      "launchUrl": "Order",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "OrderConnectionStrings": "ProductConnectionStrings11111111111",
-        "IdentityUrl": "IdentityUrl1111111111"
+        "ASPNETCORE_ENVIRONMENT": "Production",
+        "OrderConnectionStrings": "Host=192.168.0.189;Port=5432;Database=ProductDB;User ID=postgres;Password=Admin123456!;Pooling=true;",
+        "IdentityUrl": "http://192.168.0.189:5008"
       },
       "applicationUrl": "https://localhost:5003;http://localhost:5004"
     },
     "Docker": {
       "commandName": "Docker",
       "launchBrowser": true,
-      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/test",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}/Order",
       "publishAllPorts": true,
       "useSSL": true
     }

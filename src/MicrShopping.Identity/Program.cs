@@ -32,9 +32,9 @@ namespace MicrShopping.Identity
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-             .ConfigureHostConfiguration(op =>
+             .ConfigureHostConfiguration(config =>
              {
-                 op.AddCommandLine(args);
+                 config.AddEnvironmentVariables();
              });
     }
 }

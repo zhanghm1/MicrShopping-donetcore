@@ -46,6 +46,10 @@ namespace MicrShopping.OrderApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+            .ConfigureHostConfiguration(op =>
+            {
+                op.AddCommandLine(args);
+            });
     }
 }

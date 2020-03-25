@@ -24,6 +24,7 @@ namespace MicrShopping.ApiGateway
                 })
                 .ConfigureHostConfiguration(op=> {
                     op.AddJsonFile("Ocelot.json",false,true);
+                    op.AddCommandLine(args);
                 });
     }
 }

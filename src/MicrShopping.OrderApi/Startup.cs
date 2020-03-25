@@ -43,6 +43,7 @@ namespace MicrShopping.OrderApi
             services.AddScoped<OrderDbContextSeed>();
 
             string OrderConnectionStrings = Configuration["OrderConnectionStrings"];
+            Console.WriteLine(OrderConnectionStrings);
             services.AddDbContext<OrderDbContext>(options =>
                    options.UseNpgsql(OrderConnectionStrings)
                    );

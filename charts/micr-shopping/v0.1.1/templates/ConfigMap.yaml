@@ -5,4 +5,4 @@ metadata:
   labels:
 {{ include "micrshopping.labels" . | indent 4 }}
 data:
-  IdentityUrl: {{ .Values.identity.server.name  }}
+  IdentityUrl: {{ .Values.identity.service.name  }}

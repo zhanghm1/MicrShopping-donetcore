@@ -61,6 +61,9 @@ tolerations: []
 
 affinity: {}
 
+repositoryUrl: "127.0.0.1:30003"
+repositoryProject: "micrshopping"
+
 pgsql:
   image:
     repository: postgres
@@ -92,8 +95,8 @@ rabbitmq:
 
 identity:
   image:
-    repository: micrshopping.identity
-    tag: latest
+    repository: {{ repositoryUrl }}/{{ repositoryProject }}/micrshopping.identity
+    tag: {{ .Chart.apiVersion }}
   deployment_name: "micrshopping-identity"
   service:
     type: ClusterIP
@@ -114,8 +117,8 @@ identity:
 
 orderapi:
   image:
-    repository: micrshopping.orderapi
-    tag: latest
+    repository: {{ repositoryUrl }}/{{ repositoryProject }}/micrshopping.orderapi
+    tag: {{ .Chart.apiVersion }}
   deployment_name: "micrshopping-orderapi"
   service:
     type: ClusterIP
@@ -125,8 +128,8 @@ orderapi:
 
 payapi:
   image:
-    repository: micrshopping.payapi
-    tag: latest
+    repository: {{ repositoryUrl }}/{{ repositoryProject }}/micrshopping.payapi
+    tag: {{ .Chart.apiVersion }}
   deployment_name: "micrshopping-payapi"
   service:
     type: ClusterIP
@@ -136,8 +139,8 @@ payapi:
 
 productapi:
   image:
-    repository: micrshopping.productapi
-    tag: latest
+    repository: {{ repositoryUrl }}/{{ repositoryProject }}/micrshopping.productapi
+    tag: {{ .Chart.apiVersion }}
   deployment_name: "micrshopping-productapi"
   service:
     type: ClusterIP
@@ -147,8 +150,8 @@ productapi:
 
 usermanageapi:
   image:
-    repository: micrshopping.usermanageapi
-    tag: latest
+    repository: {{ repositoryUrl }}/{{ repositoryProject }}/micrshopping.usermanageapi
+    tag: {{ .Chart.apiVersion }}
   deployment_name: "micrshopping-usermanageapi"
   service:
     type: ClusterIP
@@ -159,8 +162,8 @@ usermanageapi:
 
 webmvc:
   image:
-    repository: micrshopping.webmvc
-    tag: latest
+    repository: {{ repositoryUrl }}/{{ repositoryProject }}/micrshopping.webmvc
+    tag: {{ .Chart.apiVersion }}
   deployment_name: "micrshopping-webmvc"
   service:
     type: ClusterIP
@@ -171,8 +174,8 @@ webmvc:
 
 webvue:
   image:
-    repository: micrshopping.webvue
-    tag: latest
+    repository: {{ repositoryUrl }}/{{ repositoryProject }}/micrshopping.webvue
+    tag: {{ .Chart.apiVersion }}
   deployment_name: "micrshopping-webvue"
   service:
     type: ClusterIP

@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace MicrShopping.WebUI
+namespace MicrShopping.WebVue
 {
     public class Startup
     {

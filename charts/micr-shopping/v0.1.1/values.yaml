@@ -61,6 +61,33 @@ tolerations: []
 
 affinity: {}
 
+pgsql:
+  image:
+    repository: postgres
+    tag: latest
+  deployment_name: "micrshopping-postgresql"
+  service:
+    type: ClusterIP
+    port: 5432
+    name: "micrshopping-postgresql"
+  env:
+    username: postgres
+    password: Admin123456
+
+rabbitmq:
+  image:
+    repository: rabbitmq
+    tag: 3-management
+  deployment_name: "micrshopping-rabbitmq"
+  service:
+    type: ClusterIP
+    httpPort1: 5672
+    httpPort2: 15672
+    httpPort3: 5671
+    name: "micrshopping-rabbitmq"
+  env:
+    username: admin
+    password: admin123456
 
 
 identity:
@@ -96,30 +123,61 @@ orderapi:
     httpsPort: 443
     name: "micrshopping-orderapi"
 
-pgsql:
+payapi:
   image:
-    repository: postgres
+    repository: micrshopping.payapi
     tag: latest
-  deployment_name: "micrshopping-postgresql"
+  deployment_name: "micrshopping-payapi"
   service:
     type: ClusterIP
-    port: 5432
-    name: "micrshopping-postgresql"
-  env:
-    username: postgres
-    password: Admin123456
+    httpPort: 80
+    httpsPort: 443
+    name: "micrshopping-payapi"
 
-rabbitmq:
+productapi:
   image:
-    repository: rabbitmq
-    tag: 3-management
-  deployment_name: "micrshopping-rabbitmq"
+    repository: micrshopping.productapi
+    tag: latest
+  deployment_name: "micrshopping-productapi"
   service:
     type: ClusterIP
-    httpPort1: 5672
-    httpPort2: 15672
-    httpPort3: 5671
-    name: "micrshopping-rabbitmq"
-  env:
-    username: admin
-    password: admin123456
+    httpPort: 80
+    httpsPort: 443
+    name: "micrshopping-productapi"
+
+usermanageapi:
+  image:
+    repository: micrshopping.usermanageapi
+    tag: latest
+  deployment_name: "micrshopping-usermanageapi"
+  service:
+    type: ClusterIP
+    httpPort: 80
+    httpsPort: 443
+    name: "micrshopping-usermanageapi"
+
+
+webmvc:
+  image:
+    repository: micrshopping.webmvc
+    tag: latest
+  deployment_name: "micrshopping-webmvc"
+  service:
+    type: ClusterIP
+    httpPort: 80
+    httpsPort: 443
+    name: "micrshopping-webmvc"
+
+
+webvue:
+  image:
+    repository: micrshopping.webvue
+    tag: latest
+  deployment_name: "micrshopping-webvue"
+  service:
+    type: ClusterIP
+    httpPort: 80
+    httpsPort: 443
+    name: "micrshopping-webvue"
+
+

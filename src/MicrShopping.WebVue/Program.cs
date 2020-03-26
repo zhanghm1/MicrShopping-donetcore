@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace MicrShopping.WebUI
+namespace MicrShopping.WebVue
 {
     public class Program
     {

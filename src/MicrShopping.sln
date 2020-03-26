@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Envoy", "Envoy", "{48E69FC8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ocelot", "Ocelot", "{905B9DB0-D7E8-467D-ACC5-41D080A444B6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrShopping.WebUI", "MicrShopping.WebUI\MicrShopping.WebUI.csproj", "{2A687065-3DAE-4E8D-9693-1C797FF8523D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrShopping.WebVue", "MicrShopping.WebVue\MicrShopping.WebVue.csproj", "{2A687065-3DAE-4E8D-9693-1C797FF8523D}"
 EndProject
 Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{B055EA1D-943F-441F-94E9-02735C35006C}"
 EndProject

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.webui.deployment_name }}
+  name: {{ .Values.webvue.deployment_name }}
   labels:
 {{ include "micrshopping.labels" . | indent 4 }}
 spec:
@@ -25,8 +25,8 @@ spec:
       containers:
       - name: {{ .Chart.Name }}
         securityContext:
-          {{- toYaml .Values.webui.securityContext | nindent 12 }}
-        image: "{{ .Values.webui.image.repository }}:{{ .Values.webui.image.tag }}"
+          {{- toYaml .Values.webvue.securityContext | nindent 12 }}
+        image: "{{ .Values.webvue.image.repository }}:{{ .Values.webvue.image.tag }}"
         imagePullPolicy: {{ .Values.imagePullPolicy }}
         env:
         - name: secret

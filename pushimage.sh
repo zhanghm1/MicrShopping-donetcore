@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 #登录镜像仓库
 docker  login -u admin -p 123456 http://127.0.0.1:30003

@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: micrshopping-orderapi
+  name: {{ .Values.orderapi.deployment_name }}
   labels:
 {{ include "micrshopping.labels" . | indent 4 }}
 spec:
@@ -23,25 +23,30 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.orderapi.securityContext | nindent 12 }}
-          image: "{{ .Values.orderapi.image.repository }}:{{ .Values.orderapi.image.tag }}"
-          imagePullPolicy: {{ .Values.imagePullPolicy }}
-          ports:
-            - name: http
-              containerPort: 80
-              protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: /
-              port: http
-          readinessProbe:
-            httpGet:
-              path: /
-              port: http
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+      - name: {{ .Chart.Name }}
+        securityContext:
+          {{- toYaml .Values.orderapi.securityContext | nindent 12 }}
+        image: "{{ .Values.orderapi.image.repository }}:{{ .Values.orderapi.image.tag }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        env:
+        - name: secret
+          valueFrom:
+            secretKeyRef:
+              key: secret
+              name: {{ template "micrshopping.secretname" . }}
+              optional: false
+        envFrom:
+        - configMapRef:
+            name: {{ template "micrshopping.configmapname" . }}
+            optional: false
+        - secretRef:
+            name: {{ template "micrshopping.secretname" . }}
+        ports:
+          - name: http
+            containerPort: 80
+            protocol: TCP
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

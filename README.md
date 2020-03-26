@@ -17,8 +17,12 @@
 
 ~/MicrShopping-donetcore/src# docker build -f MicrShopping.OrderApi/Dockerfile -t micrshopping.orderapi . --no-cache  ##这样就没问题
 ~/MicrShopping-donetcore/src# docker build -f MicrShopping.Identity/Dockerfile -t micrshopping.identity . --no-cache
+
     -f  文件位置
 
     -t  镜像名称
 
     micrshopping.orderspi 镜像名，必须小写
+
+
+    配置环境变量时使用密文或者映射，应首先添加一个不是All的配置

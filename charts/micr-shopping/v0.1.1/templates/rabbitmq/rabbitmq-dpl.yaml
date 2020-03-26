@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: micrshopping-rabbitmq
+  name: {{ .Values.rabbitmq.deployment_name }}
   labels:
 {{ include "micrshopping.labels" . | indent 4 }}
 spec:
@@ -30,9 +30,9 @@ spec:
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           env:
           - name: RABBITMQ_DEFAULT_PASS
-            value: admin123456
+            value: {{ .Values.rabbitmq.env.password }}
           - name: RABBITMQ_DEFAULT_USER
-            value: admin
+            value: {{ .Values.rabbitmq.env.username }}
           ports:
           - containerPort: 5672
             name: 5672tcp02

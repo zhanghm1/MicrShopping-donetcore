@@ -24,6 +24,14 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 {{- end -}}
 
+{{- define "micrshopping.secretname" -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}-secret
+{{- end -}}
+
+{{- define "micrshopping.configmapname" -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" -}}-configmap
+{{- end -}}
+
 {{/*
 Create chart name and version as used by the chart label.
 */}}

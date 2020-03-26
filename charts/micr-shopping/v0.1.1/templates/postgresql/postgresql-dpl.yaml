@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: micrshopping-postgresql
+  name: {{ .Values.pgsql.deployment_name }}
   labels:
 {{ include "micrshopping.labels" . | indent 4 }}
 spec:
@@ -23,33 +23,22 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.pgsql.image.repository }}:{{ .Values.pgsql.image.tag }}"
-          imagePullPolicy: {{ .Values.imagePullPolicy }}
-          # env:
-          # - name: POSTGRES_PASSWORD
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: {{ template "micrshopping.fullname" . }}
-          #       key: secret  # 其实这个值为空，取POSTGRES_PASSWORD值
-          # - name: POSTGRES_USER
-          #   valueFrom:
-          #     secretKeyRef:
-          #       name: {{ template "micrshopping.fullname" . }}
-          #       key: secret
-          env:
-          - name: POSTGRES_PASSWORD
-            value: Admin123456
-          - name: POSTGRES_USER
-            value: postgres
-          ports:
-            - name: http
-              containerPort: 5432
-              protocol: TCP
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+      - name: {{ .Chart.Name }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
+        image: "{{ .Values.pgsql.image.repository }}:{{ .Values.pgsql.image.tag }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        env:
+        - name: POSTGRES_PASSWORD
+          value: {{ .Values.pgsql.env.password }}
+        - name: POSTGRES_USER
+          value: {{ .Values.pgsql.env.username }}
+        ports:
+          - name: http
+            containerPort: 5432
+            protocol: TCP
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

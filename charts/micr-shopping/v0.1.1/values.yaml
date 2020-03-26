@@ -61,18 +61,21 @@ tolerations: []
 
 affinity: {}
 
+
+
 identity:
   image:
     repository: micrshopping.identity
     tag: latest
-
+  deployment_name: "micrshopping-identity"
   service:
     type: ClusterIP
     httpPort: 80
     httpsPort: 443
-    
+    name: "micrshopping-identity"
   serverNodePort:
     type: NodePort
+    name: "micrshopping-identity-nodeport"
     ports:
       http:
         port: 80
@@ -86,20 +89,22 @@ orderapi:
   image:
     repository: micrshopping.orderapi
     tag: latest
-
+  deployment_name: "micrshopping-orderapi"
   service:
     type: ClusterIP
     httpPort: 80
     httpsPort: 443
+    name: "micrshopping-orderapi"
 
 pgsql:
   image:
     repository: postgres
     tag: latest
-
+  deployment_name: "micrshopping-postgresql"
   service:
     type: ClusterIP
     port: 5432
+    name: "micrshopping-postgresql"
   env:
     username: postgres
     password: Admin123456
@@ -108,13 +113,13 @@ rabbitmq:
   image:
     repository: rabbitmq
     tag: 3-management
-
+  deployment_name: "micrshopping-rabbitmq"
   service:
     type: ClusterIP
     httpPort1: 5672
     httpPort2: 15672
     httpPort3: 5671
+    host: "micrshopping-rabbitmq"
   env:
     username: admin
     password: admin123456
-

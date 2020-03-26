@@ -26,7 +26,7 @@ spec:
       - name: {{ .Chart.Name }}
         securityContext:
           {{- toYaml .Values.webvue.securityContext | nindent 12 }}
-        image: "{{ .Values.webvue.image.repository }}:{{ .Values.webvue.image.tag }}"
+        image: "{{ .Values.repositoryUrl }}/{{ .Values.repositoryProject }}/{{ .Values.webvue.image.repository }}:{{ .Chart.apiVersion }}"
         imagePullPolicy: {{ .Values.imagePullPolicy }}
         env:
         - name: secret

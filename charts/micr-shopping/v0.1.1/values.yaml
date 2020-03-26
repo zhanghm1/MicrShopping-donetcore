@@ -95,8 +95,7 @@ rabbitmq:
 
 identity:
   image:
-    repository: {{ repositoryUrl }}/{{ repositoryProject }}/micrshopping.identity
-    tag: {{ .Chart.apiVersion }}
+    repository: micrshopping.identity
   deployment_name: "micrshopping-identity"
   service:
     type: ClusterIP
@@ -117,8 +116,7 @@ identity:
 
 orderapi:
   image:
-    repository: {{ repositoryUrl }}/{{ repositoryProject }}/micrshopping.orderapi
-    tag: {{ .Chart.apiVersion }}
+    repository: micrshopping.orderapi
   deployment_name: "micrshopping-orderapi"
   service:
     type: ClusterIP
@@ -128,8 +126,7 @@ orderapi:
 
 payapi:
   image:
-    repository: {{ repositoryUrl }}/{{ repositoryProject }}/micrshopping.payapi
-    tag: {{ .Chart.apiVersion }}
+    repository: micrshopping.payapi
   deployment_name: "micrshopping-payapi"
   service:
     type: ClusterIP
@@ -139,8 +136,7 @@ payapi:
 
 productapi:
   image:
-    repository: {{ repositoryUrl }}/{{ repositoryProject }}/micrshopping.productapi
-    tag: {{ .Chart.apiVersion }}
+    repository: micrshopping.productapi
   deployment_name: "micrshopping-productapi"
   service:
     type: ClusterIP
@@ -150,8 +146,7 @@ productapi:
 
 usermanageapi:
   image:
-    repository: {{ repositoryUrl }}/{{ repositoryProject }}/micrshopping.usermanageapi
-    tag: {{ .Chart.apiVersion }}
+    repository: micrshopping.usermanageapi
   deployment_name: "micrshopping-usermanageapi"
   service:
     type: ClusterIP
@@ -162,8 +157,7 @@ usermanageapi:
 
 webmvc:
   image:
-    repository: {{ repositoryUrl }}/{{ repositoryProject }}/micrshopping.webmvc
-    tag: {{ .Chart.apiVersion }}
+    repository: micrshopping.webmvc
   deployment_name: "micrshopping-webmvc"
   service:
     type: ClusterIP
@@ -174,8 +168,7 @@ webmvc:
 
 webvue:
   image:
-    repository: {{ repositoryUrl }}/{{ repositoryProject }}/micrshopping.webvue
-    tag: {{ .Chart.apiVersion }}
+    repository: micrshopping.webvue
   deployment_name: "micrshopping-webvue"
   service:
     type: ClusterIP

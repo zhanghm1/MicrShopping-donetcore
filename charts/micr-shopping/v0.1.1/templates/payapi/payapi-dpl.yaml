@@ -26,7 +26,7 @@ spec:
       - name: {{ .Chart.Name }}
         securityContext:
           {{- toYaml .Values.payapi.securityContext | nindent 12 }}
-        image: "{{ .Values.payapi.image.repository }}:{{ .Values.payapi.image.tag }}"
+        image: "{{ .Values.repositoryUrl }}/{{ .Values.repositoryProject }}/{{ .Values.payapi.image.repository }}:{{ .Chart.apiVersion }}"
         imagePullPolicy: {{ .Values.imagePullPolicy }}
         env:
         - name: secret

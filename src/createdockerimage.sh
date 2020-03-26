@@ -7,5 +7,6 @@ docker build -f MicrShopping.WebMVC/Dockerfile -t micrshopping.webmvc . --no-cac
 
 cd MicrShopping.WebVue/VueClient
 npm i
+npm run build
 cd dist
 docker build -f Dockerfile -t micrshopping.webvue . --no-cache

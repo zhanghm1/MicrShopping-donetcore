@@ -16,6 +16,7 @@ echo $value
 $value
 done
 
+
 cd ../charts/micr-shopping
 # 移除将要创建的文件夹
 cmd="rm -rf $new_docker_tag"

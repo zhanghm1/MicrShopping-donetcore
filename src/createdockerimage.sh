@@ -43,6 +43,8 @@ docker push 127.0.0.1:30003/micrshopping/micrshopping.webvue:v0.1.2
 
 cd ../../../../charts/micr-shopping
 
+rm -rf v0.1.2
+
 cp -r v0.1.1/ v0.1.2
 
 sed -i 's/0.1.1/0.1.2/g' v0.1.2/Chart.yaml

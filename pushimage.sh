@@ -8,21 +8,7 @@ docker  login -u admin -p 123456 http://127.0.0.1:30003
 old_docker_tag=$1
 new_docker_tag=$2
 
-cmd=("docker tag micrshopping.orderapi 127.0.0.1:30003/micrshopping/micrshopping.orderapi:$new_docker_tag"
-"docker tag micrshopping.identity 127.0.0.1:30003/micrshopping/micrshopping.identity:$new_docker_tag"
-"docker tag micrshopping.payapi 127.0.0.1:30003/micrshopping/micrshopping.payapi:$new_docker_tag"
-"docker tag micrshopping.productapi 127.0.0.1:30003/micrshopping/micrshopping.productapi:$new_docker_tag"
-"docker tag micrshopping.usermanageapi 127.0.0.1:30003/micrshopping/micrshopping.usermanageapi:$new_docker_tag"
-"docker tag micrshopping.webmvc 127.0.0.1:30003/micrshopping/micrshopping.webmvc:$new_docker_tag"
-"docker tag micrshopping.webvue 127.0.0.1:30003/micrshopping/micrshopping.webvue:$new_docker_tag"
-
-"docker push 127.0.0.1:30003/micrshopping/micrshopping.orderapi:$new_docker_tag"
-"docker push 127.0.0.1:30003/micrshopping/micrshopping.identity:$new_docker_tag"
-"docker push 127.0.0.1:30003/micrshopping/micrshopping.payapi:$new_docker_tag"
-"docker push 127.0.0.1:30003/micrshopping/micrshopping.productapi:$new_docker_tag"
-"docker push 127.0.0.1:30003/micrshopping/micrshopping.usermanageapi:$new_docker_tag"
-"docker push 127.0.0.1:30003/micrshopping/micrshopping.webmvc:$new_docker_tag"
-"docker push 127.0.0.1:30003/micrshopping/micrshopping.webvue:$new_docker_tag")
+cmd=("docker tag micrshopping.orderapi 127.0.0.1:30003/micrshopping/micrshopping.orderapi:$new_docker_tag" "docker tag micrshopping.identity 127.0.0.1:30003/micrshopping/micrshopping.identity:$new_docker_tag" "docker tag micrshopping.payapi 127.0.0.1:30003/micrshopping/micrshopping.payapi:$new_docker_tag" "docker tag micrshopping.productapi 127.0.0.1:30003/micrshopping/micrshopping.productapi:$new_docker_tag" "docker tag micrshopping.usermanageapi 127.0.0.1:30003/micrshopping/micrshopping.usermanageapi:$new_docker_tag" "docker tag micrshopping.webmvc 127.0.0.1:30003/micrshopping/micrshopping.webmvc:$new_docker_tag" "docker tag micrshopping.webvue 127.0.0.1:30003/micrshopping/micrshopping.webvue:$new_docker_tag" "docker push 127.0.0.1:30003/micrshopping/micrshopping.orderapi:$new_docker_tag" "docker push 127.0.0.1:30003/micrshopping/micrshopping.identity:$new_docker_tag" "docker push 127.0.0.1:30003/micrshopping/micrshopping.payapi:$new_docker_tag" "docker push 127.0.0.1:30003/micrshopping/micrshopping.productapi:$new_docker_tag" "docker push 127.0.0.1:30003/micrshopping/micrshopping.usermanageapi:$new_docker_tag" "docker push 127.0.0.1:30003/micrshopping/micrshopping.webmvc:$new_docker_tag" "docker push 127.0.0.1:30003/micrshopping/micrshopping.webvue:$new_docker_tag")
 
 for value in ${cmd[@]}
 do

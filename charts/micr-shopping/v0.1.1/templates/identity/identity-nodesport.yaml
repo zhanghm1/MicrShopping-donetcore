@@ -16,5 +16,7 @@ spec:
     protocol: TCP
     targetPort: 443
   type: NodePort
+  selector:
+    app: {{ template "micrshopping.fullname" . }}
 status:
   loadBalancer: {}

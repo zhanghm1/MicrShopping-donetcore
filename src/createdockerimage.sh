@@ -17,37 +17,52 @@ docker build -f Dockerfile -t micrshopping.webvue . --no-cache
 docker  login -u admin -p 123456 http://127.0.0.1:30003
 
 # 获取版本号，将tag用版本号代替
-old_docker_tag=v0.1.1
-new_docker_tag=v0.1.2
+$old_docker_tag=$1
+$new_docker_tag=$2
+
 
 #添加tag
-docker tag micrshopping.orderapi 127.0.0.1:30003/micrshopping/micrshopping.orderapi:v0.1.2
-docker tag micrshopping.identity 127.0.0.1:30003/micrshopping/micrshopping.identity:v0.1.2
-docker tag micrshopping.payapi 127.0.0.1:30003/micrshopping/micrshopping.payapi:v0.1.2
-docker tag micrshopping.productapi 127.0.0.1:30003/micrshopping/micrshopping.productapi:v0.1.2
-docker tag micrshopping.usermanageapi 127.0.0.1:30003/micrshopping/micrshopping.usermanageapi:v0.1.2
-docker tag micrshopping.webmvc 127.0.0.1:30003/micrshopping/micrshopping.webmvc:v0.1.2
-docker tag micrshopping.webvue 127.0.0.1:30003/micrshopping/micrshopping.webvue:v0.1.2
+cmd="
+docker tag micrshopping.orderapi 127.0.0.1:30003/micrshopping/micrshopping.orderapi:"${new_docker_tag}"
+docker tag micrshopping.identity 127.0.0.1:30003/micrshopping/micrshopping.identity:${new_docker_tag}
+docker tag micrshopping.payapi 127.0.0.1:30003/micrshopping/micrshopping.payapi:${new_docker_tag}
+docker tag micrshopping.productapi 127.0.0.1:30003/micrshopping/micrshopping.productapi:${new_docker_tag}
+docker tag micrshopping.usermanageapi 127.0.0.1:30003/micrshopping/micrshopping.usermanageapi:${new_docker_tag}
+docker tag micrshopping.webmvc 127.0.0.1:30003/micrshopping/micrshopping.webmvc:${new_docker_tag}
+docker tag micrshopping.webvue 127.0.0.1:30003/micrshopping/micrshopping.webvue:${new_docker_tag}
 
-#推送
-docker push 127.0.0.1:30003/micrshopping/micrshopping.orderapi:v0.1.2
-docker push 127.0.0.1:30003/micrshopping/micrshopping.identity:v0.1.2
-docker push 127.0.0.1:30003/micrshopping/micrshopping.payapi:v0.1.2
-docker push 127.0.0.1:30003/micrshopping/micrshopping.productapi:v0.1.2
-docker push 127.0.0.1:30003/micrshopping/micrshopping.usermanageapi:v0.1.2
-docker push 127.0.0.1:30003/micrshopping/micrshopping.webmvc:v0.1.2
-docker push 127.0.0.1:30003/micrshopping/micrshopping.webvue:v0.1.2
+docker push 127.0.0.1:30003/micrshopping/micrshopping.orderapi:${new_docker_tag}
+docker push 127.0.0.1:30003/micrshopping/micrshopping.identity:${new_docker_tag}
+docker push 127.0.0.1:30003/micrshopping/micrshopping.payapi:${new_docker_tag}
+docker push 127.0.0.1:30003/micrshopping/micrshopping.productapi:${new_docker_tag}
+docker push 127.0.0.1:30003/micrshopping/micrshopping.usermanageapi:${new_docker_tag}
+docker push 127.0.0.1:30003/micrshopping/micrshopping.webmvc:${new_docker_tag}
+docker push 127.0.0.1:30003/micrshopping/micrshopping.webvue:${new_docker_tag}
+"
+$cmd
 
-# docker pull 127.0.0.1:30003/library/micrshopping.orderapi:v0.1.2
 
 
 cd ../../../../charts/micr-shopping
+# 移除将要创建的文件夹
+cmd="rm -rf "${new_docker_tag}
+$cmd
 
-rm -rf v0.1.2
+# 复制新版本的chart
+cmd="cp -r "${old_docker_tag}"/ "${new_docker_tag}
+$cmd
 
-cp -r v0.1.1/ v0.1.2
+# 编辑版本号
+cmd="sed -i 's/"${old_docker_tag#*v}"/"${new_docker_tag#*v}"/g' "${new_docker_tag}"/Chart.yaml"
+$cmd
 
-sed -i 's/0.1.1/0.1.2/g' v0.1.2/Chart.yaml
+#提交到git
+git add .
+git commit -m "创建charts"
+
+#添加tag
+cmd="git tag "${new_docker_tag}
+$cmd
 
 #执行字符串
 cmd="echo hello word"

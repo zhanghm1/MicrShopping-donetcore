@@ -119,7 +119,7 @@ rabbitmq:
     httpPort1: 5672
     httpPort2: 15672
     httpPort3: 5671
-    host: "micrshopping-rabbitmq"
+    name: "micrshopping-rabbitmq"
   env:
     username: admin
     password: admin123456

@@ -8,14 +8,14 @@ spec:
   type: {{ .Values.identity.serverNodePort.type }}
   ports:
   - name: "http"
-    port: 80
+    port: {{ .Values.identity.service.httpPort }}
     protocol: TCP
-    nodePort: {{ .Values.identity.serverNodePort.ports.http.port }} #节点端口
+    nodePort: {{ .Values.identity.serverNodePort.ports.http.nodePort }} #节点端口
     targetPort: 80  #容器端口
   - name: "https"
-    port: 443
+    port: {{ .Values.identity.service.httpsPort }}
     protocol: TCP
-    nodePort: {{ .Values.identity.serverNodePort.ports.https.port }} #节点端口
+    nodePort: {{ .Values.identity.serverNodePort.ports.https.nodePort }} #节点端口
     targetPort: 443
       
   selector:

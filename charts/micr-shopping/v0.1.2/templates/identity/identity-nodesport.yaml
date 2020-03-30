@@ -17,6 +17,6 @@ spec:
     targetPort: 443
   type: NodePort
   selector:
-    component: {{ .Values.identity.deployment_name }}
+    component: {{ .Values.identity.deployment_name }}-sv
 status:
   loadBalancer: {}

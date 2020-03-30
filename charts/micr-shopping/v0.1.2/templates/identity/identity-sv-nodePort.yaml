@@ -19,4 +19,4 @@ spec:
     targetPort: 443
       
   selector:
-    workload.user.cattle.io/workloadselector: {{ .Values.identity.deployment_name }}
+    workload.user.cattle.io/workloadselector: "deployment-micrshopping-{{ .Values.identity.deployment_name }}"

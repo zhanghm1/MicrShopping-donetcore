@@ -17,4 +17,4 @@ spec:
     targetPort: {{ .Values.identity.service.httpsPort }}
       
   selector:
-    workload.user.cattle.io/workloadselector: {{ .Values.identity.deployment_name }}
+    workload.user.cattle.io/workloadselector: "deployment-micrshopping-{{ .Values.identity.deployment_name }}"

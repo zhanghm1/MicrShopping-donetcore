@@ -4,7 +4,6 @@ metadata:
   name: {{ .Values.identity.service.name }}
   labels:
 {{ include "micrshopping.labels" . | indent 4 }}
-    component: {{ .Values.identity.deployment_name }}-sv
 spec:
   type: {{ .Values.identity.service.type }}
   ports:
@@ -18,6 +17,4 @@ spec:
       targetPort: {{ .Values.identity.service.httpsPort }}
       
   selector:
-    app.kubernetes.io/name: {{ include "micrshopping.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
     component: {{ .Values.identity.deployment_name }}

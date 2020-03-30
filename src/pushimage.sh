@@ -39,6 +39,7 @@ cmd="docker push 127.0.0.1:30003/micrshopping/micrshopping.webvue:$new_docker_ta
 $cmd
 
 
+
 cd ../charts/micr-shopping
 # 移除将要创建的文件夹
 cmd="rm -rf $new_docker_tag"
@@ -55,12 +56,12 @@ cmd="sed -i 's/${old_docker_tag#*v}/${new_docker_tag#*v}/g' $new_docker_tag/Char
 echo $cmd
 $cmd
 
-#提交到git
-git add .
-git commit -m "创建charts"
+# #提交到git
+# git add .
+# git commit -m "创建charts"
 
-#添加tag
-cmd="git tag ${new_docker_tag}"
-echo $cmd
-$cmd
+# #添加tag
+# cmd="git tag ${new_docker_tag}"
+# echo $cmd
+# $cmd
 

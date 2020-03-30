@@ -16,7 +16,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "micrshopping.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
-        component: {{ .Values.pgsql.deployment_name }}
+        component: {{ .Values.productapi.deployment_name }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

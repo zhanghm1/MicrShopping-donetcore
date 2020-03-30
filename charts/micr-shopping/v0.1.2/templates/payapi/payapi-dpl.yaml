@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.payapi.deployment_name }}
   labels:
 {{ include "micrshopping.labels" . | indent 4 }}
+    component: {{ .Values.payapi.deployment_name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:

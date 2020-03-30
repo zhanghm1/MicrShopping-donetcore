@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.productapi.deployment_name }}
   labels:
 {{ include "micrshopping.labels" . | indent 4 }}
+    component: {{ .Values.productapi.deployment_name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:

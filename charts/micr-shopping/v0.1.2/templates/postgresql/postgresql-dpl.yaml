@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.pgsql.deployment_name }}
   labels:
 {{ include "micrshopping.labels" . | indent 4 }}
+    component: {{ .Values.pgsql.deployment_name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:

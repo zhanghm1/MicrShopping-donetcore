@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.identity.service.name }}
   labels:
 {{ include "micrshopping.labels" . | indent 4 }}
+    component: {{ .Values.identity.deployment_name }}-sv
 spec:
   type: {{ .Values.identity.service.type }}
   ports:
@@ -17,4 +18,4 @@ spec:
     targetPort: {{ .Values.identity.service.httpsPort }}
       
   selector:
-    workload.user.cattle.io/workloadselector: "deployment-micrshopping-{{ .Values.identity.deployment_name }}"
+    component: {{ .Values.identity.deployment_name }}

@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.identity.serverNodePort.name }}
   labels:
 {{ include "micrshopping.labels" . | indent 4 }}
+    component: {{ .Values.identity.deployment_name }}-svnp
 spec:
   type: {{ .Values.identity.serverNodePort.type }}
   ports:
@@ -19,4 +20,4 @@ spec:
     targetPort: 443
       
   selector:
-    workload.user.cattle.io/workloadselector: "deployment-micrshopping-{{ .Values.identity.deployment_name }}"
+    component: {{ .Values.identity.deployment_name }}

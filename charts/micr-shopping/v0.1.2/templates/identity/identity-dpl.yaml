@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.identity.deployment_name }}
   labels:
 {{ include "micrshopping.labels" . | indent 4 }}
-    component: {{ .Values.identity.deployment_name }}
+    component: {{ .Values.identity.deployment_name }} #Deployment的标签
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -16,7 +16,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "micrshopping.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
-        component: {{ .Values.identity.deployment_name }}
+        component: {{ .Values.identity.deployment_name }}  #pod的标签
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

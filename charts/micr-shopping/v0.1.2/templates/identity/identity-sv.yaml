@@ -7,16 +7,14 @@ metadata:
 spec:
   type: {{ .Values.identity.service.type }}
   ports:
-    - name: "http"
-      port: 80
-      protocol: TCP
-      nodePort: {{ .Values.identity.service.httpPort }} #节点端口
-      targetPort: 80  #容器端口
-    - name: "https"
-      port: 443
-      protocol: TCP
-      nodePort: {{ .Values.identity.service.httpsPort }} #节点端口
-      targetPort: 443
+  - name: "http"
+    port: 80
+    protocol: TCP
+    targetPort: {{ .Values.identity.service.httpPort }}
+  - name: "https"
+    port: 443
+    protocol: TCP
+    targetPort: {{ .Values.identity.service.httpsPort }}
       
   selector:
     workload.user.cattle.io/workloadselector: {{ .Values.identity.deployment_name }}

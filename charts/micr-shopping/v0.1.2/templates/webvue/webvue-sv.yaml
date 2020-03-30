@@ -7,13 +7,13 @@ metadata:
 spec:
   type: {{ .Values.webvue.service.type }}
   ports:
-    - name: "http"
-      port: 80
-      protocol: TCP
-      targetPort: {{ .Values.webvue.service.httpPort }}
-    - name: "https"
-      port: 443
-      protocol: TCP
-      targetPort: {{ .Values.webvue.service.httpsPort }}      
+  - name: "http"
+    port: 80
+    protocol: TCP
+    targetPort: {{ .Values.webvue.service.httpPort }}
+  - name: "https"
+    port: 443
+    protocol: TCP
+    targetPort: {{ .Values.webvue.service.httpsPort }}      
   selector:
     component: {{ .Values.webvue.deployment_name }}

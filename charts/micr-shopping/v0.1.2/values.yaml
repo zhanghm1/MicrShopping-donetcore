@@ -98,10 +98,20 @@ identity:
     repository: micrshopping.identity
   deployment_name: "micrshopping-identity"
   service:
-    type: NodePort
-    httpPort: 30080
-    httpsPort: 30443
+    type: ClusterIP
+    httpPort: 80
+    httpsPort: 443
     name: "micrshopping-identity"
+  serverNodePort:
+    type: NodePort
+    name: "micrshopping-identity-nodeport"
+    ports:
+      http:
+        port: 80
+        nodePort: 30010
+      https:
+        port: 443
+        nodePort: 30011
     
 
 orderapi:

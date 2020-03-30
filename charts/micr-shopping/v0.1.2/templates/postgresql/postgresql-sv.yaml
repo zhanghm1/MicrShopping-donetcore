@@ -7,9 +7,9 @@ metadata:
 spec:
   type: {{ .Values.pgsql.service.type }}
   ports:
-    - name: "http"
-      port: 5432
-      protocol: TCP
-      targetPort: {{ .Values.pgsql.service.port }}     
+  - name: "http"
+    port: 5432
+    protocol: TCP
+    targetPort: {{ .Values.pgsql.service.port }}     
   selector:
     component: {{ .Values.pgsql.deployment_name }}

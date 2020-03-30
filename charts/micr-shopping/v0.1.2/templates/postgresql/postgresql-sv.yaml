@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.pgsql.service.name }}
+  labels:
+{{ include "micrshopping.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.pgsql.service.type }}
+  ports:
+    - name: "http"
+      port: 5432
+      protocol: TCP
+      targetPort: {{ .Values.pgsql.service.port }}     
+  selector:
+    app.kubernetes.io/name: {{ include "micrshopping.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}

@@ -10,11 +10,13 @@ spec:
     - name: "http"
       port: 80
       protocol: TCP
-      targetPort: {{ .Values.identity.service.httpPort }}
+      nodePort: {{ .Values.identity.service.httpPort }} #节点端口
+      targetPort: 80  #容器端口
     - name: "https"
       port: 443
       protocol: TCP
-      targetPort: {{ .Values.identity.service.httpsPort }}
+      nodePort: {{ .Values.identity.service.httpsPort }} #节点端口
+      targetPort: 443
       
   selector:
     component: {{ .Values.identity.deployment_name }}

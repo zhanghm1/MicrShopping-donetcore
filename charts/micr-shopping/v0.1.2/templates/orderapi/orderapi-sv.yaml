@@ -16,6 +16,4 @@ spec:
       protocol: TCP
       targetPort: {{ .Values.orderapi.service.httpsPort }}      
   selector:
-    app.kubernetes.io/name: {{ include "micrshopping.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
     component: {{ .Values.orderapi.deployment_name }}

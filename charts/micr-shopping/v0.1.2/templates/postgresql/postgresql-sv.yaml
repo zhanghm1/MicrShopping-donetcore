@@ -12,6 +12,4 @@ spec:
       protocol: TCP
       targetPort: {{ .Values.pgsql.service.port }}     
   selector:
-    app.kubernetes.io/name: {{ include "micrshopping.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
     component: {{ .Values.pgsql.deployment_name }}

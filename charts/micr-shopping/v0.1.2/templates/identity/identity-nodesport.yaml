@@ -17,6 +17,6 @@ spec:
     targetPort: 443
   type: NodePort
   selector:
-    app: {{ template "micrshopping.fullname" . }}
+    component: {{ .Values.identity.deployment_name }}
 status:
   loadBalancer: {}

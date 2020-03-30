@@ -23,6 +23,4 @@ spec:
       targetPort: {{ .Values.rabbitmq.service.httpPort3 }}
     
   selector:
-    app.kubernetes.io/name: {{ include "micrshopping.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
     component: {{ .Values.rabbitmq.deployment_name }}

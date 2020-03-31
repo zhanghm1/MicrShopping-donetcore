@@ -9,17 +9,34 @@ spec:
   - host: micrshopping.zhanghaiming.site
     http:
       paths:
+      - path: /
+        backend:
+          serviceName: {{ .Values.webvue.service.name }}
+          servicePort: 80
+
+  - host: micrshoppingidentity.zhanghaiming.site
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ .Values.identity.service.name }}
+          servicePort: 80
+
+  - host: micrshoppingapi.zhanghaiming.site
+    http:
+      paths:
       - path: /order
         backend:
           serviceName: {{ .Values.orderapi.service.name }}
           servicePort: 80
-      - path: /product
-        backend:
-          serviceName: {{ .Values.productapi.service.name }}
-          servicePort: 80
       - path: /pay
         backend:
           serviceName: {{ .Values.payapi.service.name }}
+          servicePort: 80
+
+      - path: /product
+        backend:
+          serviceName: {{ .Values.productapi.service.name }}
           servicePort: 80
 
       - path: /account
@@ -27,12 +44,13 @@ spec:
           serviceName: {{ .Values.usermanageapi.service.name }}
           servicePort: 80
 
-      - path: /identity
-        backend:
-          serviceName: {{ .Values.identity.service.name }}
-          servicePort: 80
-
-      - path: /webvue
-        backend:
-          serviceName: {{ .Values.webvue.service.name }}
-          servicePort: 80
+  tls:
+  - hosts:
+    - micrshopping.zhanghaiming.site
+    secretName: micrshopping-zhanghaiming-site
+  - hosts:
+    - micrshoppingidentity.zhanghaiming.site
+    secretName: micrshoppingidentity-zhanghaiming-site
+  - hosts:
+    - micrshoppingapi.zhanghaiming.site
+    secretName: micrshoppingapi-zhanghaiming-site

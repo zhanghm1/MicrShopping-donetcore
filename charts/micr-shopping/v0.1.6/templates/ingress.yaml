@@ -1,9 +1,9 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: test
+  name: micrshopping-ingress
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: micrshopping.zhanghaiming.site
@@ -22,28 +22,6 @@ spec:
           serviceName: {{ .Values.identity.service.name }}
           servicePort: 80
 
-  - host: micrshoppingapi.zhanghaiming.site
-    http:
-      paths:
-      - path: /order(/|$)(.*)
-        backend:
-          serviceName: {{ .Values.orderapi.service.name }}
-          servicePort: 80
-      - path: /pay(/|$)(.*)
-        backend:
-          serviceName: {{ .Values.payapi.service.name }}
-          servicePort: 80
-
-      - path: /product(/|$)(.*)
-        backend:
-          serviceName: {{ .Values.productapi.service.name }}
-          servicePort: 80
-
-      - path: /account(/|$)(.*)
-        backend:
-          serviceName: {{ .Values.usermanageapi.service.name }}
-          servicePort: 80
-
   tls:
   - hosts:
     - micrshopping.zhanghaiming.site
@@ -51,6 +29,3 @@ spec:
   - hosts:
     - micrshoppingidentity.zhanghaiming.site
     secretName: micrshoppingidentity-zhanghaiming-site
-  - hosts:
-    - micrshoppingapi.zhanghaiming.site
-    secretName: micrshoppingapi-zhanghaiming-site

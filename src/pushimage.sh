@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #登录镜像仓库
-docker  login -u admin -p 123456 http://127.0.0.1:30003
+docker  login -u admin -p Harbor12345 http://127.0.0.1:30003
 
 # 获取版本号，将tag用版本号代替
 

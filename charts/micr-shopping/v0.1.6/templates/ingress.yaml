@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: test
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
   - host: micrshopping.zhanghaiming.site
@@ -25,21 +25,21 @@ spec:
   - host: micrshoppingapi.zhanghaiming.site
     http:
       paths:
-      - path: /order
+      - path: /order(/|$)(.*)
         backend:
           serviceName: {{ .Values.orderapi.service.name }}
           servicePort: 80
-      - path: /pay
+      - path: /pay(/|$)(.*)
         backend:
           serviceName: {{ .Values.payapi.service.name }}
           servicePort: 80
 
-      - path: /product
+      - path: /product(/|$)(.*)
         backend:
           serviceName: {{ .Values.productapi.service.name }}
           servicePort: 80
 
-      - path: /account
+      - path: /account(/|$)(.*)
         backend:
           serviceName: {{ .Values.usermanageapi.service.name }}
           servicePort: 80

@@ -15,10 +15,6 @@ npm i
 npm run build
 cd dist
 
-cmd="sed -i 's/=\//=/g' index.html"
-echo $cmd
-eval $cmd
-
 docker build -f Dockerfile -t micrshopping.webvue . --no-cache
 
 

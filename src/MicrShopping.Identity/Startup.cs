@@ -63,7 +63,7 @@ namespace MicrShopping.Identity
             })
                 .AddInMemoryIdentityResources(Config.Ids)
                 .AddInMemoryApiResources(Config.Apis)
-                .AddInMemoryClients(Config.Clients)
+                .AddInMemoryClients(Config.Clients(Configuration))
                 .AddAspNetIdentity<ApplicationUser>()
                 .AddResourceOwnerValidator<ResourceOwnerPasswordValidator<ApplicationUser>>()
                 .AddProfileService<ProfileService<ApplicationUser>>();
@@ -78,7 +78,16 @@ namespace MicrShopping.Identity
             }
 
 
-
+            services.AddCors(options =>
+            {
+                // this defines a CORS policy called "default"
+                options.AddPolicy("default", policy =>
+                {
+                    policy.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -90,7 +99,8 @@ namespace MicrShopping.Identity
                 app.UseConsul(Configuration);
             }
             app.UseStaticFiles();
-            
+
+            app.UseCors("default");
 
             app.UseRouting();
             

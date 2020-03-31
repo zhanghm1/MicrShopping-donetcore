@@ -1,0 +1,20 @@
+labels:
+  io.cattle.role: project # options are cluster/project
+questions:
+# Global Options
+- variable: repositoryUrl
+  required: true
+  default: "127.0.0.1:30003"
+  description: "镜像仓库的地址"
+  type: string
+  label: 
+  group: "Global Options"
+
+- variable: repositoryProject
+  required: true
+  default: "micrshopping"
+  description: "镜像仓库的地址项目名称"
+  type: string
+  label: 
+  group: "Global Options"
+

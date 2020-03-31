@@ -14,6 +14,11 @@ cd MicrShopping.WebVue/VueClient
 npm i
 npm run build
 cd dist
+
+cmd="sed -i 's/=\//=/g' index.html"
+echo $cmd
+$cmd
+
 docker build -f Dockerfile -t micrshopping.webvue . --no-cache
 
 

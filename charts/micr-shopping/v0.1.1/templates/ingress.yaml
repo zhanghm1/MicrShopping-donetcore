@@ -2,6 +2,8 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: test
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
   - host: micrshopping.zhanghaiming.site
@@ -23,4 +25,14 @@ spec:
       - path: /account
         backend:
           serviceName: {{ .Values.usermanageapi.service.name }}
+          servicePort: 80
+
+      - path: /identity
+        backend:
+          serviceName: {{ .Values.identity.service.name }}
+          servicePort: 80
+
+      - path: /webvue
+        backend:
+          serviceName: {{ .Values.webvue.service.name }}
           servicePort: 80

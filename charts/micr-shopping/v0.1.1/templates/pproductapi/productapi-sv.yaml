@@ -7,14 +7,13 @@ metadata:
 spec:
   type: {{ .Values.productapi.service.type }}
   ports:
-    - name: "http"
-      port: 80
-      protocol: TCP
-      targetPort: {{ .Values.productapi.service.httpPort }}
-    - name: "https"
-      port: 443
-      protocol: TCP
-      targetPort: {{ .Values.productapi.service.httpsPort }}      
+  - name: "http"
+    port: 80
+    protocol: TCP
+    targetPort: {{ .Values.productapi.service.httpPort }}
+  - name: "https"
+    port: 443
+    protocol: TCP
+    targetPort: {{ .Values.productapi.service.httpsPort }}      
   selector:
-    app.kubernetes.io/name: {{ include "micrshopping.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    component: {{ .Values.productapi.deployment_name }}

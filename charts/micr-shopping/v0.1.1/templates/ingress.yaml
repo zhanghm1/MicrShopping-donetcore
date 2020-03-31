@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test
+spec:
+  rules:
+  - host: micrshopping.zhanghaiming.site
+    http:
+      paths:
+      - path: /order
+        backend:
+          serviceName: {{ .Values.orderapi.service.name }}
+          servicePort: 80
+      - path: /product
+        backend:
+          serviceName: {{ .Values.productapi.service.name }}
+          servicePort: 80
+      - path: /pay
+        backend:
+          serviceName: {{ .Values.payapi.service.name }}
+          servicePort: 80
+
+      - path: /account
+        backend:
+          serviceName: {{ .Values.usermanageapi.service.name }}
+          servicePort: 80

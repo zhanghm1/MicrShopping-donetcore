@@ -7,14 +7,13 @@ metadata:
 spec:
   type: {{ .Values.webmvc.service.type }}
   ports:
-    - name: "http"
-      port: 80
-      protocol: TCP
-      targetPort: {{ .Values.webmvc.service.httpPort }}
-    - name: "https"
-      port: 443
-      protocol: TCP
-      targetPort: {{ .Values.webmvc.service.httpsPort }}      
+  - name: "http"
+    port: 80
+    protocol: TCP
+    targetPort: {{ .Values.webmvc.service.httpPort }}
+  - name: "https"
+    port: 443
+    protocol: TCP
+    targetPort: {{ .Values.webmvc.service.httpsPort }}      
   selector:
-    app.kubernetes.io/name: {{ include "micrshopping.name" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
+    component: {{ .Values.webmvc.deployment_name }}

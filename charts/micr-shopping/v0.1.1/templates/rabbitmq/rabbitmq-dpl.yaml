@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.rabbitmq.deployment_name }}
   labels:
 {{ include "micrshopping.labels" . | indent 4 }}
+    component: {{ .Values.rabbitmq.deployment_name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -15,6 +16,7 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "micrshopping.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+        component: {{ .Values.rabbitmq.deployment_name }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

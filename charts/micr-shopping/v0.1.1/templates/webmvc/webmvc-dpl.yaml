@@ -4,17 +4,20 @@ metadata:
   name: {{ .Values.webmvc.deployment_name }}
   labels:
 {{ include "micrshopping.labels" . | indent 4 }}
+    component: {{ .Values.webmvc.deployment_name }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "micrshopping.name" . }}
       app.kubernetes.io/instance: {{ .Release.Name }}
+      
   template:
     metadata:
       labels:
         app.kubernetes.io/name: {{ include "micrshopping.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+        component: {{ .Values.webmvc.deployment_name }}
     spec:
     {{- with .Values.imagePullSecrets }}
       imagePullSecrets:

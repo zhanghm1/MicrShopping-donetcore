@@ -17,7 +17,7 @@ cd dist
 
 cmd="sed -i 's/=\//=/g' index.html"
 echo $cmd
-$cmd
+eval $cmd
 
 docker build -f Dockerfile -t micrshopping.webvue . --no-cache
 

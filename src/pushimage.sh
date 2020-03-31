@@ -54,7 +54,8 @@ $cmd
 # 编辑版本号
 cmd="sed -i 's/${old_docker_tag#*v}/${new_docker_tag#*v}/g' $new_docker_tag/Chart.yaml"
 echo $cmd
-$cmd
+eval $cmd
+
 
 #提交到git
 git add .

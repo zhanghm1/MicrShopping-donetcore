@@ -1,0 +1,38 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: micrshopping.zhanghaiming.site
+    http:
+      paths:
+      - path: /order
+        backend:
+          serviceName: {{ .Values.orderapi.service.name }}
+          servicePort: 80
+      - path: /product
+        backend:
+          serviceName: {{ .Values.productapi.service.name }}
+          servicePort: 80
+      - path: /pay
+        backend:
+          serviceName: {{ .Values.payapi.service.name }}
+          servicePort: 80
+
+      - path: /account
+        backend:
+          serviceName: {{ .Values.usermanageapi.service.name }}
+          servicePort: 80
+
+      - path: /identity
+        backend:
+          serviceName: {{ .Values.identity.service.name }}
+          servicePort: 80
+
+      - path: /webvue
+        backend:
+          serviceName: {{ .Values.webvue.service.name }}
+          servicePort: 80

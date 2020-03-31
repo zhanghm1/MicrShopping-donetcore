@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.usermanageapi.service.name }}
+  labels:
+{{ include "micrshopping.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.usermanageapi.service.type }}
+  ports:
+  - name: "http"
+    port: 80
+    protocol: TCP
+    targetPort: {{ .Values.usermanageapi.service.httpPort }}
+  - name: "https"
+    port: 443
+    protocol: TCP
+    targetPort: {{ .Values.usermanageapi.service.httpsPort }}      
+  selector:
+    component: {{ .Values.usermanageapi.deployment_name }}

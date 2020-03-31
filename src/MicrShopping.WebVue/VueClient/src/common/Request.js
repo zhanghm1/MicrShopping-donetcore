@@ -1,9 +1,9 @@
 import Vue from 'vue';
  import router from '../router';
 import axios from 'axios';
-import {ApiUrl} from '../configs/config';
+import {apiUrl} from '../configs/config';
 const service = axios.create({
-    baseURL: ApiUrl,
+    baseURL: apiUrl,
     timeout: 30000
 });
 service.interceptors.request.use(

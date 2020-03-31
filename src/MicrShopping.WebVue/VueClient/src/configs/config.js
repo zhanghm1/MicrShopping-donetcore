@@ -1,14 +1,21 @@
-var ApiUrl="http://192.168.0.189:5002";
+var apiUrl=process.env.VUE_APP_apiUrl;
+var identityUrl=process.env.VUE_APP_identityUrl;
+var webVueUrl=process.env.VUE_APP_webVueUrl;
+
+console.log("apiUrl:"+apiUrl);
+console.log("identityUrl:"+identityUrl);
+console.log("webVueUrl:"+webVueUrl);
+
 
 var OidcConfig = {
-    authority: "http://192.168.0.189:5008/",
+    authority: identityUrl,
     client_id: "js-vue",
-    redirect_uri: "http://192.168.0.189:5015/#/callback",
+    redirect_uri: webVueUrl+"/#/callback",
     response_type: "code",
     scope:"openid profile orderapi productapi usermanageapi",
-    post_logout_redirect_uri : "http://192.168.0.189:5015/",
+    post_logout_redirect_uri : webVueUrl,
 };
 export {
-    ApiUrl,OidcConfig
+    apiUrl,OidcConfig
 } ;
 

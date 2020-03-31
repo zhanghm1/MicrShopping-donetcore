@@ -18,3 +18,11 @@ questions:
   label: 
   group: "Global Options"
 
+- variable: Clients__JsVueUrl
+  required: true
+  default: "https://micrshopping.zhanghaiming.site"
+  description: "前端项目的访问域名"
+  type: string
+  label: 
+  group: "Global Options"
+

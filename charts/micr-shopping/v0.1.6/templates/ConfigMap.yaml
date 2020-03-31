@@ -6,3 +6,5 @@ metadata:
 {{ include "micrshopping.labels" . | indent 4 }}
 data:
   IdentityUrl: {{ .Values.identity.service.name  }}
+  Clients__MVCUrl: {{ .Values.Clients__MVCUrl }}
+  Clients__JsVueUrl: {{ .Values.Clients__JsVueUrl }}

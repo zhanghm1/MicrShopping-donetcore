@@ -5,6 +5,7 @@
 using IdentityModel;
 using IdentityServer4;
 using IdentityServer4.Models;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
 namespace MicrShopping.Identity
@@ -30,7 +31,7 @@ namespace MicrShopping.Identity
                 
             };
 
-        public static IEnumerable<Client> Clients =>
+        public static IEnumerable<Client> Clients(IConfiguration Configuration) =>
             new List<Client>
             {
                 // interactive ASP.NET Core MVC client
@@ -44,10 +45,10 @@ namespace MicrShopping.Identity
                     RequirePkce = true,
                 
                     // where to redirect to after login
-                    RedirectUris = { "http://192.168.0.189:5012/signin-oidc" },
+                    RedirectUris = { Configuration["Clients:MVCUrl"] +"/signin-oidc" },
 
                     // where to redirect to after logout
-                    PostLogoutRedirectUris = { "http://192.168.0.189:5012/signout-callback-oidc" },
+                    PostLogoutRedirectUris = { Configuration["Clients:MVCUrl"] + "/signout-callback-oidc" },
 
                     AllowedScopes = new List<string>
                     {
@@ -67,9 +68,9 @@ namespace MicrShopping.Identity
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris =           { "http://192.168.0.189:5015/#/callback" },
-                    PostLogoutRedirectUris = { "http://192.168.0.189:5015/" },
-                    AllowedCorsOrigins =     { "http://192.168.0.189:5015" },
+                    RedirectUris =           { Configuration["Clients:JsVueUrl"] +"/#/callback" },
+                    PostLogoutRedirectUris = { Configuration["Clients:JsVueUrl"] },
+                    AllowedCorsOrigins =     { Configuration["Clients:JsVueUrl"] },
 
                     AllowedScopes =
                     {

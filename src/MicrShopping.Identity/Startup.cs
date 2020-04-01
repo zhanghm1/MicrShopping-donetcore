@@ -98,6 +98,14 @@ namespace MicrShopping.Identity
                 app.UseDatabaseErrorPage();
                 app.UseConsul(Configuration);
             }
+            else 
+            {
+                app.Use((context, next) =>
+                {
+                    context.Request.Scheme = "https";
+                    return next();
+                });
+            }
             app.UseStaticFiles();
 
             app.UseCors("default");

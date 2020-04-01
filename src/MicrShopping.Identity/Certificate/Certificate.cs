@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 
@@ -7,18 +8,18 @@ namespace MicrShopping.Identity.Certificates
     static class Certificate
     {
         public static string Password = "bq455f6n";
-        public static string CertPath = "Certificate/pfx.pfx";
+        public static string CertPath = AppContext.BaseDirectory+ "/Certificate/pfx.pfx";
         public static X509Certificate2 Get()
         {
-            var assembly = typeof(Certificate).GetTypeInfo().Assembly;
-            var names = assembly.GetManifestResourceNames();
+            //var assembly = typeof(Certificate).GetTypeInfo().Assembly;
+            //var names = assembly.GetManifestResourceNames();
 
             /***********************************************************************************************
              *  Please note that here we are using a local certificate only for testing purposes. In a 
              *  real environment the certificate should be created and stored in a secure way, which is out
              *  of the scope of this project.
              **********************************************************************************************/
-
+            Console.WriteLine("CertPath:" + CertPath);
             using (var stream1 = File.OpenRead(CertPath))
             {
                 return new X509Certificate2(ReadStream(stream1), Password);

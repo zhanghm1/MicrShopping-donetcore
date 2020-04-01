@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.payapi.service.name }}
+  labels:
+{{ include "micrshopping.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.payapi.service.type }}
+  ports:
+  - name: "http"
+    port: 80
+    protocol: TCP
+    targetPort: {{ .Values.payapi.service.httpPort }}
+  - name: "https"
+    port: 443
+    protocol: TCP
+    targetPort: {{ .Values.payapi.service.httpsPort }}      
+  selector:
+    component: {{ .Values.payapi.deployment_name }}

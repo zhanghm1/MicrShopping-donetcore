@@ -49,18 +49,10 @@ spec:
             protocol: TCP
           - name: https
             containerPort: 443
-            protocol: TCP
-        volumeMounts:
-        - mountPath: /app/Certificate
-          name: identityCertificate      
+            protocol: TCP     
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
-      volumes:
-      - hostPath:
-          path: /root/docker/identity/Certificate
-          type: DirectoryOrCreate
-        name: identityCertificate
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}

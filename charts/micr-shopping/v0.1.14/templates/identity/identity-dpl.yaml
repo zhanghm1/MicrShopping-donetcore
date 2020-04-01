@@ -52,7 +52,7 @@ spec:
             protocol: TCP
         volumeMounts:
         - mountPath: /app/Certificate
-          name: DirectoryOrCreate      
+          name: identityCertificate      
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -60,6 +60,7 @@ spec:
       - hostPath:
           path: /root/docker/identity/Certificate
           type: DirectoryOrCreate
+        name: identityCertificate
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}

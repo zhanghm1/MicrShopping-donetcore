@@ -33,6 +33,7 @@ namespace MicrShopping.UserManageApi.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet("{id}", Name = "Get")]
+        [Authorize]
         public async Task<UserDetailResponse> Get(int id)
         {
             UserDetailResponse resp = new UserDetailResponse();

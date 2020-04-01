@@ -29,6 +29,8 @@ namespace IdentityServer4.Quickstart.UI
 
         public IActionResult Index()
         {
+
+            System.Console.WriteLine($"{Request.Scheme}://{Request.Host.Host}:{Request.Host.Port}");
             if (_environment.IsDevelopment())
             {
                 // only show in development

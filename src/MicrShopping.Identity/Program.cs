@@ -8,12 +8,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MicrShopping.Identity.Certificates;
 using MicrShopping.Infrastructure.EFCore;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Linq;
+using System.Net;
 
 namespace MicrShopping.Identity
 {
@@ -35,6 +37,14 @@ namespace MicrShopping.Identity
             })
             .ConfigureWebHostDefaults(webBuilder =>
             {
+                webBuilder.ConfigureKestrel(serverOptions =>
+                {
+                    serverOptions.ConfigureHttpsDefaults(listenOptions =>
+                    {
+                        // certificate is an X509Certificate2
+                        listenOptions.ServerCertificate = Certificate.Get();
+                    });
+                });
                 webBuilder.UseStartup<Startup>();
             });
     }

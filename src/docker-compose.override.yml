@@ -4,7 +4,7 @@ services:
 
   micrshopping.orderapi:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ASPNETCORE_URLS=https://+:443;http://+:80
       #- OrderConnectionStrings=${orderstr:-Host=postgres;Port=5432;Database=OrderDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
 
@@ -102,7 +102,7 @@ services:
 
   micrshopping.identity:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development  # 生成环境 Product 不要使用https ,但是在IIS中部署必须使用https
+      - ASPNETCORE_ENVIRONMENT=Production  # 生成环境 Product 不要使用https ,但是在IIS中部署必须使用https
       - ASPNETCORE_URLS=https://+:443;http://+:80  
       #- IdentityConnectionStrings=${identitystr:-Host=postgres;Port=5432;Database=IdentityDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
 

@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Certificate\code.W4nCJ1p0.pfx" />
+    <None Remove="Certificate\pfx.pfx" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Certificate\code.W4nCJ1p0.pfx" />
+    <EmbeddedResource Include="Certificate\pfx.pfx" />
   </ItemGroup>
 
   <ItemGroup>

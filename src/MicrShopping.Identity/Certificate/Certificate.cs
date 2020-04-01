@@ -6,8 +6,8 @@ namespace MicrShopping.Identity.Certificates
 {
     static class Certificate
     {
-        public static string Password = "W4nCJ1p0";
-        public static string CertPath = "MicrShopping.Identity.Certificate.code.W4nCJ1p0.pfx";
+        public static string Password = "bq455f6n";
+        public static string CertPath = "MicrShopping.Identity.Certificate.pfx.pfx";
         public static X509Certificate2 Get()
         {
             var assembly = typeof(Certificate).GetTypeInfo().Assembly;

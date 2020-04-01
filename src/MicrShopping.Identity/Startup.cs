@@ -114,12 +114,12 @@ namespace MicrShopping.Identity
                 // 由于应用收到来自代理的请求，而不是 Internet 或公司网络上请求的真实源，因此原始客户端 IP 地址也必须在标头中转接。
                 app.UseForwardedHeaders();
 
-                // 也可以强制所有请求https
-                //app.Use((context, next) =>
-                //{
-                //    context.Request.Scheme = "https";
-                //    return next();
-                //});
+                ///// 也可以强制所有请求https
+                app.Use((context, next) =>
+                {
+                    context.Request.Scheme = "https";
+                    return next();
+                });
 
 
             }

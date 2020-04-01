@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.orderapi.service.name }}
+  labels:
+{{ include "micrshopping.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.orderapi.service.type }}
+  ports:
+  - name: "http"
+    port: 80
+    protocol: TCP
+    targetPort: {{ .Values.orderapi.service.httpPort }}
+  - name: "https"
+    port: 443
+    protocol: TCP
+    targetPort: {{ .Values.orderapi.service.httpsPort }}      
+  selector:
+    component: {{ .Values.orderapi.deployment_name }}

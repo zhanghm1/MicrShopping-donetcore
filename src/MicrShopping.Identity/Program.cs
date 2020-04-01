@@ -37,14 +37,6 @@ namespace MicrShopping.Identity
             })
             .ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.ConfigureKestrel(serverOptions =>
-                {
-                    serverOptions.ConfigureHttpsDefaults(listenOptions =>
-                    {
-                        // certificate is an X509Certificate2
-                        listenOptions.ServerCertificate = Certificate.Get();
-                    });
-                });
                 webBuilder.UseStartup<Startup>();
             });
     }

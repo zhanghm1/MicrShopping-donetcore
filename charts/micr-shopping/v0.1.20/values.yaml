@@ -103,18 +103,7 @@ identity:
     type: ClusterIP
     httpPort: 80
     httpsPort: 443
-    name: "micrshopping-identity"
-  serverNodePort:
-    type: NodePort
-    name: "micrshopping-identity-nodeport"
-    ports:
-      http:
-        port: 80
-        nodePort: 30010
-      https:
-        port: 443
-        nodePort: 30011
-    
+    name: "micrshopping-identity"   
 
 orderapi:
   image:

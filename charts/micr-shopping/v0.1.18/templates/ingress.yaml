@@ -21,6 +21,13 @@ spec:
         backend:
           serviceName: {{ .Values.identity.service.name }}
           servicePort: 80
+  - host: micrshoppingmvc.zhanghaiming.site
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ .Values.webmvc.service.name }}
+          servicePort: 80          
 
   tls:
   - hosts:
@@ -29,3 +36,6 @@ spec:
   - hosts:
     - micrshoppingidentity.zhanghaiming.site
     secretName: micrshoppingidentity-zhanghaiming-site
+  - hosts:
+    - micrshoppingmvc.zhanghaiming.site
+    secretName: micrshoppingmvc-zhanghaiming-site

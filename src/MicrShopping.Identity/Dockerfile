@@ -21,4 +21,6 @@ RUN dotnet publish "MicrShopping.Identity.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+VOLUME /app/Certificate
+VOLUME /app/wwwroot
 ENTRYPOINT ["dotnet", "MicrShopping.Identity.dll"]

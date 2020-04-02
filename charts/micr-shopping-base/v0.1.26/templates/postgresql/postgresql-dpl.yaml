@@ -38,9 +38,6 @@ spec:
               name: {{ template "micrshopping.secretname" . }}
               optional: false
         envFrom:
-        - configMapRef:
-            name: {{ template "micrshopping.configmapname" . }}
-            optional: false
         - secretRef:
             name: {{ template "micrshopping.secretname" . }}   
         ports:

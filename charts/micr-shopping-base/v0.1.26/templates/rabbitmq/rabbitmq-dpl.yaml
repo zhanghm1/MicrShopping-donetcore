@@ -25,28 +25,33 @@ spec:
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
-        - name: {{ .Chart.Name }}
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.rabbitmq.image.repository }}:{{ .Values.rabbitmq.image.tag }}"
-          imagePullPolicy: {{ .Values.imagePullPolicy }}
-          env:
-          - name: RABBITMQ_DEFAULT_PASS
-            value: {{ .Values.rabbitmq.env.password }}
-          - name: RABBITMQ_DEFAULT_USER
-            value: {{ .Values.rabbitmq.env.username }}
-          ports:
-          - containerPort: 5672
-            name: 5672tcp02
-            protocol: TCP
-          - containerPort: 15672
-            name: 15672tcp02
-            protocol: TCP
-          - containerPort: 5671
-            name: 5671tcp02
-            protocol: TCP
-          resources:
-            {{- toYaml .Values.resources | nindent 12 }}
+      - name: {{ .Chart.Name }}
+        securityContext:
+          {{- toYaml .Values.securityContext | nindent 12 }}
+        image: "{{ .Values.rabbitmq.image.repository }}:{{ .Values.rabbitmq.image.tag }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        env:
+        - name: secret
+          valueFrom:
+            secretKeyRef:
+              key: secret
+              name: {{ template "micrshopping.secretname" . }}
+              optional: false
+        envFrom:
+      - secretRef:
+          name: {{ template "micrshopping.secretname" . }}   
+        ports:
+        - containerPort: 5672
+          name: 5672tcp02
+          protocol: TCP
+        - containerPort: 15672
+          name: 15672tcp02
+          protocol: TCP
+        - containerPort: 5671
+          name: 5671tcp02
+          protocol: TCP
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

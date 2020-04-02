@@ -144,14 +144,4 @@ webmvc:
     name: "micrshopping-webmvc"
 
 
-webvue:
-  image:
-    repository: micrshopping.webvue
-  deployment_name: "micrshopping-webvue"
-  service:
-    type: ClusterIP
-    httpPort: 80
-    httpsPort: 443
-    name: "micrshopping-webvue"
-
 

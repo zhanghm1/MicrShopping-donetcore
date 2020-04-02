@@ -2,26 +2,35 @@ labels:
   io.cattle.role: project # options are cluster/project
 questions:
 # Global Options
-- variable: repositoryUrl
+- variable: pgsql.env.username
   required: true
-  default: "127.0.0.1:30003"
-  description: "镜像仓库的地址"
+  default: "postgres"
+  description: "pgsql 用户名"
   type: string
   label: 
   group: "Global Options"
 
-- variable: repositoryProject
+- variable: pgsql.env.password
   required: true
-  default: "micrshopping"
-  description: "镜像仓库的地址项目名称"
+  default: "postgres"
+  description: "pgsql 密码"
   type: string
   label: 
   group: "Global Options"
 
-- variable: Clients__JsVueUrl
+# Global Options
+- variable: rabbitmq.env.username
   required: true
-  default: "https://micrshopping.zhanghaiming.site"
-  description: "前端项目的访问域名"
+  default: "postgres"
+  description: "rabbitmq 用户名"
+  type: string
+  label: 
+  group: "Global Options"
+
+- variable: rabbitmq.env.password
+  required: true
+  default: "postgres"
+  description: "rabbitmq 密码"
   type: string
   label: 
   group: "Global Options"

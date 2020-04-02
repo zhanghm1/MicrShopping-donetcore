@@ -36,6 +36,15 @@ questions:
 
 
   # Global Options
+
+- variable: pgsql.host
+  required: true
+  default: "postgresql.micrshopping-base"
+  description: "pgsql服务地址"
+  type: string
+  label: 
+  group: "Global Options"  
+
 - variable: pgsql.env.username
   required: true
   default: "postgres"
@@ -52,15 +61,17 @@ questions:
   label: 
   group: "Global Options"
 
-- variable: pgsql.host
+
+
+# Global Options
+- variable: rabbitmq.host
   required: true
-  default: "admin123456"
-  description: "pgsql服务地址"
+  default: "rabbitmq.micrshopping-base"
+  description: "rabbitmq服务地址"
   type: string
   label: 
   group: "Global Options"  
 
-# Global Options
 - variable: rabbitmq.env.username
   required: true
   default: "admin"
@@ -77,11 +88,5 @@ questions:
   label: 
   group: "Global Options"
 
-- variable: rabbitmq.host
-  required: true
-  default: "admin123456"
-  description: "rabbitmq服务地址"
-  type: string
-  label: 
-  group: "Global Options"  
+
 

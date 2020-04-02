@@ -65,11 +65,11 @@ pgsql:
   image:
     repository: postgres
     tag: latest
-  deployment_name: "micrshopping-base-postgresql"
+  deployment_name: "postgresql"
   service:
     type: ClusterIP
     port: 5432
-    name: "micrshopping-base-postgresql"
+    name: "postgresql"
   env:
     username: postgres
     password: Admin123456
@@ -78,13 +78,13 @@ rabbitmq:
   image:
     repository: rabbitmq
     tag: 3-management
-  deployment_name: "micrshopping-base-rabbitmq"
+  deployment_name: "rabbitmq"
   service:
     type: ClusterIP
     httpPort1: 5672
     httpPort2: 15672
     httpPort3: 5671
-    name: "micrshopping-base-rabbitmq"
+    name: "rabbitmq"
   env:
     username: admin
     password: admin123456

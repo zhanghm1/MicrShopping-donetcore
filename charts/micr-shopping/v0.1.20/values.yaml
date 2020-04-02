@@ -63,7 +63,8 @@ affinity: {}
 
 repositoryUrl: "127.0.0.1:30003"
 repositoryProject: "micrshopping"
-Clients__MVCUrl: "micrshopping"
+IdentityUrl: "https://micrshoppingidentity.zhanghaiming.site"
+Clients__MVCUrl: "https://micrshoppingmvc.zhanghaiming.site"
 Clients__JsVueUrl: "https://micrshopping.zhanghaiming.site"
 OrderServerUrl: "https://micrshoppingapi.zhanghaiming.site/order"
 pgsql:

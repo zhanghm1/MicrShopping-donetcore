@@ -16,7 +16,7 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: {{ .Values.webvue.service.name }}
+          serviceName: {{ .Values.pgadmin4.service.name }}
           servicePort: 8001
 
   tls:

@@ -12,7 +12,7 @@ questions:
 
 - variable: pgsql.env.password
   required: true
-  default: "postgres"
+  default: "Admin123456"
   description: "pgsql 密码"
   type: string
   label: 
@@ -21,7 +21,7 @@ questions:
 # Global Options
 - variable: rabbitmq.env.username
   required: true
-  default: "postgres"
+  default: "admin"
   description: "rabbitmq 用户名"
   type: string
   label: 
@@ -29,7 +29,7 @@ questions:
 
 - variable: rabbitmq.env.password
   required: true
-  default: "postgres"
+  default: "admin123456"
   description: "rabbitmq 密码"
   type: string
   label: 

@@ -30,19 +30,6 @@ spec:
           {{- toYaml .Values.webvue.securityContext | nindent 12 }}
         image: "{{ .Values.repositoryUrl }}/{{ .Values.repositoryProject }}/{{ .Values.webvue.image.repository }}:{{ .Chart.ApiVersion }}"
         imagePullPolicy: {{ .Values.imagePullPolicy }}
-        env:
-        - name: secret
-          valueFrom:
-            secretKeyRef:
-              key: secret
-              name: {{ template "micrshopping.secretname" . }}
-              optional: false
-        envFrom:
-        - configMapRef:
-            name: {{ template "micrshopping.configmapname" . }}
-            optional: false
-        - secretRef:
-            name: {{ template "micrshopping.secretname" . }}
         ports:
         - containerPort: 80
           name: http

@@ -115,14 +115,17 @@ namespace MicrShopping.Identity
                 app.UseForwardedHeaders();
 
                 ///// 也可以强制所有请求https
-                app.Use((context, next) =>
-                {
-                    context.Request.Scheme = "https";
-                    return next();
-                });
+                
 
 
             }
+            app.Use((context, next) =>
+            {
+                System.Console.WriteLine("===================" + context.Request.Host.Host);
+                context.Request.Scheme = "https";
+                return next();
+            });
+
             app.UseStaticFiles();
 
             app.UseCors("default");

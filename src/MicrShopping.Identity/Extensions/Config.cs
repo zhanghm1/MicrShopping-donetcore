@@ -31,8 +31,11 @@ namespace MicrShopping.Identity
                 
             };
 
-        public static IEnumerable<Client> Clients(IConfiguration Configuration) =>
-            new List<Client>
+        public static IEnumerable<Client> Clients(IConfiguration Configuration) 
+        {
+            System.Console.WriteLine("Clients__MVCUrl :"+ Configuration["Clients:MVCUrl"]);
+            System.Console.WriteLine("Clients__JsVueUrl :" + Configuration["Clients:JsVueUrl"]);
+            return new List<Client>
             {
                 // interactive ASP.NET Core MVC client
                 new Client
@@ -94,5 +97,7 @@ namespace MicrShopping.Identity
                     }
                 }
             };
+        }
+            
     }
 }

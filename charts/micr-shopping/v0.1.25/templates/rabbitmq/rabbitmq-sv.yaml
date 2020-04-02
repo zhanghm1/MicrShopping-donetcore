@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.rabbitmq.service.name }}
+  labels:
+{{ include "micrshopping.labels" . | indent 4 }}
+spec:
+  type: {{ .Values.rabbitmq.service.type }}
+  ports:
+  - name: "httpport1" # 小写
+    port: 5672
+    protocol: TCP
+    targetPort: {{ .Values.rabbitmq.service.httpPort1 }}
+
+  - name: "httpport2"
+    port: 15672
+    protocol: TCP
+    targetPort: {{ .Values.rabbitmq.service.httpPort2 }}
+
+  - name: "httpport3"
+    port: 5671
+    protocol: TCP
+    targetPort: {{ .Values.rabbitmq.service.httpPort3 }}
+    
+  selector:
+    component: {{ .Values.rabbitmq.deployment_name }}

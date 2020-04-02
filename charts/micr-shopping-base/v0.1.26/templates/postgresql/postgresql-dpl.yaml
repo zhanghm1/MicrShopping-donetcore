@@ -44,6 +44,11 @@ spec:
         - name: http
           containerPort: 5432
           protocol: TCP
+          
+        - name: 5432tcp54320
+          containerPort: 5432
+          hostPort: 5432
+          protocol: TCP        
         resources:
           {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

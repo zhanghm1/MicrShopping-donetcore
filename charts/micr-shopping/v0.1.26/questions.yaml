@@ -26,3 +26,62 @@ questions:
   label: 
   group: "Global Options"
 
+  - variable: Clients__MVCUrl
+  required: true
+  default: "https://micrshoppingmvc.zhanghaiming.site"
+  description: "mvc项目的访问域名"
+  type: string
+  label: 
+  group: "Global Options"
+
+
+  # Global Options
+- variable: pgsql.env.username
+  required: true
+  default: "postgres"
+  description: "pgsql 用户名"
+  type: string
+  label: 
+  group: "Global Options"
+
+- variable: pgsql.env.password
+  required: true
+  default: "Admin123456"
+  description: "pgsql 密码"
+  type: string
+  label: 
+  group: "Global Options"
+
+- variable: pgsql.host
+  required: true
+  default: "admin123456"
+  description: "pgsql服务地址"
+  type: string
+  label: 
+  group: "Global Options"  
+
+# Global Options
+- variable: rabbitmq.env.username
+  required: true
+  default: "admin"
+  description: "rabbitmq 用户名"
+  type: string
+  label: 
+  group: "Global Options"
+
+- variable: rabbitmq.env.password
+  required: true
+  default: "admin123456"
+  description: "rabbitmq 密码"
+  type: string
+  label: 
+  group: "Global Options"
+
+- variable: rabbitmq.host
+  required: true
+  default: "admin123456"
+  description: "rabbitmq服务地址"
+  type: string
+  label: 
+  group: "Global Options"  
+

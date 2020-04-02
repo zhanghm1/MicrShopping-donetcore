@@ -99,5 +99,5 @@ pgadmin4:
     httpPort: 8001
     name: "pgadmin4"
   env:
-    username: admin
+    username: admin@qq.com
     password: admin123456

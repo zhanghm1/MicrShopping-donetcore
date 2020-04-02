@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.webvue.deployment_name }}
+  labels:
+{{ include "micrshopping.labels" . | indent 4 }}
+    component: {{ .Values.webvue.deployment_name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "micrshopping.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "micrshopping.name" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        component: {{ .Values.webvue.deployment_name }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+      - name: {{ .Chart.Name }}
+        securityContext:
+          {{- toYaml .Values.webvue.securityContext | nindent 12 }}
+        image: "{{ .Values.repositoryUrl }}/{{ .Values.repositoryProject }}/{{ .Values.webvue.image.repository }}:{{ .Chart.ApiVersion }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy }}
+        env:
+        - name: secret
+          valueFrom:
+            secretKeyRef:
+              key: secret
+              name: {{ template "micrshopping.secretname" . }}
+              optional: false
+        envFrom:
+        - configMapRef:
+            name: {{ template "micrshopping.configmapname" . }}
+            optional: false
+        - secretRef:
+            name: {{ template "micrshopping.secretname" . }}
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        - containerPort: 443
+          name: https
+          protocol: TCP
+        resources:
+          {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}

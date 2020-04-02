@@ -38,8 +38,8 @@ spec:
               name: {{ template "micrshopping.secretname" . }}
               optional: false
         envFrom:
-      - secretRef:
-          name: {{ template "micrshopping.secretname" . }}   
+        - secretRef:
+            name: {{ template "micrshopping.secretname" . }}   
         ports:
         - containerPort: 5672
           name: 5672tcp02

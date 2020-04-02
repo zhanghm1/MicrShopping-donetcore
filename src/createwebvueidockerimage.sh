@@ -28,7 +28,7 @@ $cmd
 
 
 
-cd ../charts/micr-shopping-webvue
+cd ../../../../charts/micr-shopping-webvue
 # 移除将要创建的文件夹
 cmd="rm -rf $new_docker_tag"
 echo $cmd

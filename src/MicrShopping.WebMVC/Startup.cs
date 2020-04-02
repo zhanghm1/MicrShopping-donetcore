@@ -40,7 +40,7 @@ namespace MicrShopping.WebMVC
                 .AddOpenIdConnect("oidc", options =>
                 {
                     options.Authority = IdentityUrl;
-                    options.RequireHttpsMetadata = false;
+                    options.RequireHttpsMetadata = true;
 
                     options.ClientId = "mvc";
                     options.ClientSecret = "secret";

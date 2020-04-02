@@ -26,7 +26,7 @@ questions:
   label: 
   group: "Global Options"
 
-  - variable: Clients__MVCUrl
+- variable: Clients__MVCUrl
   required: true
   default: "https://micrshoppingmvc.zhanghaiming.site"
   description: "mvc项目的访问域名"

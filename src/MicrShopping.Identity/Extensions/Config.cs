@@ -35,6 +35,10 @@ namespace MicrShopping.Identity
         {
             System.Console.WriteLine("Clients__MVCUrl :"+ Configuration["Clients:MVCUrl"]);
             System.Console.WriteLine("Clients__JsVueUrl :" + Configuration["Clients:JsVueUrl"]);
+
+            string Clients_MVCUrl = Configuration["Clients:MVCUrl"];
+            string Clients_JsVueUrl = Configuration["Clients:JsVueUrl"];
+
             return new List<Client>
             {
                 // interactive ASP.NET Core MVC client
@@ -42,16 +46,16 @@ namespace MicrShopping.Identity
                 {
                     ClientId = "mvc",
                     ClientSecrets = { new Secret("secret".Sha256()) },
-
+                    
                     AllowedGrantTypes = GrantTypes.Code,
                     RequireConsent = true,
                     RequirePkce = true,
                 
                     // where to redirect to after login
-                    RedirectUris = { Configuration["Clients:MVCUrl"] +"/signin-oidc" },
+                    RedirectUris = { Clients_MVCUrl + "/signin-oidc" },
 
                     // where to redirect to after logout
-                    PostLogoutRedirectUris = { Configuration["Clients:MVCUrl"] + "/signout-callback-oidc" },
+                    PostLogoutRedirectUris = { Clients_MVCUrl + "/signout-callback-oidc" },
 
                     AllowedScopes = new List<string>
                     {
@@ -71,9 +75,9 @@ namespace MicrShopping.Identity
                     RequirePkce = true,
                     RequireClientSecret = false,
 
-                    RedirectUris =           { Configuration["Clients:JsVueUrl"] +"/#/callback" },
-                    PostLogoutRedirectUris = { Configuration["Clients:JsVueUrl"] },
-                    AllowedCorsOrigins =     { Configuration["Clients:JsVueUrl"] },
+                    RedirectUris =           { Clients_JsVueUrl + "/#/callback" },
+                    PostLogoutRedirectUris = { Clients_JsVueUrl },
+                    AllowedCorsOrigins =     { Clients_JsVueUrl },
 
                     AllowedScopes =
                     {

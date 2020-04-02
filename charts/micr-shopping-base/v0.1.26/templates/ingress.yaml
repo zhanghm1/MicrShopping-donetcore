@@ -1,0 +1,25 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: micrshopping-pgadmin4-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/cors-allow-headers: >-
+      DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization
+    nginx.ingress.kubernetes.io/cors-allow-methods: 'PUT, GET, POST, OPTIONS'
+    nginx.ingress.kubernetes.io/cors-allow-origin: '*'
+    nginx.ingress.kubernetes.io/enable-cors: 'true'
+spec:
+  rules:
+  - host: micrshopping.zhanghaiming.site
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ .Values.webvue.service.name }}
+          servicePort: 8001
+
+  tls:
+  - hosts:
+    - micrshopping.zhanghaiming.site
+    secretName: micrshopping-zhanghaiming-site

@@ -89,3 +89,15 @@ rabbitmq:
     username: admin
     password: admin123456
 
+pgadmin4:
+  image:
+    repository: dpage/pgadmin4
+    tag: latest
+  deployment_name: "pgadmin4"
+  service:
+    type: ClusterIP
+    httpPort: 8001
+    name: "pgadmin4"
+  env:
+    username: admin
+    password: admin123456

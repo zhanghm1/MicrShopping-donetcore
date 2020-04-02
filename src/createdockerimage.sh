@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #拉取最新代码
-git checkout master
+git checkout origin/master
 
 docker build -f MicrShopping.OrderApi/Dockerfile -t micrshopping.orderapi . --no-cache
 docker build -f MicrShopping.Identity/Dockerfile -t micrshopping.identity . --no-cache
@@ -44,6 +44,9 @@ cmd="docker push 127.0.0.1:30003/micrshopping/micrshopping.usermanageapi:$new_do
 $cmd
 cmd="docker push 127.0.0.1:30003/micrshopping/micrshopping.webmvc:$new_docker_tag" 
 $cmd
+
+#拉取最新代码
+git checkout origin/master
 
 cd ../charts/micr-shopping
 

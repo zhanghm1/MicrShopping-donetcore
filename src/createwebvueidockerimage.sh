@@ -1,7 +1,7 @@
 #!/bin/sh
 
 #拉取最新代码
-git checkout master
+git checkout origin/master
 
 cd MicrShopping.WebVue/VueClient
 npm i
@@ -26,7 +26,8 @@ $cmd
 cmd="docker push 127.0.0.1:30003/micrshopping/micrshopping.webvue:$new_docker_tag"
 $cmd
 
-
+#拉取最新代码
+git checkout origin/master
 
 cd ../../../../charts/micr-shopping-webvue
 # 移除将要创建的文件夹

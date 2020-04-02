@@ -39,7 +39,7 @@ namespace MicrShopping.Identity
             string Clients_MVCUrl = Configuration["Clients:MVCUrl"];
             string Clients_JsVueUrl = Configuration["Clients:JsVueUrl"];
 
-            return new List<Client>
+            var list = new List<Client>
             {
                 // interactive ASP.NET Core MVC client
                 new Client
@@ -101,6 +101,8 @@ namespace MicrShopping.Identity
                     }
                 }
             };
+            System.Console.WriteLine("clients:"+Newtonsoft.Json.JsonConvert.SerializeObject(list));
+            return list;
         }
             
     }

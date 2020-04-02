@@ -11,14 +11,6 @@ metadata:
     nginx.ingress.kubernetes.io/enable-cors: 'true'
 spec:
   rules:
-  - host: micrshopping.zhanghaiming.site
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: {{ .Values.webvue.service.name }}
-          servicePort: 80
-
   - host: micrshoppingidentity.zhanghaiming.site
     http:
       paths:
@@ -35,9 +27,6 @@ spec:
           servicePort: 80          
 
   tls:
-  - hosts:
-    - micrshopping.zhanghaiming.site
-    secretName: micrshopping-zhanghaiming-site
   - hosts:
     - micrshoppingidentity.zhanghaiming.site
     secretName: micrshoppingidentity-zhanghaiming-site

@@ -8,6 +8,7 @@ namespace MicrShopping.Domain.Entities.Orders
 {
     public class Order: EntityBase
     {
+        public int UserId { get; set; }
         public string Code { get; set; }
         public decimal TotalPrice { get; set; }
         public string Address { get; set; }

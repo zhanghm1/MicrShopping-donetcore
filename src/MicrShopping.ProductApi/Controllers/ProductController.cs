@@ -32,7 +32,7 @@ namespace MicrShopping.ProductApi.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        [Route("ProductList")]
+        [Route("List")]
         public PageBase<ProductListResponse> GetProductList([FromQuery]ProductListRequest request)
         {
             
@@ -44,7 +44,7 @@ namespace MicrShopping.ProductApi.Controllers
         }
 
         [HttpGet]
-        [Route("ProductClassList")]
+        [Route("ClassList")]
         public PageBase<ProductClassResponse> GetProductClassList()
         {
             
@@ -56,7 +56,7 @@ namespace MicrShopping.ProductApi.Controllers
 
         }
         [HttpGet]
-        [Route("ProductDetail/{id}")]
+        [Route("Detail/{id}")]
         public ProductDetailResponse GetProductDetail(int id)
         {
             ProductDetailResponse resp = new ProductDetailResponse();

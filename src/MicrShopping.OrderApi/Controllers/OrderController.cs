@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Consul;
 using DotNetCore.CAP;
 using Microsoft.AspNetCore.Authorization;
@@ -22,16 +23,18 @@ namespace MicrShopping.OrderApi.Controllers
     {
         private readonly ILogger<OrderController> _logger;
         private readonly ICapPublisher _capBus;
-
+        private readonly IMapper _mapper;
         private OrderDbContext _orderDbContext;
         public OrderController(ILogger<OrderController> logger
             , ICapPublisher capPublisher
             , OrderDbContext orderDbContext
+            , IMapper mapper
             )
         {
             _logger = logger;
             _capBus = capPublisher;
             _orderDbContext = orderDbContext;
+            _mapper = mapper;
         }
         [HttpGet]
         public IActionResult Get()
@@ -41,7 +44,7 @@ namespace MicrShopping.OrderApi.Controllers
         }
         [Authorize(Roles = "admin")]
         [HttpPost]
-        [Route("CreateOrder")]
+        [Route("Create")]
         public async Task<string> CreateOrder(CreateOrderRequest request)
         {
             // 准备productList

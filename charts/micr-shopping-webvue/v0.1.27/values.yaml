@@ -61,6 +61,10 @@ tolerations: []
 
 affinity: {}
 
+repositoryUrl: "127.0.0.1:30003"
+repositoryProject: "micrshopping"
+
+
 webvue:
   image:
     repository: micrshopping.webvue

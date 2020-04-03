@@ -6,7 +6,8 @@ Vue.use(Vuex)
 //这里是具体的状态值
 const state = {
     UserInfo: null,
-    UserPermission:[]
+    UserPermission:[],
+    ShoppingCarts:[]
 };
 
 //mutations 是更新state某个值的具体行为

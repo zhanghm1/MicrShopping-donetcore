@@ -6,6 +6,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MicrShopping.Domain;
 using MicrShopping.Domain.Entities.Orders;
 using MicrShopping.Domain.Entities.Products;
 using MicrShopping.OrderApi.Data;
@@ -29,9 +30,9 @@ namespace MicrShopping.OrderApi.Controllers
         [Route("List")]
         public async Task<List<ShoppingCartListItemResponse>> ShoppingCartList()
         {
-            int UerId = 0;
+            int userId = UserManage.GetUserId(User);
             List<ShoppingCartListItemResponse> resp = new List<ShoppingCartListItemResponse>();
-            var cartList = _orderDbContext.ShoppingCart.Where(a => a.UserId == UerId && !a.IsDeleted).ToList();
+            var cartList = _orderDbContext.ShoppingCart.Where(a => a.UserId == userId && !a.IsDeleted).ToList();
             
             //要去获取产品列表
             List<Product> products = new List<Product>();
@@ -50,14 +51,14 @@ namespace MicrShopping.OrderApi.Controllers
         [Route("Add")]
         public async Task<string> AddShoppingCart(AddShoppingCartRequest request)
         {
-            int UerId = 0;
+            int userId = UserManage.GetUserId(User);
             // 准备productList
             List<Product> products = new List<Product>();
             
             string OrderNo = string.Empty;
-            if (_orderDbContext.ShoppingCart.Any(a => a.UserId== UerId && a.ProdictId == request.ProductId))
+            if (_orderDbContext.ShoppingCart.Any(a => a.UserId== userId && a.ProdictId == request.ProductId))
             {
-                ShoppingCart shoppingCart = _orderDbContext.ShoppingCart.FirstOrDefault(a => a.UserId == UerId && a.ProdictId == request.ProductId);
+                ShoppingCart shoppingCart = _orderDbContext.ShoppingCart.FirstOrDefault(a => a.UserId == userId && a.ProdictId == request.ProductId);
                 shoppingCart.Number += request.Number;
                 _orderDbContext.ShoppingCart.Update(shoppingCart);
             }

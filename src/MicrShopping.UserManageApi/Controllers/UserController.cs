@@ -7,6 +7,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MicrShopping.Domain;
 using MicrShopping.Infrastructure.Common;
 using MicrShopping.Infrastructure.EFCore;
 using MicrShopping.UserManageApi.Models;
@@ -49,8 +50,8 @@ namespace MicrShopping.UserManageApi.Controllers
         public UserDetailResponse Identity()
         {
             UserDetailResponse resp = new UserDetailResponse();
-
-            var user = _dbContext.Users.Where(a => a.Id == 1).FirstOrDefault();
+            int userId = UserManage.GetUserId(User);
+            var user = _dbContext.Users.Where(a => a.Id == userId).FirstOrDefault();
             //user.NormalizedUserName
             resp = _mapper.Map<UserDetailResponse>(user);
             return resp;

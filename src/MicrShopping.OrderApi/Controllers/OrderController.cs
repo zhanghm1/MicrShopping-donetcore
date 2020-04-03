@@ -8,6 +8,7 @@ using DotNetCore.CAP;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using MicrShopping.Domain;
 using MicrShopping.Domain.Entities.Orders;
 using MicrShopping.Domain.Entities.Products;
 using MicrShopping.Infrastructure.Common;
@@ -47,6 +48,7 @@ namespace MicrShopping.OrderApi.Controllers
         [Route("Create")]
         public async Task<string> CreateOrder(CreateOrderRequest request)
         {
+            int userId = UserManage.GetUserId(User);
             // 准备productList
             List<Product> products = new List<Product>();
             foreach (var item in request.Data)
@@ -63,7 +65,8 @@ namespace MicrShopping.OrderApi.Controllers
                     Address = request.Address,
                     Code = CodePrefix.OrderCodePrefix + Guid.NewGuid().ToString().Replace("-", ""),
                     //TotalPrice = orderItemList.Sum(a => a.TotalPrice),
-                    Status = OrderStatus.WaitPay
+                    Status = OrderStatus.WaitPay,
+                    UserId= userId
                 };
                 _orderDbContext.Order.Add(order);
                 

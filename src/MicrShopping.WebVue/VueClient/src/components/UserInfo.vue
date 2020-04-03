@@ -4,6 +4,8 @@
       {{UserInfo.UserName}}
       <button @click="GetUserInfo">获取用户信息</button>
       <button @click="logout">退出</button>
+      <button @click="shoppingCart">查看购物车</button>
+      <vShoppingCart></vShoppingCart>
     </div>
     <div v-else>
       <button @click="login">登录</button>
@@ -18,14 +20,17 @@ import {mapState,mapMutations} from 'vuex';
 import {OidcConfig} from '../configs/config';
 import userService from "../service/userService" ;
 
-
-
+import vShoppingCart from "./shoppingCart" ;
+import bus from '../common/bus';
 
 export default {
   name: 'UserInfo1',
   props: {
     msg: String
   },
+  components: {
+        vShoppingCart,
+    },
   data(){
     return {
       OidcManager:{},
@@ -45,7 +50,7 @@ export default {
     },
 
     GetUserInfo() {
-      userService.GetUserInfo(this.UserInfo.UserId).then((data)=>{
+      userService.GetMyUserInfo().then((data)=>{
         window.console.log("GetUserInfo", data);
       });
     },
@@ -57,6 +62,9 @@ export default {
 
         this.OidcManager.signoutRedirect();
         
+    },
+    shoppingCart(){
+      bus.$emit("ShowShoppingCart",true);
     }
   },
   created(){

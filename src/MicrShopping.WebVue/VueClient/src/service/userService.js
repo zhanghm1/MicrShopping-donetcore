@@ -1,6 +1,9 @@
 import axios from "../common/Request"
 
 const UserService={
+    //
+    /**获取 */
+    GetMyUserInfo:()=> axios.get('/account/user/Identity'),
     /**获取 */
     GetUserInfo:(currentUserId)=> axios.get('/account/user/'+currentUserId),
     /**编辑 */

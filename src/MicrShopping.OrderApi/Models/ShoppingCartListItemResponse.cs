@@ -7,8 +7,9 @@ namespace MicrShopping.OrderApi.Models
 {
     public class ShoppingCartListItemResponse
     {
+        public int ShoppingCartId { get; set; }
         public int Number { get; set; }
-        public int Id { get; set; }
+        public int ProductId { get; set; }
         /// <summary>
         /// 唯一编号
         /// </summary>
@@ -18,10 +19,10 @@ namespace MicrShopping.OrderApi.Models
         /// <summary>
         /// 真实价格
         /// </summary>
-        public decimal RealPrice { get; set; }
+        public decimal? RealPrice { get; set; }
         /// <summary>
         /// 原价
         /// </summary>
-        public decimal FormerPrice { get; set; }
+        public decimal? FormerPrice { get; set; }
     }
 }

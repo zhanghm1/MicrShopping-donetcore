@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -78,15 +79,33 @@ namespace MicrShopping.OrderApi
             });
             
 
-            string IdentityUrl= Configuration["IdentityUrl"];// "http://192.168.0.189:5008";
+            string IdentityUrl= Configuration["IdentityUrl"];
 
-            services.AddAuthentication("Bearer")
-                 .AddJwtBearer("Bearer", options =>
-                 {
-                     options.Authority = IdentityUrl;
-                     options.RequireHttpsMetadata = false;
-                     options.Audience = "orderapi";
-                 });
+            //services.AddAuthentication("Bearer")
+            //     .AddJwtBearer("Bearer", options =>
+            //     {
+            //         options.Authority = IdentityUrl;
+            //         options.RequireHttpsMetadata = false;
+            //         options.Audience = "orderapi";
+            //     });
+            //保持结构一致，要么多个服务都使用上面的结构，要么统一用下面的结构，不要分开用，分开会对 ClaimsPrincipal 解析不一致
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultForbidScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddIdentityServerAuthentication(options =>
+            {
+                options.Authority = IdentityUrl;
+                options.ApiName = "orderapi";
+                options.RequireHttpsMetadata = false;
+            });
+
+
+
             //设置Authorize的policy,可以添加多个
             services.AddAuthorization(options =>
             {

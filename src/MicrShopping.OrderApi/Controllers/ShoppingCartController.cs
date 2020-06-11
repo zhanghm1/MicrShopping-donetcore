@@ -38,10 +38,23 @@ namespace MicrShopping.OrderApi.Controllers
             List<Product> products = new List<Product>();
 
 
-            foreach (var item in products)
+            foreach (var item in cartList)
             {
-               var respitem = _mapper.Map<ShoppingCartListItemResponse>(item);
-                respitem.Number = cartList.FirstOrDefault(a => a.ProdictId == item.Id).Number;
+                var product = products.FirstOrDefault(a => a.Id == item.ProdictId);
+
+                ShoppingCartListItemResponse respitem = new ShoppingCartListItemResponse()
+                { 
+                
+                ProductId=1,
+                ShoppingCartId= item.Id,
+                Number=item.Number,
+                Code= product?.Code,
+                Description= product?.Description,
+                FormerPrice= product?.FormerPrice,
+                Name= product?.Name,
+                RealPrice= product?.RealPrice
+                };
+
                 resp.Add(respitem);
             }
             return resp;
@@ -64,7 +77,12 @@ namespace MicrShopping.OrderApi.Controllers
             }
             else
             {
-                ShoppingCart shoppingCart = new ShoppingCart();
+                ShoppingCart shoppingCart = new ShoppingCart()
+                { 
+                UserId= userId,
+                ProdictId= request.ProductId,
+                Number= request.Number,
+                };
                 _orderDbContext.ShoppingCart.Add(shoppingCart);
             }
 

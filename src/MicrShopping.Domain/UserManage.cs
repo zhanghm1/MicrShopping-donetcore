@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using System.Text;
 using System.Linq;
+using IdentityModel;
 
 namespace MicrShopping.Domain
 {
     public static class UserManage
     {
+
         public static int GetUserId(ClaimsPrincipal User)
         {
-            var claim = User.Claims.Where(a => a.Type == "sub").FirstOrDefault();
+            var claim = User.Claims.Where(a => a.Type == JwtClaimTypes.Subject).FirstOrDefault();
             return Convert.ToInt32(claim.Value);
         }
-        public static int GetUserName(ClaimsPrincipal User)
+        public static string GetUserName(ClaimsPrincipal User)
         {
-            var claim = User.Claims.Where(a => a.Type == "name").FirstOrDefault();
-            return Convert.ToInt32(claim.Value);
+            var claim = User.Claims.Where(a => a.Type == JwtClaimTypes.Name).FirstOrDefault();
+            return claim.Value;
         }
     }
 }

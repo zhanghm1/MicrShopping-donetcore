@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -82,13 +83,23 @@ namespace MicrShopping.PayApi
             
 
             string IdentityUrl = Configuration["IdentityUrl"];// "http://192.168.0.189:5008";
-            services.AddAuthentication("Bearer")
-                 .AddJwtBearer("Bearer", options =>
-                 {
-                     options.Authority = IdentityUrl;
-                     options.RequireHttpsMetadata = false;
-                     options.Audience = "payapi";
-                 });
+
+
+            services.AddAuthentication(options =>
+            {
+                options.DefaultScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultAuthenticateScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultSignInScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+                options.DefaultForbidScheme = IdentityServerAuthenticationDefaults.AuthenticationScheme;
+            })
+            .AddIdentityServerAuthentication(options =>
+            {
+                options.Authority = IdentityUrl;
+                options.ApiName = "payapi";
+                options.RequireHttpsMetadata = false;
+            });
+            
 
             services.AddMvc(options => {
                 options.Filters.Add<ApiExceptionFilter>();

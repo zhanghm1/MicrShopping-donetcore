@@ -1,6 +1,7 @@
 ﻿using MicrShopping.Infrastructure.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,6 +14,35 @@ namespace MicrShopping.Domain.Entities.Products
         /// </summary>
         public string Code { get; set; }
         public string Name { get; set; }
+        /// <summary>
+        /// 封面图
+        /// </summary>
+        public string ImageUrl { get; set; }
+        /// <summary>
+        /// 详情的轮播图
+        /// </summary>
+        public string DetailUrl { get; set; }
+        /// <summary>
+        /// 详情的轮播图列表数据
+        /// </summary>
+        [NotMapped]
+        public List<string> DetailUrlList
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(DetailUrl))
+                {
+                    return new List<string>();
+                }
+                return DetailUrl.Split(',').ToList();
+            }
+            set {
+                DetailUrl = string.Join(',', value);
+            }
+        }
+        /// <summary>
+        /// 描述
+        /// </summary>
         public string Description { get; set; }
         /// <summary>
         /// 真实价格

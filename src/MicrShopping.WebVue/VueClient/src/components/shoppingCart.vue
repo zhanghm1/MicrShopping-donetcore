@@ -8,8 +8,13 @@
       
         <div class="product-item" v-for="item in ShoppingCarts" :key="item.id">
             <div>{{item.name}}</div>
-            <div>{{item.number}}</div>
+            <div>数量{{item.number}}</div>
+            <div>实际价格：{{item.realPrice}}</div>
         </div>
+        <div class="Settlement">
+            <span> 总计：{{Zongji}}</span> <button @click="createOrder">去付款</button>
+        </div>
+        
   </div>
 </template>
 
@@ -22,13 +27,20 @@ export default {
     data(){
         return {
             IsShowShoppingCart:false,
-            productList:[]
         }
     },
     computed: {
         ...mapState([
             'ShoppingCarts'
         ]),
+        Zongji:function(){
+            let reslut =0;
+            this.ShoppingCarts.forEach(item=>{
+                reslut+=item.number*item.realPrice;
+            });
+
+            return reslut;
+        }
     },
     methods:{
         ...mapMutations([
@@ -38,14 +50,16 @@ export default {
             if(this.ShoppingCarts.length==0){
                 return ;
             }
-            let data={};
+            let data={
+                data:[]
+            };
             this.ShoppingCarts.forEach(element => {
-                data.data.push({productId:element.id,number:element.number});
+                data.data.push({productId:element.productId,number:element.number});
             });
             data.address="深圳";
             data.phone= "13500000000";
 
-            orderService.PostEditOrder(data).then(resp=>{
+            orderService.CreateOrder(data).then(resp=>{
                 window.console.log(resp);
             })
         },
@@ -57,7 +71,8 @@ export default {
                 window.console.log(resp);
                 this.SaveShoppingCarts(resp.data);
             });
-        }
+        },
+        
     },
     created(){
         this.GetShoppingCartList();
@@ -82,5 +97,20 @@ export default {
 .close{
     float: right;
     padding: 5px 10px;
+}
+
+.shoppingCart .product-item{
+    border: 1px red solid;
+    width: 100%;
+    height: 80px;
+    padding: 10px 15px;
+    margin: 0;
+    float: none;
+    box-sizing: border-box;
+}
+.Settlement{
+    position:absolute;
+    bottom: 0;
+    height: 50px;
 }
 </style>

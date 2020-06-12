@@ -42,6 +42,16 @@ namespace MicrShopping.ProductApi.Controllers
 
             return resp;
         }
+        [HttpGet]
+        [Route("ListByIds")]
+        public List<ProductListResponse> GetProductList(string ids)
+        {
+            int[] _ids = ids.Split(',').Select(a => Convert.ToInt32(a)).ToArray();
+            var list = _productDbContext.Product.Where(a=>_ids.Contains(a.Id)).ToList();
+
+            return _mapper.Map<List<ProductListResponse>>(list.ToList());
+
+        }
 
         [HttpGet]
         [Route("ClassList")]

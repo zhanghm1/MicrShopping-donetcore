@@ -5,7 +5,10 @@
       <button @click="GetUserInfo">获取用户信息</button>
       <button @click="logout">退出</button>
       <button @click="shoppingCart">查看购物车</button>
+      <button @click="ShowOrderList">查看订单</button>
       <vShoppingCart></vShoppingCart>
+      <vOrderList v-if="OrderListShow"></vOrderList>
+      
     </div>
     <div v-else>
       <button @click="login">登录</button>
@@ -21,6 +24,7 @@ import {OidcConfig} from '../configs/config';
 import userService from "../service/userService" ;
 
 import vShoppingCart from "./shoppingCart" ;
+import vOrderList from "./OrderLsit" ;
 import bus from '../common/bus';
 
 export default {
@@ -30,10 +34,12 @@ export default {
   },
   components: {
         vShoppingCart,
+        vOrderList,
     },
   data(){
     return {
       OidcManager:{},
+      OrderListShow:false,
     }
   },
       computed: {
@@ -65,7 +71,10 @@ export default {
     },
     shoppingCart(){
       bus.$emit("ShowShoppingCart",true);
-    }
+    },
+    ShowOrderList(){
+      this.OrderListShow=true;
+    },
   },
   created(){
     //var that=this;

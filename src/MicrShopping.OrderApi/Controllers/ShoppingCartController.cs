@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -9,8 +10,12 @@ using Microsoft.AspNetCore.Mvc;
 using MicrShopping.Domain;
 using MicrShopping.Domain.Entities.Orders;
 using MicrShopping.Domain.Entities.Products;
+using MicrShopping.Infrastructure.Common;
 using MicrShopping.OrderApi.Data;
 using MicrShopping.OrderApi.Models;
+using MicrShopping.OrderApi.Services;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 namespace MicrShopping.OrderApi.Controllers
 {
@@ -21,10 +26,12 @@ namespace MicrShopping.OrderApi.Controllers
     {
         private readonly IMapper _mapper;
         private OrderDbContext _orderDbContext;
-        public ShoppingCartController(OrderDbContext orderDbContext, IMapper mapper)
+        private ProductService _productService;
+        public ShoppingCartController(OrderDbContext orderDbContext, IMapper mapper,ProductService productService)
         {
             _orderDbContext = orderDbContext;
             _mapper = mapper;
+            _productService = productService;
         }
         [HttpGet]
         [Route("List")]
@@ -34,8 +41,8 @@ namespace MicrShopping.OrderApi.Controllers
             List<ShoppingCartListItemResponse> resp = new List<ShoppingCartListItemResponse>();
             var cartList = _orderDbContext.ShoppingCart.Where(a => a.UserId == userId && !a.IsDeleted).ToList();
             
-            //要去获取产品列表
-            List<Product> products = new List<Product>();
+            //去获取产品列表
+            List<ProductListResponse> products = await _productService.GetProductListByIds(string.Join(',', cartList.Select(a => a.ProdictId)));
 
 
             foreach (var item in cartList)

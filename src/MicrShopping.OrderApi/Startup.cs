@@ -20,6 +20,7 @@ using MicrShopping.Domain;
 using MicrShopping.Domain.Extensions;
 using MicrShopping.Infrastructure.Common.ApiFilters;
 using MicrShopping.OrderApi.Data;
+using MicrShopping.OrderApi.Services;
 
 namespace MicrShopping.OrderApi
 {
@@ -43,6 +44,8 @@ namespace MicrShopping.OrderApi
 
 
             services.AddScoped<OrderDbContextSeed>();
+            services.AddScoped<ProductService>();
+            
 
             string Host = Configuration["ConnectionStrings:Host"];
             string Port = Configuration["ConnectionStrings:Port"];

@@ -15,6 +15,7 @@ using MicrShopping.Infrastructure.Common;
 using MicrShopping.Infrastructure.Common.CapModels;
 using MicrShopping.OrderApi.Data;
 using MicrShopping.OrderApi.Models;
+using MicrShopping.OrderApi.Services;
 
 namespace MicrShopping.OrderApi.Controllers
 {
@@ -26,16 +27,19 @@ namespace MicrShopping.OrderApi.Controllers
         private readonly ICapPublisher _capBus;
         private readonly IMapper _mapper;
         private OrderDbContext _orderDbContext;
+        private ProductService _productService;
         public OrderController(ILogger<OrderController> logger
             , ICapPublisher capPublisher
             , OrderDbContext orderDbContext
             , IMapper mapper
+            , ProductService productService
             )
         {
             _logger = logger;
             _capBus = capPublisher;
             _orderDbContext = orderDbContext;
             _mapper = mapper;
+            _productService = productService;
         }
         [HttpGet]
         public IActionResult Get()
@@ -49,15 +53,12 @@ namespace MicrShopping.OrderApi.Controllers
         public async Task<string> CreateOrder(CreateOrderRequest request)
         {
             int userId = UserManage.GetUserId(User);
+
             // 准备productList
-            List<Product> products = new List<Product>();
-            foreach (var item in request.Data)
-            {
-                Product product = new Product() {Id=item.ProductId };
-                products.Add(product);
-            }
+            List<ProductListResponse> products = await _productService.GetProductListByIds(string.Join(',', request.Data.Select(a => a.ProductId)));
+
+            
             string OrderNo = string.Empty;
-            //ResponseBase responseBase = new ResponseBase();
             using (var trans = _orderDbContext.Database.BeginTransaction(_capBus, autoCommit: true))
             {
                 Order order = new Order()
@@ -75,7 +76,7 @@ namespace MicrShopping.OrderApi.Controllers
 
                 foreach (var item in products)
                 {
-                    int number = request.Data.FirstOrDefault(a => a.ProductId == item.Id).Number;
+                    int number = request.Data.Where(a => a.ProductId == item.Id).Sum(a=>a.Number);
                     OrderItem orderItem = new OrderItem()
                     {
                         Code = CodePrefix.OrderItemCodePrefix+ Guid.NewGuid().ToString().Replace("-", ""),
@@ -109,6 +110,23 @@ namespace MicrShopping.OrderApi.Controllers
             
             return OrderNo;
 
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("List")]
+        public async Task<PageBase<Order>> CreateOrder(int PageIndex,int PageSize)
+        {
+            int userId = UserManage.GetUserId(User);
+            var list = _orderDbContext.Order.Where(a => a.UserId == userId && !a.IsDeleted).Skip(PageSize*(PageIndex-1)).Take(PageSize).ToList();
+            PageBase<Order> resp = new PageBase<Order> {
+            List= list,
+            PageIndex= PageIndex,
+            PageSize= PageSize,
+
+            };
+
+            return resp;
         }
         [HttpGet]
         [Route("Identity")]

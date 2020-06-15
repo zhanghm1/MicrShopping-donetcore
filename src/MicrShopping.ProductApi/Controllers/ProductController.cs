@@ -46,6 +46,10 @@ namespace MicrShopping.ProductApi.Controllers
         [Route("ListByIds")]
         public List<ProductListResponse> GetProductList(string ids)
         {
+            if (string.IsNullOrWhiteSpace(ids))
+            {
+                return null;
+            }
             int[] _ids = ids.Split(',').Select(a => Convert.ToInt32(a)).ToArray();
             var list = _productDbContext.Product.Where(a=>_ids.Contains(a.Id)).ToList();
 

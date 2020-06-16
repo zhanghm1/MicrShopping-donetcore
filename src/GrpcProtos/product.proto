@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option csharp_namespace = "MicrShopping.protos";
+
+
+package ProductGrpc;
+
+
+service ProductGrpcService {
+  rpc ProductListByIds (ProductListRequest) returns (ProductListResponse);
+}
+message ProductListRequest {
+  string ids = 1;
+}
+message ProductListResponse {
+  repeated ProductListItemResponse data = 1;
+}
+message ProductListItemResponse {
+  int32 id = 1;
+  string code = 2;
+  string name = 3;
+  string image_url = 4;
+  string description = 5;
+  double real_price=6;
+  double former_price=7;
+  int32 now_count = 8;
+}

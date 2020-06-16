@@ -17,6 +17,7 @@ using Microsoft.OpenApi.Models;
 using MicrShopping.Domain.Extensions;
 using MicrShopping.Infrastructure.Common.ApiFilters;
 using MicrShopping.ProductApi.Data;
+using MicrShopping.ProductApi.GrpcService;
 
 namespace MicrShopping.ProductApi
 {
@@ -37,6 +38,7 @@ namespace MicrShopping.ProductApi
                 options.Filters.Add<ApiExceptionFilter>();
                 options.Filters.Add<ApiResultFilter>();
             }).AddWebApiConventions();//处理返回HttpResponseMessage
+            services.AddGrpc();
 
             services.AddScoped<ProductDbContextSeed>();
 
@@ -127,6 +129,7 @@ namespace MicrShopping.ProductApi
 
             app.UseRouting();
 
+
             //app.UseSwagger();
             // 生成自己的SwaggerUI  这里已经因为在ApiGateway项目集成多个服务的SwaggerUI，就注释了；只需要生成/swagger/v1/swagger.json文件让ApiGateway能获取到
             //app.UseSwaggerUI(c =>
@@ -141,6 +144,8 @@ namespace MicrShopping.ProductApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+
+                endpoints.MapGrpcService<ProductGrpcServcie>();
             });
         }
 

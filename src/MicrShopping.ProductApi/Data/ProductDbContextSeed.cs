@@ -23,9 +23,9 @@ namespace MicrShopping.ProductApi.Data
             };
 
             List<Product> products = new List<Product>() {
-                new Product(){Code=CodePrefix.ProductCodePrefix+"0001",FormerPrice=12,RealPrice=10,NowCount=100,Name="产品1" },
-                new Product(){Code=CodePrefix.ProductCodePrefix+"0002",FormerPrice=12,RealPrice=10,NowCount=100,Name="产品2" },
-                new Product(){Code=CodePrefix.ProductCodePrefix+"0003",FormerPrice=12,RealPrice=10,NowCount=100,Name="产品3" },
+                new Product(){Code=CodePrefix.ProductCodePrefix+"0001",FormerPrice=12,RealPrice=10,NowCount=10,Name="产品1" },
+                new Product(){Code=CodePrefix.ProductCodePrefix+"0002",FormerPrice=12,RealPrice=10,NowCount=10,Name="产品2" },
+                new Product(){Code=CodePrefix.ProductCodePrefix+"0003",FormerPrice=12,RealPrice=10,NowCount=10,Name="产品3" },
             };
 
             foreach (var item in products)

@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Protos\product.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="DotNetCore.CAP" Version="3.0.2" />
     <PackageReference Include="DotNetCore.CAP.Dashboard" Version="3.0.2" />
@@ -24,11 +28,24 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.WebApiCompatShim" Version="2.2.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.29.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.29.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MicrShopping.Domain\MicrShopping.Domain.csproj" />
     <ProjectReference Include="..\MicrShopping.Infrastructure.Common\MicrShopping.Infrastructure.Common.csproj" />
+  </ItemGroup>
+  
+  
+  
+  <ItemGroup>
+    <!--全部包括的写法，所有的定义文件都是Client，这在自己没有gRPC服务可用，如果自己有，则自己的应该为Server-->
+    <!--<Protobuf Include="..\GrpcProtos\*.proto" GrpcServices="Client" Link="GrpcProtos\%(RecursiveDir)%(Filename)%(Extension)" />-->
+    
+    
+    <Protobuf Include="..\GrpcProtos\product.proto" GrpcServices="Client" Link="GrpcProtos\%(RecursiveDir)%(Filename)%(Extension)" />
+    <Protobuf Include="..\GrpcProtos\user.proto" GrpcServices="Client" Link="GrpcProtos\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

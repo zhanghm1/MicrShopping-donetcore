@@ -19,6 +19,7 @@ using MicrShopping.Domain;
 using MicrShopping.Domain.Extensions;
 using MicrShopping.Infrastructure.Common.ApiFilters;
 using MicrShopping.Infrastructure.EFCore;
+using MicrShopping.UserApi.GrpcService;
 
 namespace MicrShopping.UserManageApi
 {
@@ -40,6 +41,7 @@ namespace MicrShopping.UserManageApi
                 options.Filters.Add<ApiResultFilter>();
             }).AddWebApiConventions();//处理返回HttpResponseMessage
 
+            services.AddGrpc();
 
             string Host = Configuration["ConnectionStrings:Host"];
             string Port = Configuration["ConnectionStrings:Port"];
@@ -142,6 +144,8 @@ namespace MicrShopping.UserManageApi
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<UserGrpcServcie>();
+
                 endpoints.MapControllers();
             });
         }

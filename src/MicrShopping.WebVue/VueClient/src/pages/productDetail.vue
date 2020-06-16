@@ -14,7 +14,7 @@ export default {
     name:"ProductDetail",
     data(){
         return {
-            product:{}
+            product:{name:'',code:'',realPrice:0,}
         }
     },
     methods:{

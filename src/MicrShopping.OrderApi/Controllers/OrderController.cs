@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Consul;
 using DotNetCore.CAP;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -28,11 +29,16 @@ namespace MicrShopping.OrderApi.Controllers
         private readonly IMapper _mapper;
         private OrderDbContext _orderDbContext;
         private ProductService _productService;
+        private UserService _userService;
+
+
+        
         public OrderController(ILogger<OrderController> logger
             , ICapPublisher capPublisher
             , OrderDbContext orderDbContext
             , IMapper mapper
             , ProductService productService
+            , UserService userService
             )
         {
             _logger = logger;
@@ -40,6 +46,7 @@ namespace MicrShopping.OrderApi.Controllers
             _orderDbContext = orderDbContext;
             _mapper = mapper;
             _productService = productService;
+            _userService = userService;
         }
         [HttpGet]
         public IActionResult Get()
@@ -55,9 +62,17 @@ namespace MicrShopping.OrderApi.Controllers
             int userId = UserManage.GetUserId(User);
 
             // 准备productList
+            // webapi接口获取数据
             List<ProductListResponse> products = await _productService.GetProductListByIds(string.Join(',', request.Data.Select(a => a.ProductId)));
 
+            // grpc服务 获取数据
+            products = await _productService.GetProductListByIdsGrpc(string.Join(',', request.Data.Select(a => a.ProductId)));
+
             
+            string accessToken = await HttpContext.GetTokenAsync("access_token");
+            //获取用户信息,需要grpc 身份认证，用identityserver4的token
+            var userInfo = await _userService.GetUserInfoByIdGrpc(userId, accessToken);
+
             string OrderNo = string.Empty;
             using (var trans = _orderDbContext.Database.BeginTransaction(_capBus, autoCommit: true))
             {
@@ -65,7 +80,6 @@ namespace MicrShopping.OrderApi.Controllers
                 {
                     Address = request.Address,
                     Code = CodePrefix.OrderCodePrefix + Guid.NewGuid().ToString().Replace("-", ""),
-                    //TotalPrice = orderItemList.Sum(a => a.TotalPrice),
                     Status = OrderStatus.WaitPay,
                     UserId= userId
                 };

@@ -23,6 +23,10 @@ namespace MicrShopping.ProductApi.Models
         /// </summary>
         public decimal FormerPrice { get; set; }
         /// <summary>
+        /// 封面图
+        /// </summary>
+        public string ImageUrl { get; set; }
+        /// <summary>
         /// 当前库存
         /// </summary>
         public int NowCount { get; set; }

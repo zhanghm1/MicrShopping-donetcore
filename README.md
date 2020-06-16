@@ -28,4 +28,4 @@
     配置环境变量时使用密文或者映射，应首先添加一个不是All的配置
 
 
-遇到在ocelot中代理请求超时，其他的都正常，清理了docker network后正常。
+遇到在ocelot中代理请求超时，其他的都正常，执行  docker network rm $(docker network ls -q) 清理了所有的 docker network后恢复正常。

@@ -5,8 +5,7 @@ services:
   micrshopping.orderapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      #- OrderConnectionStrings=${orderstr:-Host=postgres;Port=5432;Database=OrderDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
+      - ASPNETCORE_URLS=http://+:80
 
       - ConnectionStrings__Host=postgres
       - ConnectionStrings__Port=5432
@@ -29,18 +28,16 @@ services:
       - ServerName=orderapi
 
       - IdentityUrl=http://192.168.0.189:5008
+      - ProductGrpcUrl=http://micrshopping.productapi:81
+      - ProductUrl=http://micrshopping.productapi
+      - UserGrpcUrl=http://micrshopping.usermanageapi:81
     ports:
       - 5004:80
-      - 5003:443
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
   micrshopping.payapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-      #- PayConnectionStrings=${paystr:-Host=postgres;Port=5432;Database=PayDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
+      - ASPNETCORE_URLS=http://+:80
 
       - ConnectionStrings__Host=postgres
       - ConnectionStrings__Port=5432
@@ -62,18 +59,12 @@ services:
       - IdentityUrl=http://192.168.0.189:5008
     ports:
       - 5006:80
-      - 5005:443
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
 
   micrshopping.usermanageapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-
-      #- IdentityConnectionStrings=${usermanagestr:-Host=postgres;Port=5432;Database=IdentityDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
+      - ASPNETCORE_URLS=http://+:80
 
       - ConnectionStrings__Host=postgres
       - ConnectionStrings__Port=5432
@@ -89,22 +80,20 @@ services:
       - scheme=http
       - ip=micrshopping.usermanageapi
       - port=80
+      - grpcport=81
+
       - ConsulAddress=http://consul4:8500
       - ServerName=usermanageapi
 
       - IdentityUrl=http://192.168.0.189:5008
     ports:
       - 5016:80
-      - 5017:443
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+      - 5015:81
 
   micrshopping.identity:
     environment:
-      - ASPNETCORE_ENVIRONMENT=Development  # 生产环境 Product nginx使用http ,但是在IIS中部署必须使用https
-      - ASPNETCORE_URLS=https://+:443;http://+:80  
-      #- IdentityConnectionStrings=${identitystr:-Host=postgres;Port=5432;Database=IdentityDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80  
 
       - ConnectionStrings__Host=postgres
       - ConnectionStrings__Port=5432
@@ -124,32 +113,11 @@ services:
       - Clients__JsVueUrl=http://192.168.0.189:5015
     ports:
       - 5008:80
-      - 5007:443
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
-
-  micrshopping.apigateway:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
-
-      - scheme=https
-      - ip=192.168.0.189
-      - port=5001
-
-    ports:
-      - 5002:80
-      - 5001:443
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
   micrshopping.productapi:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=https://+:443;http://+:80
-      #- ProductConnectionStrings=${productstr:-Host=postgres;Port=5432;Database=ProductDB;User ID=postgres;Password=Admin123456!;Pooling=true;}
 
       
       - ConnectionStrings__Host=postgres
@@ -166,33 +134,33 @@ services:
       - scheme=http
       - ip=micrshopping.productapi
       - port=80
+      - grpcport=81
+
       - ConsulAddress=http://consul4:8500
       - ServerName=productapi
-
       - IdentityUrl=http://192.168.0.189:5008
     ports:
       - 5010:80
-      - 5009:443
+      - 5009:81
+
+  micrshopping.apigateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - 5002:80
+      - 5001:443
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
-
-
-
-
-
-
   micrshopping.webmvc:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=https://+:443;http://+:80
+      - ASPNETCORE_URLS=http://+:80
 
       - IdentityUrl=http://192.168.0.189:5008
       - OrderServerUrl=http://192.168.0.189:5004
     ports:
       - 5012:80
-      - 5011:443
-    volumes:
-      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+

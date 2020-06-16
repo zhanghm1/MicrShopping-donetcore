@@ -45,7 +45,7 @@ namespace MicrShopping.OrderApi
 
             services.AddScoped<OrderDbContextSeed>();
             services.AddScoped<ProductService>();
-            
+            services.AddScoped<UserService>();
 
             string Host = Configuration["ConnectionStrings:Host"];
             string Port = Configuration["ConnectionStrings:Port"];

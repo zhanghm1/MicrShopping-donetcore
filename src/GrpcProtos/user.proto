@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option csharp_namespace = "MicrShopping.protos";
+
+
+package UserGrpc;
+
+
+service UserGrpcService {
+  rpc UserListByIds (UserListRequest) returns (UserListResponse);
+
+  rpc UserInfoById (UserInfoRequest) returns (UserListItemResponse);
+}
+message UserInfoRequest {
+  int32 id = 1;
+}
+
+
+message UserListRequest {
+  string ids = 1;
+}
+message UserListResponse {
+  repeated UserListItemResponse data = 1;
+}
+message UserListItemResponse {
+  int32 id = 1;
+  string user_name = 2;
+  string nick_name = 3;
+
+}

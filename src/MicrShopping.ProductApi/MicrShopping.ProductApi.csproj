@@ -23,11 +23,17 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="3.1.2" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.WebApiCompatShim" Version="2.2.0" />
+    
+    <PackageReference Include="Grpc.AspNetCore" Version="2.29.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MicrShopping.Domain\MicrShopping.Domain.csproj" />
     <ProjectReference Include="..\MicrShopping.Infrastructure.Common\MicrShopping.Infrastructure.Common.csproj" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Protobuf Include="..\GrpcProtos\*.proto" GrpcServices="Server" Link="GrpcProtos\%(RecursiveDir)%(Filename)%(Extension)" />
   </ItemGroup>
 
 

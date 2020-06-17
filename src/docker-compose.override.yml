@@ -18,8 +18,8 @@ services:
       - RabbitMQ__Password=admin123456
       - RabbitMQ__Port=5672
 
-#      - RabbitMQ__Host=rabbitmq  对象形式的参数写法 等同 RabbitMQ:{Host:"rabbitmq"}
-#      - RabbitMQ__0__UserName=admin  数组形式的参数写法 等同 RabbitMQ:[{UserName:"admin"}]
+      #      - RabbitMQ__Host=rabbitmq  对象形式的参数写法 等同 RabbitMQ:{Host:"rabbitmq"}
+      #      - RabbitMQ__0__UserName=admin  数组形式的参数写法 等同 RabbitMQ:[{UserName:"admin"}]
 
       - scheme=http
       - ip=micrshopping.orderapi
@@ -27,7 +27,7 @@ services:
       - ConsulAddress=http://consul4:8500
       - ServerName=orderapi
 
-      - IdentityUrl=http://192.168.0.189:5008
+      - IdentityUrl=http://192.168.0.189:5012
       - ProductGrpcUrl=http://micrshopping.productapi:81
       - ProductUrl=http://micrshopping.productapi
       - UserGrpcUrl=http://micrshopping.usermanageapi:81
@@ -56,63 +56,9 @@ services:
       - ConsulAddress=http://consul4:8500
       - ServerName=payapi
 
-      - IdentityUrl=http://192.168.0.189:5008
+      - IdentityUrl=http://192.168.0.189:5012
     ports:
       - 5006:80
-
-
-  micrshopping.usermanageapi:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80
-
-      - ConnectionStrings__Host=postgres
-      - ConnectionStrings__Port=5432
-      - ConnectionStrings__Database=IdentityDB
-      - ConnectionStrings__UserID=postgres
-      - ConnectionStrings__Password=Admin123456!
-      
-      - RabbitMQ__Host=rabbitmq
-      - RabbitMQ__UserName=admin
-      - RabbitMQ__Password=admin123456
-      - RabbitMQ__Port=5672
-      
-      - scheme=http
-      - ip=micrshopping.usermanageapi
-      - port=80
-      - grpcport=81
-
-      - ConsulAddress=http://consul4:8500
-      - ServerName=usermanageapi
-
-      - IdentityUrl=http://192.168.0.189:5008
-    ports:
-      - 5016:80
-      - 5015:81
-
-  micrshopping.identity:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:80  
-
-      - ConnectionStrings__Host=postgres
-      - ConnectionStrings__Port=5432
-      - ConnectionStrings__Database=IdentityDB
-      - ConnectionStrings__UserID=postgres
-      - ConnectionStrings__Password=Admin123456!
-
-      - scheme=http
-      - ip=micrshopping.identity
-      - port=80
-      - ConsulAddress=http://consul4:8500
-      - ServerName=identityapi
-
-      - IdentityUrl=http://192.168.0.189:5008
-
-      - Clients__MVCUrl=http://192.168.0.189:5012
-      - Clients__JsVueUrl=http://192.168.0.189:5015
-    ports:
-      - 5008:80
 
   micrshopping.productapi:
     environment:
@@ -138,10 +84,63 @@ services:
 
       - ConsulAddress=http://consul4:8500
       - ServerName=productapi
-      - IdentityUrl=http://192.168.0.189:5008
+      - IdentityUrl=http://192.168.0.189:5012
+    ports:
+      - 5008:80
+      - 5007:81
+
+  micrshopping.usermanageapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+
+      - ConnectionStrings__Host=postgres
+      - ConnectionStrings__Port=5432
+      - ConnectionStrings__Database=IdentityDB
+      - ConnectionStrings__UserID=postgres
+      - ConnectionStrings__Password=Admin123456!
+      
+      - RabbitMQ__Host=rabbitmq
+      - RabbitMQ__UserName=admin
+      - RabbitMQ__Password=admin123456
+      - RabbitMQ__Port=5672
+      
+      - scheme=http
+      - ip=micrshopping.usermanageapi
+      - port=80
+      - grpcport=81
+
+      - ConsulAddress=http://consul4:8500
+      - ServerName=usermanageapi
+
+      - IdentityUrl=http://192.168.0.189:5012
     ports:
       - 5010:80
       - 5009:81
+
+  micrshopping.identity:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80  
+
+      - ConnectionStrings__Host=postgres
+      - ConnectionStrings__Port=5432
+      - ConnectionStrings__Database=IdentityDB
+      - ConnectionStrings__UserID=postgres
+      - ConnectionStrings__Password=Admin123456!
+
+      - scheme=http
+      - ip=micrshopping.identity
+      - port=80
+      - ConsulAddress=http://consul4:8500
+      - ServerName=identityapi
+
+      - IdentityUrl=http://192.168.0.189:5012
+
+      - Clients__MVCUrl=http://192.168.0.189:5014
+      - Clients__JsVueUrl=http://192.168.0.189:5015
+    ports:
+      - 5012:80
 
   micrshopping.apigateway:
     environment:
@@ -162,5 +161,5 @@ services:
       - IdentityUrl=http://192.168.0.189:5008
       - OrderServerUrl=http://192.168.0.189:5004
     ports:
-      - 5012:80
+      - 5014:80
 

@@ -16,4 +16,4 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build the Docker image
       
-      run: docker build -f src/MicrShopping.OrderApi/Dockerfile -t micrshopping.orderapi . --no-cache
+      run: cd src && docker build -f MicrShopping.OrderApi/Dockerfile -t micrshopping.orderapi . --no-cache

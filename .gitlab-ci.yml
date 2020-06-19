@@ -1,0 +1,48 @@
+
+stages:
+  - createtag
+  - build
+  - pull_image
+
+# # 创建tag
+# job0:
+#   stage: createtag
+#   tags:
+#     - shell_tag  # 要指定runner中的哪一个tag执行
+#   script: 
+#     - git clone http://$GITLAB_USER:$GITLAB_PASSWORD@192.168.0.189:8929/root/test.git temp
+#     - git tag 0.1.8
+#     - git push origin 0.1.8  
+#   only:
+#     - master
+
+job1:
+  stage: build
+  tags:
+    - testtags  # 要指定runner中的哪一个tag执行,不同的job可执行不同的runner-tag
+  script:
+    - cd dist
+    - docker build -f Dockerfile -t zhanghm11/test:$CI_COMMIT_REF_NAME . --no-cache
+  only:
+    - tags
+
+job2:
+  stage: pull_image
+  before_script:
+    - echo $DOCKER_REGISTRY_USER
+    - echo $DOCKER_REGISTRY_PASSWORD
+    - echo $DOCKER_REGISTRY_URL
+    - echo $CI_COMMIT_REF_NAME    #tag名
+  
+    - docker login -u $DOCKER_REGISTRY_USER -p $DOCKER_REGISTRY_PASSWORD $DOCKER_REGISTRY_URL  
+  tags:
+    - testtags
+
+  script:
+    - docker push zhanghm11/test:$CI_COMMIT_REF_NAME
+
+  only:
+    - tags
+
+
+    # https://github.com/semantic-release/semantic-release  语义版本号

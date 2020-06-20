@@ -102,10 +102,10 @@ namespace MicrShopping.ProductApi
                 });
             });
 
-            //services.AddSwaggerGen(c =>
-            //{
-            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-            //});
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            });
             if (env.IsDevelopment())
             {
                 services.AddConsulConfig(Configuration);
@@ -130,7 +130,7 @@ namespace MicrShopping.ProductApi
             app.UseRouting();
 
 
-            //app.UseSwagger();
+            app.UseSwagger(); //生成/swagger/v1/swagger.json
             // 生成自己的SwaggerUI  这里已经因为在ApiGateway项目集成多个服务的SwaggerUI，就注释了；只需要生成/swagger/v1/swagger.json文件让ApiGateway能获取到
             //app.UseSwaggerUI(c =>
             //{

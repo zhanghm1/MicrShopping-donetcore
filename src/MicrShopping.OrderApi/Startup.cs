@@ -167,12 +167,13 @@ namespace MicrShopping.OrderApi
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseSwagger();
+            app.UseSwagger();//生成/swagger/v1/swagger.json
+
             // 生成自己的SwaggerUI  这里已经因为在ApiGateway项目集成多个服务的SwaggerUI，就注释了；只需要生成/swagger/v1/swagger.json文件让ApiGateway能获取到
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            });
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            //});
 
             app.UseEndpoints(endpoints =>
             {

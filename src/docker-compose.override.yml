@@ -27,7 +27,7 @@ services:
       - ConsulAddress=http://consul4:8500
       - ServerName=orderapi
 
-      - IdentityUrl=http://192.168.0.189:5012    #这个地址要和access_token携带信息的issuer地址相同，也就是说，前后端的IdentityUrl应该要保持一致，不能一个内网一个外网
+      - IdentityUrl=http://192.168.1.189:5012    #这个地址要和access_token携带信息的issuer地址相同，也就是说，前后端的IdentityUrl应该要保持一致，不能一个内网一个外网
       - ProductGrpcUrl=http://micrshopping.productapi:81
       - ProductUrl=http://micrshopping.productapi
       - UserGrpcUrl=http://micrshopping.usermanageapi:81
@@ -56,7 +56,7 @@ services:
       - ConsulAddress=http://consul4:8500
       - ServerName=payapi
 
-      - IdentityUrl=http://192.168.0.189:5012   #这个地址要和access_token携带信息的issuer地址相同，也就是说，前后端的IdentityUrl应该要保持一致，不能一个内网一个外网
+      - IdentityUrl=http://192.168.1.189:5012   #这个地址要和access_token携带信息的issuer地址相同，也就是说，前后端的IdentityUrl应该要保持一致，不能一个内网一个外网
     ports:
       - 5006:80
 
@@ -84,7 +84,7 @@ services:
 
       - ConsulAddress=http://consul4:8500
       - ServerName=productapi
-      - IdentityUrl=http://192.168.0.189:5012    #这个地址要和access_token携带信息的issuer地址相同，也就是说，前后端的IdentityUrl应该要保持一致，不能一个内网一个外网
+      - IdentityUrl=http://192.168.1.189:5012    #这个地址要和access_token携带信息的issuer地址相同，也就是说，前后端的IdentityUrl应该要保持一致，不能一个内网一个外网
     ports:
       - 5008:80
       - 5007:81
@@ -113,7 +113,7 @@ services:
       - ConsulAddress=http://consul4:8500
       - ServerName=usermanageapi
 
-      - IdentityUrl=http://192.168.0.189:5012    #这个地址要和access_token携带信息的issuer地址相同，也就是说，前后端的IdentityUrl应该要保持一致，不能一个内网一个外网
+      - IdentityUrl=http://192.168.1.189:5012    #这个地址要和access_token携带信息的issuer地址相同，也就是说，前后端的IdentityUrl应该要保持一致，不能一个内网一个外网
     ports:
       - 5010:80
       - 5009:81
@@ -135,10 +135,10 @@ services:
       - ConsulAddress=http://consul4:8500
       - ServerName=identityapi
 
-     # - IdentityUrl=http://192.168.0.189:5012    #这个地址要和access_token携带信息的issuer地址相同，也就是说，前后端的IdentityUrl应该要保持一致，不能一个内网一个外网
+     # - IdentityUrl=http://192.168.1.189:5012    #这个地址要和access_token携带信息的issuer地址相同，也就是说，前后端的IdentityUrl应该要保持一致，不能一个内网一个外网
 
-      - Clients__MVCUrl=http://192.168.0.189:5014
-      - Clients__JsVueUrl=http://192.168.0.189:5015
+      - Clients__MVCUrl=http://192.168.1.189:5014
+      - Clients__JsVueUrl=http://192.168.1.189:5015
     ports:
       - 5012:80
 
@@ -158,8 +158,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
 
-      - IdentityUrl=http://192.168.0.189:5012
-      - OrderServerUrl=http://192.168.0.189:5004
+      - IdentityUrl=http://192.168.1.189:5012
+      - OrderServerUrl=http://192.168.1.189:5004
     ports:
       - 5014:80
 

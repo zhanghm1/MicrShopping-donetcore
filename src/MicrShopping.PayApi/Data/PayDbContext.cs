@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MicrShopping.OrderApi.Data.Entities;
+using MicrShopping.Domain.Entities.Pays;
 using System;
 using System.Collections.Generic;
 using System.Linq;

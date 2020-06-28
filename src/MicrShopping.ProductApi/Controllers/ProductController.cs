@@ -90,7 +90,11 @@ namespace MicrShopping.ProductApi.Controllers
             resp.ProductClass= _mapper.Map<List<ProductClassResponse>>(linq.ToList());
             return resp;
         }
-
+        /// <summary>
+        /// 创建订单时减少产品库存数量
+        /// </summary>
+        /// <param name="reduceProductModel"></param>
+        /// <returns></returns>
         [NonAction]
         [CapSubscribe(CapStatic.ReduceProductCount)]
         public async Task ReduceProductCount(ReduceProductModel reduceProductModel)

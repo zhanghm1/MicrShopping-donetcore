@@ -31,8 +31,6 @@ namespace MicrShopping.OrderApi.Controllers
         private ProductService _productService;
         private UserService _userService;
 
-
-        
         public OrderController(ILogger<OrderController> logger
             , ICapPublisher capPublisher
             , OrderDbContext orderDbContext
@@ -48,18 +46,21 @@ namespace MicrShopping.OrderApi.Controllers
             _productService = productService;
             _userService = userService;
         }
+
         [HttpGet]
         public IActionResult Get()
         {
             return Ok();
-
         }
+
         [Authorize(Roles = "admin")]
         [HttpPost]
         [Route("Create")]
         public async Task<string> CreateOrder(CreateOrderRequest request)
         {
             int userId = UserManage.GetUserId(User);
+
+            //_orderDbContext.ShoppingCart.Where(a =>)
 
             // 准备productList
             // webapi接口获取数据
@@ -68,7 +69,6 @@ namespace MicrShopping.OrderApi.Controllers
             // grpc服务 获取数据
             products = await _productService.GetProductListByIdsGrpc(string.Join(',', request.Data.Select(a => a.ProductId)));
 
-            
             string accessToken = await HttpContext.GetTokenAsync("access_token");
             //获取用户信息,需要grpc 身份认证，用identityserver4的token
             var userInfo = await _userService.GetUserInfoByIdGrpc(userId, accessToken);
@@ -81,19 +81,18 @@ namespace MicrShopping.OrderApi.Controllers
                     Address = request.Address,
                     Code = CodePrefix.OrderCodePrefix + Guid.NewGuid().ToString().Replace("-", ""),
                     Status = OrderStatus.WaitPay,
-                    UserId= userId
+                    UserId = userId
                 };
                 _orderDbContext.Order.Add(order);
-                
 
-                List<OrderItem> orderItemList = new List<OrderItem>(); 
+                List<OrderItem> orderItemList = new List<OrderItem>();
 
                 foreach (var item in products)
                 {
-                    int number = request.Data.Where(a => a.ProductId == item.Id).Sum(a=>a.Number);
+                    int number = request.Data.Where(a => a.ProductId == item.Id).Sum(a => a.Number);
                     OrderItem orderItem = new OrderItem()
                     {
-                        Code = CodePrefix.OrderItemCodePrefix+ Guid.NewGuid().ToString().Replace("-", ""),
+                        Code = CodePrefix.OrderItemCodePrefix + Guid.NewGuid().ToString().Replace("-", ""),
                         FormerPrice = item.FormerPrice,
                         RealPrice = item.RealPrice,
                         Number = number,
@@ -101,7 +100,7 @@ namespace MicrShopping.OrderApi.Controllers
                         ProductId = item.Id,
                         TotalPrice = item.RealPrice * number,
                         IsDeleted = false,
-                        OrderCode= order.Code
+                        OrderCode = order.Code
                     };
                     orderItemList.Add(orderItem);
                 }
@@ -111,9 +110,10 @@ namespace MicrShopping.OrderApi.Controllers
 
                 _orderDbContext.SaveChanges();
 
-                ReduceProductModel productModel = new ReduceProductModel() {
-                OrderCode=order.Code,
-                ProductItem= orderItemList.Select(a => new ReduceProductItemModel { Id = a.ProductId, Number = a.Number }).ToList()
+                ReduceProductModel productModel = new ReduceProductModel()
+                {
+                    OrderCode = order.Code,
+                    ProductItem = orderItemList.Select(a => new ReduceProductItemModel { Id = a.ProductId, Number = a.Number }).ToList()
                 };
 
                 _capBus.Publish(CapStatic.ReduceProductCount, productModel);
@@ -121,34 +121,32 @@ namespace MicrShopping.OrderApi.Controllers
                 OrderNo = order.Code;
                 //trans.Commit();
             }
-            
-            return OrderNo;
 
+            return OrderNo;
         }
 
         [Authorize]
         [HttpGet]
         [Route("List")]
-        public async Task<PageBase<Order>> CreateOrder(int PageIndex,int PageSize)
+        public async Task<PageBase<Order>> CreateOrder(int PageIndex, int PageSize)
         {
             int userId = UserManage.GetUserId(User);
-            var list = _orderDbContext.Order.Where(a => a.UserId == userId && !a.IsDeleted).Skip(PageSize*(PageIndex-1)).Take(PageSize).ToList();
-            PageBase<Order> resp = new PageBase<Order> {
-            List= list,
-            PageIndex= PageIndex,
-            PageSize= PageSize,
-
+            var list = _orderDbContext.Order.Where(a => a.UserId == userId && !a.IsDeleted).Skip(PageSize * (PageIndex - 1)).Take(PageSize).ToList();
+            PageBase<Order> resp = new PageBase<Order>
+            {
+                List = list,
+                PageIndex = PageIndex,
+                PageSize = PageSize,
             };
 
             return resp;
         }
+
         [HttpGet]
         [Route("Identity")]
         public IActionResult Identity()
         {
             return new JsonResult(from c in User.Claims select new { c.Type, c.Value });
-
         }
-        
     }
 }

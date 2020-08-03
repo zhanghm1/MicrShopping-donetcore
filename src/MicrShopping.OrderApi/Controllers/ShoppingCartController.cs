@@ -27,12 +27,14 @@ namespace MicrShopping.OrderApi.Controllers
         private readonly IMapper _mapper;
         private OrderDbContext _orderDbContext;
         private ProductService _productService;
-        public ShoppingCartController(OrderDbContext orderDbContext, IMapper mapper,ProductService productService)
+
+        public ShoppingCartController(OrderDbContext orderDbContext, IMapper mapper, ProductService productService)
         {
             _orderDbContext = orderDbContext;
             _mapper = mapper;
             _productService = productService;
         }
+
         [HttpGet]
         [Route("List")]
         public async Task<List<ShoppingCartListItemResponse>> ShoppingCartList()
@@ -40,26 +42,24 @@ namespace MicrShopping.OrderApi.Controllers
             int userId = UserManage.GetUserId(User);
             List<ShoppingCartListItemResponse> resp = new List<ShoppingCartListItemResponse>();
             var cartList = _orderDbContext.ShoppingCart.Where(a => a.UserId == userId && !a.IsDeleted).ToList();
-            
+
             //去获取产品列表
             List<ProductListResponse> products = await _productService.GetProductListByIds(string.Join(',', cartList.Select(a => a.ProdictId)));
-
 
             foreach (var item in cartList)
             {
                 var product = products.FirstOrDefault(a => a.Id == item.ProdictId);
 
                 ShoppingCartListItemResponse respitem = new ShoppingCartListItemResponse()
-                { 
-                
-                ProductId=1,
-                ShoppingCartId= item.Id,
-                Number=item.Number,
-                Code= product?.Code,
-                Description= product?.Description,
-                FormerPrice= product?.FormerPrice,
-                Name= product?.Name,
-                RealPrice= product?.RealPrice
+                {
+                    ProductId = product.Id,
+                    ShoppingCartId = item.Id,
+                    Number = item.Number,
+                    Code = product?.Code,
+                    Description = product?.Description,
+                    FormerPrice = product?.FormerPrice,
+                    Name = product?.Name,
+                    RealPrice = product?.RealPrice
                 };
 
                 resp.Add(respitem);
@@ -74,9 +74,9 @@ namespace MicrShopping.OrderApi.Controllers
             int userId = UserManage.GetUserId(User);
             // 准备productList
             List<Product> products = new List<Product>();
-            
+
             string OrderNo = string.Empty;
-            if (_orderDbContext.ShoppingCart.Any(a => a.UserId== userId && a.ProdictId == request.ProductId))
+            if (_orderDbContext.ShoppingCart.Any(a => a.UserId == userId && a.ProdictId == request.ProductId))
             {
                 ShoppingCart shoppingCart = _orderDbContext.ShoppingCart.FirstOrDefault(a => a.UserId == userId && a.ProdictId == request.ProductId);
                 shoppingCart.Number += request.Number;
@@ -85,10 +85,10 @@ namespace MicrShopping.OrderApi.Controllers
             else
             {
                 ShoppingCart shoppingCart = new ShoppingCart()
-                { 
-                UserId= userId,
-                ProdictId= request.ProductId,
-                Number= request.Number,
+                {
+                    UserId = userId,
+                    ProdictId = request.ProductId,
+                    Number = request.Number,
                 };
                 _orderDbContext.ShoppingCart.Add(shoppingCart);
             }
@@ -96,7 +96,6 @@ namespace MicrShopping.OrderApi.Controllers
             _orderDbContext.SaveChanges();
 
             return OrderNo;
-
         }
     }
 }

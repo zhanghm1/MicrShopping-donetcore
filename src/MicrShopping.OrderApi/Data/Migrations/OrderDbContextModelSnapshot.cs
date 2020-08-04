@@ -128,7 +128,7 @@ namespace MicrShopping.OrderApi.Migrations
                     b.Property<int>("Number")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ProdictId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("integer");
 
                     b.Property<int>("UserId")

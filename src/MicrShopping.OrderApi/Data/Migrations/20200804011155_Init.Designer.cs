@@ -10,8 +10,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace MicrShopping.OrderApi.Migrations
 {
     [DbContext(typeof(OrderDbContext))]
-    [Migration("20200311095628_init")]
-    partial class init
+    [Migration("20200804011155_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,6 +64,9 @@ namespace MicrShopping.OrderApi.Migrations
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("numeric");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("Order");
@@ -109,6 +112,33 @@ namespace MicrShopping.OrderApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("OrderItem");
+                });
+
+            modelBuilder.Entity("MicrShopping.Domain.Entities.Orders.ShoppingCart", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("CreateTime")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("boolean");
+
+                    b.Property<int>("Number")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ShoppingCart");
                 });
 #pragma warning restore 612, 618
         }

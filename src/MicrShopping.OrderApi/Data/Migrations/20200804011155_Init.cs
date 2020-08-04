@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace MicrShopping.OrderApi.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,6 +16,7 @@ namespace MicrShopping.OrderApi.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     CreateTime = table.Column<DateTime>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
                     Code = table.Column<string>(nullable: true),
                     TotalPrice = table.Column<decimal>(nullable: false),
                     Address = table.Column<string>(nullable: true),
@@ -53,6 +54,23 @@ namespace MicrShopping.OrderApi.Migrations
                 {
                     table.PrimaryKey("PK_OrderItem", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "ShoppingCart",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    CreateTime = table.Column<DateTime>(nullable: false),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    UserId = table.Column<int>(nullable: false),
+                    ProductId = table.Column<int>(nullable: false),
+                    Number = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCart", x => x.Id);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -62,6 +80,9 @@ namespace MicrShopping.OrderApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "OrderItem");
+
+            migrationBuilder.DropTable(
+                name: "ShoppingCart");
         }
     }
 }

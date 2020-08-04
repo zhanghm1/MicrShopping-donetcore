@@ -56,18 +56,18 @@ namespace MicrShopping.OrderApi.Controllers
         [Authorize(Roles = "admin")]
         [HttpPost]
         [Route("Create")]
-        public async Task<string> CreateOrder(CreateOrderRequest request)
+        public async Task<string> CreateOrder(CreateOrderForShopingRequest request)
         {
             int userId = UserManage.GetUserId(User);
 
-            //_orderDbContext.ShoppingCart.Where(a =>)
-
+            var shoppings = _orderDbContext.ShoppingCart.Where(a => a.UserId == userId && request.ShopingIds.Contains(a.Id) && !a.IsDeleted).ToList();
+            var productIds = shoppings.Select(a => a.ProductId).ToList();
             // 准备productList
             // webapi接口获取数据
-            List<ProductListResponse> products = await _productService.GetProductListByIds(string.Join(',', request.Data.Select(a => a.ProductId)));
+            List<ProductListResponse> products = await _productService.GetProductListByIds(string.Join(',', shoppings.Select(a => a.ProductId)));
 
             // grpc服务 获取数据
-            products = await _productService.GetProductListByIdsGrpc(string.Join(',', request.Data.Select(a => a.ProductId)));
+            products = await _productService.GetProductListByIdsGrpc(string.Join(',', shoppings.Select(a => a.ProductId)));
 
             string accessToken = await HttpContext.GetTokenAsync("access_token");
             //获取用户信息,需要grpc 身份认证，用identityserver4的token
@@ -89,7 +89,9 @@ namespace MicrShopping.OrderApi.Controllers
 
                 foreach (var item in products)
                 {
-                    int number = request.Data.Where(a => a.ProductId == item.Id).Sum(a => a.Number);
+                    var shopingProducts = shoppings.Where(a => a.ProductId == item.Id);
+                    int number = shopingProducts.Sum(a => a.Number);
+
                     OrderItem orderItem = new OrderItem()
                     {
                         Code = CodePrefix.OrderItemCodePrefix + Guid.NewGuid().ToString().Replace("-", ""),
@@ -103,6 +105,11 @@ namespace MicrShopping.OrderApi.Controllers
                         OrderCode = order.Code
                     };
                     orderItemList.Add(orderItem);
+
+                    foreach (var shopingProduct in shopingProducts)
+                    {
+                        shopingProduct.IsDeleted = true;
+                    }
                 }
                 _orderDbContext.OrderItem.AddRange(orderItemList);
 

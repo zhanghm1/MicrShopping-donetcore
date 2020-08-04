@@ -8,7 +8,7 @@ namespace MicrShopping.Domain.Entities.Orders
     public class ShoppingCart : EntityBase
     {
         public int UserId { get; set; }
-        public int ProdictId { get; set; }
+        public int ProductId { get; set; }
         public int Number { get; set; }
     }
 }

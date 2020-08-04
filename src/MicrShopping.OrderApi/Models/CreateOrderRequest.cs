@@ -18,8 +18,10 @@ namespace MicrShopping.OrderApi.Models
         public int Number { get; set; }
     }
 
-    public class CreateOrderShopingRequest
+    public class CreateOrderForShopingRequest
     {
-        public List<int> Data { get; set; }
+        public List<int> ShopingIds { get; set; }
+        public string Address { get; set; }
+        public string Phone { get; set; }
     }
 }

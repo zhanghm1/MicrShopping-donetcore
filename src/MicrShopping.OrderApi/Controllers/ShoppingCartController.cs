@@ -44,11 +44,11 @@ namespace MicrShopping.OrderApi.Controllers
             var cartList = _orderDbContext.ShoppingCart.Where(a => a.UserId == userId && !a.IsDeleted).ToList();
 
             //去获取产品列表
-            List<ProductListResponse> products = await _productService.GetProductListByIds(string.Join(',', cartList.Select(a => a.ProdictId)));
+            List<ProductListResponse> products = await _productService.GetProductListByIds(string.Join(',', cartList.Select(a => a.ProductId)));
 
             foreach (var item in cartList)
             {
-                var product = products.FirstOrDefault(a => a.Id == item.ProdictId);
+                var product = products.FirstOrDefault(a => a.Id == item.ProductId);
 
                 ShoppingCartListItemResponse respitem = new ShoppingCartListItemResponse()
                 {
@@ -76,9 +76,9 @@ namespace MicrShopping.OrderApi.Controllers
             List<Product> products = new List<Product>();
 
             string OrderNo = string.Empty;
-            if (_orderDbContext.ShoppingCart.Any(a => a.UserId == userId && a.ProdictId == request.ProductId))
+            if (_orderDbContext.ShoppingCart.Any(a => a.UserId == userId && a.ProductId == request.ProductId))
             {
-                ShoppingCart shoppingCart = _orderDbContext.ShoppingCart.FirstOrDefault(a => a.UserId == userId && a.ProdictId == request.ProductId);
+                ShoppingCart shoppingCart = _orderDbContext.ShoppingCart.FirstOrDefault(a => a.UserId == userId && a.ProductId == request.ProductId);
                 shoppingCart.Number += request.Number;
                 _orderDbContext.ShoppingCart.Update(shoppingCart);
             }
@@ -87,7 +87,7 @@ namespace MicrShopping.OrderApi.Controllers
                 ShoppingCart shoppingCart = new ShoppingCart()
                 {
                     UserId = userId,
-                    ProdictId = request.ProductId,
+                    ProductId = request.ProductId,
                     Number = request.Number,
                 };
                 _orderDbContext.ShoppingCart.Add(shoppingCart);

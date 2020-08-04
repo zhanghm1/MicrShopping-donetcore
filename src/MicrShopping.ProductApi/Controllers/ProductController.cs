@@ -44,7 +44,7 @@ namespace MicrShopping.ProductApi.Controllers
             var list = query.OrderBy(a => a.Id).Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize).ToList();
 
             PageBase<ProductListResponse> resp = new PageBase<ProductListResponse>();
-            resp.List = _mapper.Map<List<ProductListResponse>>(list.ToList());
+            resp.List = _mapper.Map<List<ProductListResponse>>(list);
             resp.PageIndex = request.PageIndex;
             resp.PageSize = request.PageSize;
             resp.CountTotal = await query.CountAsync();

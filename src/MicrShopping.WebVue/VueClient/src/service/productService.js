@@ -1,12 +1,12 @@
 import axios from "../common/Request"
 
-const productService={
+const productService = {
     /**获取产品列表 */
-    GetProductList:(PageIndex,PageSize)=> axios.get(`/product/product/List?pageSize=${PageSize}&pageIndex=${PageIndex}`),
+    GetProductList: (PageIndex, PageSize, name) => axios.get(`/product/product/List?pageSize=${PageSize}&pageIndex=${PageIndex}&name=${name}`),
     /**获取产品分类 */
-    GetProductClassList:()=> axios.get(`/product/product/ClassList`),
+    GetProductClassList: () => axios.get(`/product/product/ClassList`),
     /**获取产品详情 */
-    GetProductDetail:(id)=> axios.get('/product/product/Detail/'+id),
+    GetProductDetail: (id) => axios.get('/product/product/Detail/' + id),
 };
 export default productService;
 

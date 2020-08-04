@@ -53,7 +53,7 @@ namespace MicrShopping.OrderApi.Controllers
             return Ok();
         }
 
-        [Authorize(Roles = "admin")]
+        [Authorize]
         [HttpPost]
         [Route("Create")]
         public async Task<string> CreateOrder(CreateOrderForShopingRequest request)
@@ -134,7 +134,7 @@ namespace MicrShopping.OrderApi.Controllers
         [Authorize]
         [HttpGet]
         [Route("List")]
-        public async Task<PageBase<Order>> CreateOrder(int PageIndex, int PageSize)
+        public async Task<PageBase<Order>> OrderList(int PageIndex, int PageSize)
         {
             int userId = UserManage.GetUserId(User);
             var list = _orderDbContext.Order.Where(a => a.UserId == userId && !a.IsDeleted).Skip(PageSize * (PageIndex - 1)).Take(PageSize).ToList();

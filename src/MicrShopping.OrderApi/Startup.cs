@@ -28,61 +28,29 @@ namespace MicrShopping.OrderApi
     {
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment env { get; }
+
         public Startup(IConfiguration configuration, IWebHostEnvironment _env)
         {
             env = _env;
             Configuration = configuration;
         }
 
-        public void ConfigureServices(IServiceCollection services)
+        public virtual void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup).Assembly);
-            services.AddControllersWithViews(options => {
+            services.AddControllersWithViews(options =>
+            {
                 options.Filters.Add<ApiExceptionFilter>();
                 options.Filters.Add<ApiResultFilter>();
             }).AddWebApiConventions();//处理返回HttpResponseMessage
 
-
-            services.AddScoped<OrderDbContextSeed>();
             services.AddScoped<ProductService>();
             services.AddScoped<UserService>();
 
-            string Host = Configuration["ConnectionStrings:Host"];
-            string Port = Configuration["ConnectionStrings:Port"];
-            string Database = Configuration["ConnectionStrings:Database"];
-            string Password = Configuration["ConnectionStrings:Password"];
-            string UserID = Configuration["ConnectionStrings:UserID"];
+            AddDbContext(services);
+            AddCap(services);
 
-
-            string ConnectionStrings = $"Host={Host};Port={Port};Database={Database};User ID={UserID};Password={Password};";
-
-            Console.WriteLine(ConnectionStrings);
-            services.AddDbContext<OrderDbContext>(options =>
-                   options.UseNpgsql(ConnectionStrings)
-                   );
-            services.AddScoped<OrderDbContext>();
-
-            string RabbitMQHost = Configuration["RabbitMQ:Host"];
-            string RabbitMQPassword = Configuration["RabbitMQ:Password"];
-            string RabbitMQUserName = Configuration["RabbitMQ:UserName"];
-            string RabbitMQPort = Configuration["RabbitMQ:Port"];
-
-            services.AddCap(x =>
-            {
-                x.UseEntityFramework<OrderDbContext>();
-                x.UseRabbitMQ(options =>
-                {
-                    options.HostName = RabbitMQHost;
-                    options.Password = RabbitMQPassword;
-                    options.UserName = RabbitMQUserName;
-                });
-                //x.UseInMemoryStorage();
-                //x.UseInMemoryMessageQueue();
-                x.UseDashboard();
-            });
-            
-
-            string IdentityUrl= Configuration["IdentityUrl"];
+            string IdentityUrl = Configuration["IdentityUrl"];
 
             //services.AddAuthentication("Bearer")
             //     .AddJwtBearer("Bearer", options =>
@@ -107,8 +75,6 @@ namespace MicrShopping.OrderApi
                 options.RequireHttpsMetadata = false;
             });
 
-
-
             //设置Authorize的policy,可以添加多个
             services.AddAuthorization(options =>
             {
@@ -122,7 +88,6 @@ namespace MicrShopping.OrderApi
                 });
             });
 
-
             services.AddCors(options =>
             {
                 // this defines a CORS policy called "default"
@@ -134,7 +99,6 @@ namespace MicrShopping.OrderApi
                 });
             });
 
-
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
@@ -142,7 +106,7 @@ namespace MicrShopping.OrderApi
 
             if (env.IsDevelopment())
             {
-                services.AddConsulConfig(Configuration);
+                AddConsulConfig(services);
             }
         }
 
@@ -152,7 +116,7 @@ namespace MicrShopping.OrderApi
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseConsul(Configuration);
+                UseConsul(app);
             }
             else
             {
@@ -164,8 +128,7 @@ namespace MicrShopping.OrderApi
 
             app.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            ConfigureAuth(app);
 
             app.UseSwagger();//生成/swagger/v1/swagger.json
 
@@ -183,5 +146,58 @@ namespace MicrShopping.OrderApi
             });
         }
 
+        protected virtual void ConfigureAuth(IApplicationBuilder app)
+        {
+            app.UseAuthentication();
+            app.UseAuthorization();
+        }
+
+        protected virtual void AddDbContext(IServiceCollection services)
+        {
+            string Host = Configuration["ConnectionStrings:Host"];
+            string Port = Configuration["ConnectionStrings:Port"];
+            string Database = Configuration["ConnectionStrings:Database"];
+            string Password = Configuration["ConnectionStrings:Password"];
+            string UserID = Configuration["ConnectionStrings:UserID"];
+
+            string ConnectionStrings = $"Host={Host};Port={Port};Database={Database};User ID={UserID};Password={Password};";
+            Console.WriteLine(ConnectionStrings);
+            services.AddDbContext<OrderDbContext>(options =>
+                   options.UseNpgsql(ConnectionStrings)
+                   );
+            services.AddScoped<OrderDbContextSeed>();
+        }
+
+        protected virtual void AddConsulConfig(IServiceCollection services)
+        {
+            services.AddConsulConfig(Configuration);
+        }
+
+        protected virtual void AddCap(IServiceCollection services)
+        {
+            string RabbitMQHost = Configuration["RabbitMQ:Host"];
+            string RabbitMQPassword = Configuration["RabbitMQ:Password"];
+            string RabbitMQUserName = Configuration["RabbitMQ:UserName"];
+            string RabbitMQPort = Configuration["RabbitMQ:Port"];
+
+            services.AddCap(x =>
+            {
+                x.UseEntityFramework<OrderDbContext>();
+                x.UseRabbitMQ(options =>
+                {
+                    options.HostName = RabbitMQHost;
+                    options.Password = RabbitMQPassword;
+                    options.UserName = RabbitMQUserName;
+                });
+                //x.UseInMemoryStorage();
+                //x.UseInMemoryMessageQueue();
+                x.UseDashboard();
+            });
+        }
+
+        protected virtual void UseConsul(IApplicationBuilder app)
+        {
+            app.UseConsul(Configuration);
+        }
     }
 }

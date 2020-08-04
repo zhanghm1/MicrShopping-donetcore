@@ -6,8 +6,8 @@
     <ProjectGuid>b055ea1d-943f-441f-94e9-02735c35006c</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
-    <DockerServiceName>micrshopping.apigateway</DockerServiceName>
-    <UserSecretsId>0cb4df52-32d7-4674-a2fd-d1471af1366f</UserSecretsId>
+    <DockerServiceName>micrshopping.webmvc</DockerServiceName>
+    <UserSecretsId>c4601b75-82ab-406a-81de-091e6648b616</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

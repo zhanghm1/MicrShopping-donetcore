@@ -8,101 +8,92 @@
       <button @click="ShowOrderList">查看订单</button>
       <vShoppingCart></vShoppingCart>
       <vOrderList v-if="OrderListShow"></vOrderList>
-      
     </div>
     <div v-else>
       <button @click="login">登录</button>
     </div>
-    
   </div>
 </template>
 
 <script>
-import Oidc from "oidc-client" ;
-import {mapState,mapMutations} from 'vuex';
-import {OidcConfig} from '../configs/config';
-import userService from "../service/userService" ;
+import Oidc from "oidc-client";
+import { mapState, mapMutations } from "vuex";
+import { OidcConfig } from "../configs/config";
+import userService from "../service/userService";
 
-import vShoppingCart from "./shoppingCart" ;
-import vOrderList from "./OrderLsit" ;
-import bus from '../common/bus';
+import vShoppingCart from "./shoppingCart";
+import vOrderList from "./OrderLsit";
 
 export default {
-  name: 'UserInfo1',
+  name: "UserInfo1",
   props: {
-    msg: String
+    msg: String,
   },
   components: {
-        vShoppingCart,
-        vOrderList,
-    },
-  data(){
-    return {
-      OidcManager:{},
-      OrderListShow:false,
-    }
+    vShoppingCart,
+    vOrderList,
   },
-      computed: {
-            ...mapState([
-                'UserInfo'
-            ]),
-    },
-  methods:{
-        ...mapMutations([
-                'SaveUserInfo','LoginOut'
-            ]),
+  data() {
+    return {
+      OidcManager: {},
+      OrderListShow: false,
+    };
+  },
+  computed: {
+    ...mapState(["UserInfo"]),
+  },
+  methods: {
+    ...mapMutations(["SaveUserInfo", "LoginOut"]),
     login() {
-        this.OidcManager.signinRedirect();
+      this.OidcManager.signinRedirect();
     },
 
     GetUserInfo() {
-      userService.GetMyUserInfo().then((data)=>{
+      userService.GetMyUserInfo().then((data) => {
         window.console.log("GetUserInfo", data);
       });
     },
 
     logout() {
-        this.LoginOut(); //清除store内存
-        localStorage.setItem("access_token",''); //清除缓存
-        localStorage.setItem("user_name",''); //清除缓存
+      this.LoginOut(); //清除store内存
+      localStorage.setItem("access_token", ""); //清除缓存
+      localStorage.setItem("user_name", ""); //清除缓存
 
-        this.OidcManager.signoutRedirect();
-        
+      this.OidcManager.signoutRedirect();
     },
-    shoppingCart(){
-      bus.$emit("ShowShoppingCart",true);
+    shoppingCart() {
+      this.$bus.$emit("ShowShoppingCart", true);
     },
-    ShowOrderList(){
-      this.OrderListShow=true;
+    ShowOrderList() {
+      this.OrderListShow = true;
     },
   },
-  created(){
+  created() {
     //var that=this;
     this.OidcManager = new Oidc.UserManager(OidcConfig);
-    this.OidcManager.getUser().then((user)=> {
-        if (user) {
-            localStorage.setItem("id_token",user.id_token);
-            localStorage.setItem("access_token",user.access_token);
-            localStorage.setItem("user_name",user.profile.name);
-            localStorage.setItem("token_type",user.token_type);
-            localStorage.setItem("expires_at",user.expires_at);
-            localStorage.setItem("refresh_token",user.refresh_token);
-            localStorage.setItem("session_state",user.session_state);
-            
-            window.console.log("User logged in", user);
-            //更新到store
-            var userInfo={
-              UserName:user.profile.name,
-              UserId:user.profile.sub,
-            };
-            this.SaveUserInfo(userInfo);
-        }
-        else {
-            window.console.log("User not logged in");
-        }
+    this.OidcManager.getUser().then((user) => {
+      if (user) {
+        localStorage.setItem("id_token", user.id_token);
+        localStorage.setItem("access_token", user.access_token);
+        localStorage.setItem("user_name", user.profile.name);
+        localStorage.setItem("token_type", user.token_type);
+        localStorage.setItem("expires_at", user.expires_at);
+        localStorage.setItem("refresh_token", user.refresh_token);
+        localStorage.setItem("session_state", user.session_state);
+
+        window.console.log("User logged in", user);
+        //更新到store
+        var userInfo = {
+          UserName: user.profile.name,
+          UserId: user.profile.sub,
+        };
+        this.SaveUserInfo(userInfo);
+      } else {
+        window.console.log("User not logged in");
+      }
     });
-  }
-}
+  },
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

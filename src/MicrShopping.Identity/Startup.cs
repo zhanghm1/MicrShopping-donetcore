@@ -20,7 +20,8 @@ namespace MicrShopping.Identity
     {
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment env { get; }
-        public Startup( IConfiguration configuration, IWebHostEnvironment _env)
+
+        public Startup(IConfiguration configuration, IWebHostEnvironment _env)
         {
             env = _env;
             Configuration = configuration;
@@ -45,7 +46,6 @@ namespace MicrShopping.Identity
             string Password = Configuration["ConnectionStrings:Password"];
             string UserID = Configuration["ConnectionStrings:UserID"];
 
-
             string ConnectionStrings = $"Host={Host};Port={Port};Database={Database};User ID={UserID};Password={Password};";
             System.Console.WriteLine(ConnectionStrings);
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -69,7 +69,6 @@ namespace MicrShopping.Identity
                 .AddResourceOwnerValidator<ResourceOwnerPasswordValidator<ApplicationUser>>()
                 .AddProfileService<ProfileService<ApplicationUser>>();
 
-
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddSigningCredential(Certificate.Get());
 
@@ -79,14 +78,11 @@ namespace MicrShopping.Identity
             }
             else
             {
-
                 services.Configure<ForwardedHeadersOptions>(options =>
                 {
-                    options.ForwardedHeaders =
-                        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+                    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
                 });
             }
-
 
             services.AddCors(options =>
             {
@@ -108,7 +104,7 @@ namespace MicrShopping.Identity
                 app.UseDatabaseErrorPage();
                 app.UseConsul(Configuration);
             }
-            else 
+            else
             {
                 // 当通过 HTTP 代理 HTTPS 请求时，原方案(HTTPS) 将丢失，并且必须在标头中转接。
                 // 由于应用收到来自代理的请求，而不是 Internet 或公司网络上请求的真实源，因此原始客户端 IP 地址也必须在标头中转接。
@@ -116,26 +112,23 @@ namespace MicrShopping.Identity
 
                 ///// 也可以强制所有请求https
 
-                app.Use((context, next) =>
-                {
-                    System.Console.WriteLine("===================" + context.Request.Host.Host);
-                    context.Request.Scheme = "https";
-                    return next();
-                });
-
+                //app.Use((context, next) =>
+                //{
+                //    System.Console.WriteLine("===================" + context.Request.Host.Host);
+                //    context.Request.Scheme = "https";
+                //    return next();
+                //});
             }
-            
 
             app.UseStaticFiles();
 
             app.UseCors("default");
 
             app.UseRouting();
-            
-            
+
             app.UseIdentityServer();
             app.UseAuthorization();
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();

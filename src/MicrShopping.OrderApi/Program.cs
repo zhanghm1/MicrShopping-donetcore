@@ -28,12 +28,12 @@ namespace MicrShopping.OrderApi
                     var context = services.GetRequiredService<OrderDbContext>();
                     context.Database.Migrate();
 
-                    var seedData = scope.ServiceProvider.GetRequiredService<OrderDbContextSeed>();
+                    var seedData = services.GetRequiredService<OrderDbContextSeed>();
                     seedData.Init();
                 }
                 catch (Exception ex)
                 {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    var logger = services.GetRequiredService<ILogger<Program>>();
 
                     logger.LogError(ex, "An error occurred while migrating or seeding the database.");
                 }
@@ -44,7 +44,7 @@ namespace MicrShopping.OrderApi
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                
+
             .ConfigureAppConfiguration(config =>
             {
                 config.AddEnvironmentVariables();
@@ -53,6 +53,5 @@ namespace MicrShopping.OrderApi
             {
                 webBuilder.UseStartup<Startup>();
             });
-        
     }
 }

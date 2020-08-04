@@ -30,12 +30,12 @@ namespace MicrShopping.ProductApi
                     var context = services.GetRequiredService<ProductDbContext>();
                     context.Database.Migrate();
 
-                    var seedData = scope.ServiceProvider.GetRequiredService<ProductDbContextSeed>();
+                    var seedData = services.GetRequiredService<ProductDbContextSeed>();
                     seedData.Init();
                 }
                 catch (Exception ex)
                 {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
+                    var logger = services.GetRequiredService<ILogger<Program>>();
 
                     logger.LogError(ex, "An error occurred while migrating or seeding the database.");
                 }

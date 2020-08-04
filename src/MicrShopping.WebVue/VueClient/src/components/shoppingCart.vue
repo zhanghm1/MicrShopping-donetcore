@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import bus from "../common/bus";
 import orderService from "../service/orderService";
 import { mapState, mapMutations } from "vuex";
 export default {
@@ -70,7 +69,7 @@ export default {
   },
   created() {
     this.GetShoppingCartList();
-    bus.$on("ShowShoppingCart", (data) => {
+    this.$bus.$on("ShowShoppingCart", (data) => {
       window.console.log(data);
       this.GetShoppingCartList();
       this.IsShowShoppingCart = data;

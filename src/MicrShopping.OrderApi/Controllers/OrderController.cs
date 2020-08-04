@@ -86,7 +86,6 @@ namespace MicrShopping.OrderApi.Controllers
                 _orderDbContext.Order.Add(order);
 
                 List<OrderItem> orderItemList = new List<OrderItem>();
-
                 foreach (var item in products)
                 {
                     var shopingProducts = shoppings.Where(a => a.ProductId == item.Id);

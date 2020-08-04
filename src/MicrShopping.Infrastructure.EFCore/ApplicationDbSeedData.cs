@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -18,8 +17,6 @@ namespace MicrShopping.Infrastructure.EFCore
     {
         public static void EnsureSeedData(IServiceProvider serviceProvider)
         {
-
-
             using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
                 var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
@@ -35,11 +32,9 @@ namespace MicrShopping.Infrastructure.EFCore
                         new Claim(JwtClaimTypes.Role, "admin1"),
                         }
                     }
-
                 };
                 foreach (var item in users)
                 {
-
                     var alice = userMgr.FindByNameAsync(item.UserName).Result;
                     if (alice == null)
                     {
@@ -64,12 +59,11 @@ namespace MicrShopping.Infrastructure.EFCore
                     {
                         //Log.Debug("alice already exists");
                     }
-
-
                 }
             }
         }
     }
+
     public class AddUser
     {
         public string UserName { get; set; }
@@ -77,6 +71,5 @@ namespace MicrShopping.Infrastructure.EFCore
         public string NickName { get; set; }
 
         public List<Claim> Claims { get; set; }
-
     }
 }

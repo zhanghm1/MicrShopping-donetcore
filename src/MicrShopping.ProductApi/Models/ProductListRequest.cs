@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace MicrShopping.ProductApi.Models
 {
-    public class ProductListRequest: RequestPageBase
+    public class ProductListRequest : RequestPageBase
     {
+        public string Name { get; set; }
     }
 }

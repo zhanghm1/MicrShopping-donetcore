@@ -27,19 +27,21 @@ namespace MicrShopping.OrderApi.Controllers
         private readonly IMapper _mapper;
         private OrderDbContext _orderDbContext;
         private ProductService _productService;
+        private IUserManage _userManage;
 
-        public ShoppingCartController(OrderDbContext orderDbContext, IMapper mapper, ProductService productService)
+        public ShoppingCartController(OrderDbContext orderDbContext, IMapper mapper, ProductService productService, IUserManage userManage)
         {
             _orderDbContext = orderDbContext;
             _mapper = mapper;
             _productService = productService;
+            _userManage = userManage;
         }
 
         [HttpGet]
         [Route("List")]
         public async Task<List<ShoppingCartListItemResponse>> ShoppingCartList()
         {
-            int userId = UserManage.GetUserId(User);
+            int userId = _userManage.GetUserId(User);
             List<ShoppingCartListItemResponse> resp = new List<ShoppingCartListItemResponse>();
             var cartList = _orderDbContext.ShoppingCart.Where(a => a.UserId == userId && !a.IsDeleted).ToList();
 
@@ -69,16 +71,13 @@ namespace MicrShopping.OrderApi.Controllers
 
         [HttpPost]
         [Route("Add")]
-        public async Task<string> AddShoppingCart(AddShoppingCartRequest request)
+        public async Task<bool> AddShoppingCart(AddShoppingCartRequest request)
         {
-            int userId = UserManage.GetUserId(User);
-            // 准备productList
-            List<Product> products = new List<Product>();
-
-            string OrderNo = string.Empty;
-            if (_orderDbContext.ShoppingCart.Any(a => a.UserId == userId && a.ProductId == request.ProductId))
+            int userId = _userManage.GetUserId(User);
+            int ProductId = request.ProductId;
+            if (_orderDbContext.ShoppingCart.Any(a => a.UserId == userId && a.ProductId == ProductId))
             {
-                ShoppingCart shoppingCart = _orderDbContext.ShoppingCart.FirstOrDefault(a => a.UserId == userId && a.ProductId == request.ProductId);
+                ShoppingCart shoppingCart = _orderDbContext.ShoppingCart.FirstOrDefault(a => a.UserId == userId && a.ProductId == ProductId);
                 shoppingCart.Number += request.Number;
                 _orderDbContext.ShoppingCart.Update(shoppingCart);
             }
@@ -95,7 +94,7 @@ namespace MicrShopping.OrderApi.Controllers
 
             _orderDbContext.SaveChanges();
 
-            return OrderNo;
+            return true;
         }
     }
 }

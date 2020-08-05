@@ -25,14 +25,14 @@ namespace MicrShopping.OrderApi.Services
         {
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
-            ProductGrpcUrl = _configuration.GetValue<string>("ProductGrpcUrl");
-            ProductUrl = _configuration.GetValue<string>("ProductUrl");
+            ProductGrpcUrl = _configuration?.GetValue<string>("ProductGrpcUrl");
+            ProductUrl = _configuration?.GetValue<string>("ProductUrl");
         }
 
         public async Task<List<Models.ProductListResponse>> GetProductListByIds(string ids)
         {
             var httpclient = _httpClientFactory.CreateClient();
-            string url = ProductUrl+"/Product/ListByIds?ids=" + ids;
+            string url = ProductUrl + "/Product/ListByIds?ids=" + ids;
             var reslut = await httpclient.GetAsync(url);
             if (reslut.IsSuccessStatusCode)
             {
@@ -40,7 +40,6 @@ namespace MicrShopping.OrderApi.Services
                 ResponseBase<List<Models.ProductListResponse>> products1 = JsonConvert.DeserializeObject<ResponseBase<List<Models.ProductListResponse>>>(reslutStr, new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
-
                 });
                 return products1.Data;
             }
@@ -67,6 +66,5 @@ namespace MicrShopping.OrderApi.Services
                 }).ToList();
             });
         }
-
     }
 }

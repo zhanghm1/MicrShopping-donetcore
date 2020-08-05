@@ -43,6 +43,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{5023EBEC-0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrShopping.OrderApi.FunctionalTest", "MicrShopping.OrderApi.FunctionalTest\MicrShopping.OrderApi.FunctionalTest.csproj", "{8EF8B029-6CAA-4005-B43C-973CA05AB423}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicrShopping.OrderApi.UnitTest", "MicrShopping.OrderApi.UnitTest\MicrShopping.OrderApi.UnitTest.csproj", "{AD34C533-BB26-4C98-B684-AEB86D0BEE60}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -101,6 +103,10 @@ Global
 		{8EF8B029-6CAA-4005-B43C-973CA05AB423}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EF8B029-6CAA-4005-B43C-973CA05AB423}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EF8B029-6CAA-4005-B43C-973CA05AB423}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD34C533-BB26-4C98-B684-AEB86D0BEE60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD34C533-BB26-4C98-B684-AEB86D0BEE60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD34C533-BB26-4C98-B684-AEB86D0BEE60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD34C533-BB26-4C98-B684-AEB86D0BEE60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,6 +126,7 @@ Global
 		{0419492D-B8E6-4888-B772-A47CCF5F26BD} = {665A9845-D2FA-4714-9FAA-818AF698F0D3}
 		{3678B7D7-0FC7-4BE6-BA4F-6DE8A7E1A436} = {7C2800E2-1AE6-4B7B-AD56-EE335557888D}
 		{8EF8B029-6CAA-4005-B43C-973CA05AB423} = {5023EBEC-0155-4F8F-899C-A5C83E1EEC57}
+		{AD34C533-BB26-4C98-B684-AEB86D0BEE60} = {5023EBEC-0155-4F8F-899C-A5C83E1EEC57}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B9088373-6F43-417E-9D55-F329AF9A8DED}

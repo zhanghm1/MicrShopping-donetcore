@@ -46,6 +46,7 @@ namespace MicrShopping.OrderApi
 
             services.AddScoped<ProductService>();
             services.AddScoped<UserService>();
+            services.AddScoped<IUserManage, UserManage>();
 
             AddDbContext(services);
             AddCap(services);

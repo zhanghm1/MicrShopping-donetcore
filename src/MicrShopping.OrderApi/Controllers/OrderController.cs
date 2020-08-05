@@ -30,6 +30,7 @@ namespace MicrShopping.OrderApi.Controllers
         private OrderDbContext _orderDbContext;
         private ProductService _productService;
         private UserService _userService;
+        private IUserManage _userManage;
 
         public OrderController(ILogger<OrderController> logger
             , ICapPublisher capPublisher
@@ -37,6 +38,7 @@ namespace MicrShopping.OrderApi.Controllers
             , IMapper mapper
             , ProductService productService
             , UserService userService
+            , IUserManage userManage
             )
         {
             _logger = logger;
@@ -45,6 +47,7 @@ namespace MicrShopping.OrderApi.Controllers
             _mapper = mapper;
             _productService = productService;
             _userService = userService;
+            _userManage = userManage;
         }
 
         [HttpGet]
@@ -58,7 +61,7 @@ namespace MicrShopping.OrderApi.Controllers
         [Route("Create")]
         public async Task<string> CreateOrder(CreateOrderForShopingRequest request)
         {
-            int userId = UserManage.GetUserId(User);
+            int userId = _userManage.GetUserId(User);
 
             var shoppings = _orderDbContext.ShoppingCart.Where(a => a.UserId == userId && request.ShopingIds.Contains(a.Id) && !a.IsDeleted).ToList();
             var productIds = shoppings.Select(a => a.ProductId).ToList();
@@ -136,7 +139,7 @@ namespace MicrShopping.OrderApi.Controllers
         [Route("List")]
         public async Task<PageBase<Order>> OrderList(int PageIndex, int PageSize)
         {
-            int userId = UserManage.GetUserId(User);
+            int userId = _userManage.GetUserId(User);
             var list = _orderDbContext.Order.Where(a => a.UserId == userId && !a.IsDeleted).Skip(PageSize * (PageIndex - 1)).Take(PageSize).ToList();
             PageBase<Order> resp = new PageBase<Order>
             {

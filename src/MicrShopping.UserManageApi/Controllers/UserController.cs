@@ -21,15 +21,18 @@ namespace MicrShopping.UserManageApi.Controllers
         private readonly IMapper _mapper;
         private readonly ILogger<UserController> _logger;
         private ApplicationDbContext _dbContext;
-        public UserController(ILogger<UserController> logger, ApplicationDbContext dbContext, IMapper mapper)
+        private IUserManage _userManage;
+
+        public UserController(ILogger<UserController> logger, ApplicationDbContext dbContext, IMapper mapper, IUserManage userManage)
         {
             _logger = logger;
             _dbContext = dbContext;
             _mapper = mapper;
+            _userManage = userManage;
         }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
@@ -44,26 +47,27 @@ namespace MicrShopping.UserManageApi.Controllers
             resp = _mapper.Map<UserDetailResponse>(user);
             return resp;
         }
+
         [HttpGet]
         [Route("Identity")]
         [Authorize]
         public UserDetailResponse Identity()
         {
             UserDetailResponse resp = new UserDetailResponse();
-            int userId = UserManage.GetUserId(User);
+            int userId = _userManage.GetUserId(User);
             var user = _dbContext.Users.Where(a => a.Id == userId).FirstOrDefault();
             //user.NormalizedUserName
             resp = _mapper.Map<UserDetailResponse>(user);
             return resp;
-
         }
+
         [HttpGet]
         [Route("exception")]
         public IActionResult exception()
         {
-            throw new ApiExceptionBase("ccccc","错误的");
-
+            throw new ApiExceptionBase("ccccc", "错误的");
         }
+
         [HttpGet]
         [Route("GetHtml")]
         public async Task<HttpResponseMessage> GetHtml()
@@ -72,7 +76,6 @@ namespace MicrShopping.UserManageApi.Controllers
             HttpResponseMessage resp = await httpClient.GetAsync("https://www.baidu.com/");
 
             return resp;
-
         }
     }
 }

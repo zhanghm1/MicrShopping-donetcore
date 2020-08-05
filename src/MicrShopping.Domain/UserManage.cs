@@ -7,18 +7,25 @@ using IdentityModel;
 
 namespace MicrShopping.Domain
 {
-    public static class UserManage
+    public class UserManage : IUserManage
     {
-
-        public static int GetUserId(ClaimsPrincipal User)
+        public int GetUserId(ClaimsPrincipal User)
         {
             var claim = User.Claims.Where(a => a.Type == JwtClaimTypes.Subject).FirstOrDefault();
             return Convert.ToInt32(claim.Value);
         }
-        public static string GetUserName(ClaimsPrincipal User)
+
+        public string GetUserName(ClaimsPrincipal User)
         {
             var claim = User.Claims.Where(a => a.Type == JwtClaimTypes.Name).FirstOrDefault();
             return claim.Value;
         }
+    }
+
+    public interface IUserManage
+    {
+        public int GetUserId(ClaimsPrincipal User);
+
+        public string GetUserName(ClaimsPrincipal User);
     }
 }

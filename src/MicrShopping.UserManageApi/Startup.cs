@@ -27,6 +27,7 @@ namespace MicrShopping.UserManageApi
     {
         public IConfiguration Configuration { get; }
         public IWebHostEnvironment env { get; }
+
         public Startup(IConfiguration configuration, IWebHostEnvironment _env)
         {
             env = _env;
@@ -36,7 +37,8 @@ namespace MicrShopping.UserManageApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAutoMapper(typeof(Startup).Assembly);
-            services.AddControllersWithViews(options => {
+            services.AddControllersWithViews(options =>
+            {
                 options.Filters.Add<ApiExceptionFilter>();
                 options.Filters.Add<ApiResultFilter>();
             }).AddWebApiConventions();//处理返回HttpResponseMessage
@@ -49,7 +51,6 @@ namespace MicrShopping.UserManageApi
             string Password = Configuration["ConnectionStrings:Password"];
             string UserID = Configuration["ConnectionStrings:UserID"];
 
-
             string ConnectionStrings = $"Host={Host};Port={Port};Database={Database};User ID={UserID};Password={Password};";
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseNpgsql(ConnectionStrings));
@@ -58,6 +59,7 @@ namespace MicrShopping.UserManageApi
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
+            services.AddScoped<IUserManage, UserManage>();
 
             string IdentityUrl = Configuration["IdentityUrl"];// "http://192.168.0.189:5008";
 
@@ -117,7 +119,6 @@ namespace MicrShopping.UserManageApi
             {
                 services.AddConsulConfig(Configuration);
             }
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -149,6 +150,5 @@ namespace MicrShopping.UserManageApi
                 endpoints.MapControllers();
             });
         }
-
     }
 }

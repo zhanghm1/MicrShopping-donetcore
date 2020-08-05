@@ -9,13 +9,12 @@ namespace MicrShopping.OrderApi.Data
 {
     public class OrderDbContext : DbContext
     {
-        public OrderDbContext(DbContextOptions<OrderDbContext> options): base(options)
+        public OrderDbContext(DbContextOptions<OrderDbContext> options) : base(options)
         {
-
         }
-        public DbSet<Order> Order { get; set; }
-        public DbSet<OrderItem> OrderItem { get; set; }
-        public DbSet<ShoppingCart> ShoppingCart { get; set; }
-        
+
+        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<OrderItem> OrderItem { get; set; }
+        public virtual DbSet<ShoppingCart> ShoppingCart { get; set; }
     }
 }

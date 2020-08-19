@@ -75,15 +75,17 @@ namespace MicrShopping.OrderApi.Controllers
         {
             int userId = _userManage.GetUserId(User);
             int ProductId = request.ProductId;
-            if (_orderDbContext.ShoppingCart.Any(a => a.UserId == userId && a.ProductId == ProductId))
+
+            ShoppingCart shoppingCart = _orderDbContext.ShoppingCart.FirstOrDefault(a => a.UserId == userId && a.ProductId == ProductId);
+
+            if (shoppingCart != null)
             {
-                ShoppingCart shoppingCart = _orderDbContext.ShoppingCart.FirstOrDefault(a => a.UserId == userId && a.ProductId == ProductId);
                 shoppingCart.Number += request.Number;
                 _orderDbContext.ShoppingCart.Update(shoppingCart);
             }
             else
             {
-                ShoppingCart shoppingCart = new ShoppingCart()
+                shoppingCart = new ShoppingCart()
                 {
                     UserId = userId,
                     ProductId = request.ProductId,

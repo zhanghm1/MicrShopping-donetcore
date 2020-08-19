@@ -13,6 +13,7 @@ using MicrShopping.Domain.Extensions;
 using MicrShopping.Domain;
 using MicrShopping.Infrastructure.EFCore;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.Http;
 
 namespace MicrShopping.Identity
 {
@@ -94,6 +95,11 @@ namespace MicrShopping.Identity
                         .AllowAnyMethod();
                 });
             });
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = (_) => true;
+                options.MinimumSameSitePolicy = SameSiteMode.Lax;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -123,7 +129,7 @@ namespace MicrShopping.Identity
             app.UseStaticFiles();
 
             app.UseCors("default");
-
+            app.UseCookiePolicy();
             app.UseRouting();
 
             app.UseIdentityServer();

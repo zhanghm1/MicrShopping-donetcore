@@ -14,6 +14,7 @@ using MicrShopping.Infrastructure.Common.CapModels;
 using MicrShopping.ProductApi.Data;
 using MicrShopping.ProductApi.Models;
 using Newtonsoft.Json;
+using Npgsql;
 
 namespace MicrShopping.ProductApi.Controllers
 {
@@ -36,6 +37,10 @@ namespace MicrShopping.ProductApi.Controllers
         [Route("List")]
         public async Task<PageBase<ProductListResponse>> GetProductList([FromQuery] ProductListRequest request)
         {
+            // EF Core 执行 sql
+            //NpgsqlParameter parameters = new NpgsqlParameter("@Id", 1);
+            //int execNumber = _productDbContext.Database.ExecuteSqlRaw("update public.\"Product\" set \"NowCount\"=0 where \"Id\"=1;", parameters);
+
             var query = _productDbContext.Product.Where(a => !a.IsDeleted);
             if (!string.IsNullOrWhiteSpace(request.Name))
             {

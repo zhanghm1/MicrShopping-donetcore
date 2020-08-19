@@ -44,7 +44,7 @@ services:
         - consul2
         - consul3 
 
-
+# docker run -d -p 1433:1433 -e SA_PASSWORD=Admin123456 -e ACCEPT_EULA=Y  microsoft/mssql-server-linux
   # sqlserver:
   #   image: microsoft/mssql-server-linux:latest
   #   container_name: sqlserver

@@ -22,7 +22,7 @@ export default {
     return {
       productPageSize: 10,
       productPageIndex: 1,
-      searchName: "",
+      searchName: "产",
       productList: [],
       productClassList: [],
     };

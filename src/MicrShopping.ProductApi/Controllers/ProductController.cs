@@ -1,20 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using DotNetCore.CAP;
+using LinqKit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using MicrShopping.Domain.Entities.Products;
+using MicrShopping.Domain.Extensions;
 using MicrShopping.Infrastructure.Common;
 using MicrShopping.Infrastructure.Common.CapModels;
 using MicrShopping.ProductApi.Data;
 using MicrShopping.ProductApi.Models;
 using Newtonsoft.Json;
 using Npgsql;
+
+using LinqKit;
 
 namespace MicrShopping.ProductApi.Controllers
 {
@@ -40,12 +45,12 @@ namespace MicrShopping.ProductApi.Controllers
             // EF Core 执行 sql
             //NpgsqlParameter parameters = new NpgsqlParameter("@Id", 1);
             //int execNumber = _productDbContext.Database.ExecuteSqlRaw("update public.\"Product\" set \"NowCount\"=0 where \"Id\"=1;", parameters);
+            //var list1 = _productDbContext.Product.FromSqlRaw("SELECT * FROM public.\"Product\" where \"Id\"=@Id ", parameters).ToList();
 
             var query = _productDbContext.Product.Where(a => !a.IsDeleted);
-            if (!string.IsNullOrWhiteSpace(request.Name))
-            {
-                query = query.Where(a => a.Name.Contains(request.Name));
-            }
+
+            query = query.WhereIF(!string.IsNullOrWhiteSpace(request.Name), a => a.Name.Contains(request.Name));
+
             var list = query.OrderBy(a => a.Id).Skip((request.PageIndex - 1) * request.PageSize).Take(request.PageSize).ToList();
 
             PageBase<ProductListResponse> resp = new PageBase<ProductListResponse>();

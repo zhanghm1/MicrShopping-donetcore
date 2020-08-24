@@ -54,6 +54,7 @@ namespace MicrShopping.UserManageApi
             string ConnectionStrings = $"Host={Host};Port={Port};Database={Database};User ID={UserID};Password={Password};";
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseNpgsql(ConnectionStrings));
+            services.AddScoped<ApplicationDbSeedData>();
 
             services.AddIdentity<ApplicationUser, ApplicationRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()

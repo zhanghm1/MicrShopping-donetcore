@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MicrShopping.Domain.Extensions;
 using MicrShopping.OrderApi.Data;
 using MicrShopping.PayApi.Data;
 
@@ -17,29 +18,18 @@ namespace MicrShopping.PayApi
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
-
-            using (var scope = host.Services.CreateScope())
+            try
             {
-                var services = scope.ServiceProvider;
+                Console.WriteLine(string.Join('-', args));
+                var host = CreateHostBuilder(args).Build();
 
-                try
-                {
-                    var context = services.GetService<PayDbContext>();
-                    context.Database.Migrate();
+                host.MigrateDbContext<PayDbContext, PayDbContextSeed>();
 
-                    var seedData = services.GetService<PayDbContextSeed>();
-                    seedData.Init();
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetService<ILogger<Program>>();
-
-                    logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-                }
+                host.Run();
             }
-
-            host.Run();
+            catch (Exception ex)
+            {
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

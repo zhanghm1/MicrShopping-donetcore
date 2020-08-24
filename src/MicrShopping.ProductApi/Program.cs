@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using MicrShopping.Domain.Extensions;
 using MicrShopping.ProductApi.Data;
 
 namespace MicrShopping.ProductApi
@@ -19,29 +20,18 @@ namespace MicrShopping.ProductApi
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args).Build();
-
-            using (var scope = host.Services.CreateScope())
+            try
             {
-                var services = scope.ServiceProvider;
+                Console.WriteLine(string.Join('-', args));
+                var host = CreateHostBuilder(args).Build();
 
-                try
-                {
-                    var context = services.GetRequiredService<ProductDbContext>();
-                    context.Database.Migrate();
+                host.MigrateDbContext<ProductDbContext, ProductDbContextSeed>();
 
-                    var seedData = services.GetRequiredService<ProductDbContextSeed>();
-                    seedData.Init();
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-
-                    logger.LogError(ex, "An error occurred while migrating or seeding the database.");
-                }
+                host.Run();
             }
-
-            host.Run();
+            catch (Exception ex)
+            {
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

@@ -10,17 +10,27 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
 using MicrShopping.Domain;
+using MicrShopping.Infrastructure.Common.BaseModels;
 
 namespace MicrShopping.Infrastructure.EFCore
 {
-    public class ApplicationDbSeedData
+    public class ApplicationDbSeedData : IDbContextSeed
     {
-        public static void EnsureSeedData(IServiceProvider serviceProvider)
+        private UserManager<ApplicationUser> _userManager;
+
+        public ApplicationDbSeedData(UserManager<ApplicationUser> userManager)
         {
-            using (var scope = serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope())
-            {
-                var userMgr = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-                List<AddUser> users = new List<AddUser>()
+            _userManager = userManager;
+        }
+
+        public void Init()
+        {
+            EnsureSeedData();
+        }
+
+        public void EnsureSeedData()
+        {
+            List<AddUser> users = new List<AddUser>()
                 {
                     new AddUser(){UserName="admin",Password="Admin123456!",NickName="哈哈哈",Claims=new List<Claim>{
                         new Claim(JwtClaimTypes.Name, "admin"),
@@ -33,32 +43,31 @@ namespace MicrShopping.Infrastructure.EFCore
                         }
                     }
                 };
-                foreach (var item in users)
+            foreach (var item in users)
+            {
+                var alice = _userManager.FindByNameAsync(item.UserName).Result;
+                if (alice == null)
                 {
-                    var alice = userMgr.FindByNameAsync(item.UserName).Result;
-                    if (alice == null)
+                    alice = new ApplicationUser
                     {
-                        alice = new ApplicationUser
-                        {
-                            UserName = item.UserName
-                        };
-                        var result = userMgr.CreateAsync(alice, item.Password).Result;
-                        if (!result.Succeeded)
-                        {
-                            throw new Exception(result.Errors.First().Description);
-                        }
+                        UserName = item.UserName
+                    };
+                    var result = _userManager.CreateAsync(alice, item.Password).Result;
+                    if (!result.Succeeded)
+                    {
+                        throw new Exception(result.Errors.First().Description);
+                    }
 
-                        result = userMgr.AddClaimsAsync(alice, item.Claims).Result;
-                        if (!result.Succeeded)
-                        {
-                            throw new Exception(result.Errors.First().Description);
-                        }
-                        //Log.Debug("alice created");
-                    }
-                    else
+                    result = _userManager.AddClaimsAsync(alice, item.Claims).Result;
+                    if (!result.Succeeded)
                     {
-                        //Log.Debug("alice already exists");
+                        throw new Exception(result.Errors.First().Description);
                     }
+                    //Log.Debug("alice created");
+                }
+                else
+                {
+                    //Log.Debug("alice already exists");
                 }
             }
         }

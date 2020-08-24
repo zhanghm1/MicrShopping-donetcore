@@ -1,5 +1,6 @@
 ﻿using MicrShopping.Domain.Entities.Products;
 using MicrShopping.Infrastructure.Common;
+using MicrShopping.Infrastructure.Common.BaseModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,15 @@ using System.Threading.Tasks;
 
 namespace MicrShopping.ProductApi.Data
 {
-    public class ProductDbContextSeed
+    public class ProductDbContextSeed : IDbContextSeed
     {
         private ProductDbContext _dbContext;
+
         public ProductDbContextSeed(ProductDbContext dbContext)
         {
             _dbContext = dbContext;
         }
+
         public void Init()
         {
             List<ProductClass> productClasses = new List<ProductClass>() {
@@ -31,11 +34,11 @@ namespace MicrShopping.ProductApi.Data
             foreach (var item in products)
             {
                 var product = _dbContext.Product.FirstOrDefault(a => a.Code == item.Code);
-                if (product==null)
+                if (product == null)
                 {
                     _dbContext.Product.Add(item);
                 }
-                else 
+                else
                 {
                     item.Id = product.Id;
                 }
@@ -54,13 +57,12 @@ namespace MicrShopping.ProductApi.Data
             }
             _dbContext.SaveChanges();
 
-
             List<ProductClassLink> productClassLinks = new List<ProductClassLink>();
             foreach (var itemP in products)
             {
                 foreach (var itemPC in productClasses)
                 {
-                    var productClass = _dbContext.ProductClassLink.FirstOrDefault(a => a.ProductClassId== itemPC.Id && a.ProductId==itemP.Id);
+                    var productClass = _dbContext.ProductClassLink.FirstOrDefault(a => a.ProductClassId == itemPC.Id && a.ProductId == itemP.Id);
                     if (productClass == null)
                     {
                         ProductClassLink productClassLink = new ProductClassLink()

@@ -56,6 +56,11 @@ namespace MicrShopping.OrderApi.Controllers
             return Ok();
         }
 
+        /// <summary>
+        /// 创建订单
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpPost]
         [Route("Create")]
@@ -134,6 +139,12 @@ namespace MicrShopping.OrderApi.Controllers
             return OrderNo;
         }
 
+        /// <summary>
+        /// 订单列表
+        /// </summary>
+        /// <param name="PageIndex"></param>
+        /// <param name="PageSize"></param>
+        /// <returns></returns>
         [Authorize]
         [HttpGet]
         [Route("List")]

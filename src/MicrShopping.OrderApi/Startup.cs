@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Threading.Tasks;
 using AutoMapper;
 using IdentityServer4.AccessTokenValidation;
@@ -102,10 +104,12 @@ namespace MicrShopping.OrderApi
                 });
             });
 
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
-            });
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+            //});
+
+            AddSwaggerGen(services);
 
             if (env.IsDevelopment())
             {
@@ -153,10 +157,10 @@ namespace MicrShopping.OrderApi
             app.UseSwagger();//生成/swagger/v1/swagger.json
 
             // 生成自己的SwaggerUI  这里已经因为在ApiGateway项目集成多个服务的SwaggerUI，就注释了；只需要生成/swagger/v1/swagger.json文件让ApiGateway能获取到
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            //});
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             app.UseEndpoints(endpoints =>
             {
@@ -170,6 +174,25 @@ namespace MicrShopping.OrderApi
         {
             app.UseAuthentication();
             app.UseAuthorization();
+        }
+
+        private void AddSwaggerGen(IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+
+                List<Assembly> assemblies = new List<Assembly>() {
+                typeof(Startup).Assembly
+                };
+
+                foreach (var item in assemblies)
+                {
+                    var xmlPath = Path.Combine(AppContext.BaseDirectory, $"{item.GetName().Name}.xml");
+                    // 启用xml注释. 该方法第二个参数启用控制器的注释，默认为false.
+                    c.IncludeXmlComments(xmlPath, true);
+                }
+            });
         }
 
         protected virtual void AddDbContext(IServiceCollection services)

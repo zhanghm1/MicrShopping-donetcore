@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
 using IdentityServer4.AccessTokenValidation;
@@ -18,6 +19,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using MicrShopping.Domain;
 using MicrShopping.Domain.Extensions;
+using MicrShopping.Infrastructure.Common;
 using MicrShopping.Infrastructure.Common.ApiFilters;
 using MicrShopping.OrderApi.Data;
 using MicrShopping.OrderApi.Services;
@@ -109,6 +111,23 @@ namespace MicrShopping.OrderApi
             {
                 AddConsulConfig(services);
             }
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                //禁用自带的默认模型验证行为,添加全局filter 验证模型
+                //options.SuppressModelStateInvalidFilter = true;
+                //或者重新定义返回
+                options.InvalidModelStateResponseFactory = context =>
+                {
+                    ResponseBase<List<string>> resp = new ResponseBase<List<string>>()
+                    {
+                        Status = "ModelStateValidError",
+                        Message = "ModelStateValidError",
+                        Data = context.ModelState.Select(a => a.Value.Errors.FirstOrDefault()).Select(a => a.ErrorMessage).ToList()
+                    };
+                    return new JsonResult(resp) { StatusCode = (int)HttpStatusCode.BadRequest };
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -31,6 +31,7 @@ namespace MicrShopping.OrderApi.UnitTest
             // 这里DbContext采用内存数据库，用Mock模拟会有很多问题，如果是有接口的IRepository也推荐用Mock模拟
             using (var dbContext = new OrderDbContext(options))
             {
+                var list = dbContext.ShoppingCart.ToList();
                 dbContext.AddRange(ShoppingCartList());
                 dbContext.SaveChanges();
             }
@@ -89,8 +90,9 @@ namespace MicrShopping.OrderApi.UnitTest
 
         public List<ShoppingCart> ShoppingCartList()
         {
-            return new List<ShoppingCart>() {
-                new ShoppingCart(){Id=1,Number=1,ProductId=1,UserId=1 }
+            return new List<ShoppingCart>()
+            {
+                new ShoppingCart(){Number=1,ProductId=1,UserId=1 }
             };
         }
     }

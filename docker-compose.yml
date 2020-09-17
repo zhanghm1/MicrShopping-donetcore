@@ -44,19 +44,21 @@ services:
         - consul2
         - consul3 
 
-# docker run -d -p 1433:1433 -e SA_PASSWORD=Admin123456 -e ACCEPT_EULA=Y  microsoft/mssql-server-linux
+
+insert into [test].[dbo].[users]([name],[age]) values('张三',12);
+
 # docker run -d -p 1433:1433 -e SA_PASSWORD=Admin123456 -e ACCEPT_EULA=Y  mcr.microsoft.com/mssql/server
 
   # sqlserver:
-  #   image: microsoft/mssql-server-linux:latest
+  #   image: mcr.microsoft.com/mssql/server:latest
   #   container_name: sqlserver
   #   environment:
   #     - SA_PASSWORD=Admin123456!
   #     - ACCEPT_EULA=Y
   #   ports:
-  #     - "14333:1433"
+  #     - "1434:1433"
   #   volumes:
-  #     - D://docker/sqlserver:/var/opt/mssql           
+  #     - D://docker/sqlserver:/var/opt/mssql/data          
 
   # mysql:
   #   image: mysql:latest

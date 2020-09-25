@@ -95,11 +95,8 @@ namespace MicrShopping.Identity
                         .AllowAnyMethod();
                 });
             });
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.CheckConsentNeeded = (_) => true;
-                options.MinimumSameSitePolicy = SameSiteMode.Lax;
-            });
+
+            services.AddNonBreakingSameSiteCookies();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -129,8 +126,10 @@ namespace MicrShopping.Identity
             app.UseStaticFiles();
 
             app.UseCors("default");
-            app.UseCookiePolicy();
+
             app.UseRouting();
+
+            app.UseCookiePolicy();
 
             app.UseIdentityServer();
             app.UseAuthorization();

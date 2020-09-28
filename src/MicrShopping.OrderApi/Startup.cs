@@ -111,6 +111,8 @@ namespace MicrShopping.OrderApi
 
             AddSwaggerGen(services);
 
+            AddRedisCache(services);
+
             if (env.IsDevelopment())
             {
                 AddConsulConfig(services);
@@ -241,6 +243,22 @@ namespace MicrShopping.OrderApi
         protected virtual void UseConsul(IApplicationBuilder app)
         {
             app.UseConsul(Configuration);
+        }
+
+        private void AddRedisCache(IServiceCollection services)
+        {
+            string Host = Configuration["Redis:Host"];
+            string Port = Configuration["Redis:Port"];
+            string Database = Configuration["Redis:Database"];
+            string Password = Configuration["Redis:Password"];
+
+            services.AddStackExchangeRedisCache(options =>
+            {
+                // 连接字符串
+                options.Configuration = $"{Host}:{Port},password={Password},defaultDatabase={Database}";
+                // 键名前缀
+                //options.InstanceName = "xoyozo_";
+            });
         }
     }
 }

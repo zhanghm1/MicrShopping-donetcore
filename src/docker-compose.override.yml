@@ -13,6 +13,11 @@ services:
       - ConnectionStrings__UserID=postgres
       - ConnectionStrings__Password=Admin123456!
       
+      - Redis__Host=redis
+      - Redis__Port=6379
+      - Redis__Password=12345678
+      - Redis__Database=0
+      
       - RabbitMQ__Host=rabbitmq
       - RabbitMQ__UserName=admin
       - RabbitMQ__Password=admin123456

@@ -77,7 +77,7 @@ services:
     image: postgres:latest #  // postgres 镜像
     privileged: true
     ports:
-      - 5432:5432
+      - 5433:5432
     environment:
       POSTGRES_PASSWORD: Admin123456!
       POSTGRES_USER: postgres
@@ -107,6 +107,12 @@ services:
       - "5672:5672"
       - "5671:5671"
 
+  redis:
+    image: redis
+    container_name: redism
+    command: redis-server --requirepass 12345678
+    ports:
+      - 6377:6379
 
   micrshopping.webmvc:
     image: ${DOCKER_REGISTRY-}micrshoppingwebmvc

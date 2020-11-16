@@ -11,8 +11,6 @@ namespace MicrShopping.ProductApi.Data
 {
     public class ProductDbContext : DbContext
     {
-        public static readonly LoggerFactory LoggerFactory = new LoggerFactory(new[] { new DebugLoggerProvider() });
-
         public ProductDbContext(DbContextOptions<ProductDbContext> options) : base(options)
         {
         }
@@ -23,8 +21,7 @@ namespace MicrShopping.ProductApi.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseLoggerFactory(LoggerFactory);
+            optionsBuilder.LogTo(Console.WriteLine);
         }
     }
 }

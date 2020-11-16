@@ -104,7 +104,7 @@ namespace MicrShopping.Identity
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                //app.UseDatabaseErrorPage();
                 app.UseConsul(Configuration);
             }
             else

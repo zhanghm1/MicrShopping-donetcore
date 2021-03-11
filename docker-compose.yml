@@ -45,7 +45,7 @@ services:
         - consul3 
 
 
-insert into [test].[dbo].[users]([name],[age]) values('张三',12);
+
 
 # docker run -d -p 1433:1433 -e SA_PASSWORD=Admin123456 -e ACCEPT_EULA=Y  mcr.microsoft.com/mssql/server
 

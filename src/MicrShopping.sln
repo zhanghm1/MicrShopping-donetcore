@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrShopping.Infrastructure.Common", "MicrShopping.Infrastructure.Common\MicrShopping.Infrastructure.Common.csproj", "{56B51662-6867-4041-A015-76969035EB76}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{665A9845-D2FA-4714-9FAA-818AF698F0D3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "services", "services", "{665A9845-D2FA-4714-9FAA-818AF698F0D3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ui", "ui", "{7C2800E2-1AE6-4B7B-AD56-EE335557888D}"
 EndProject
@@ -43,7 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{5023EBEC-0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrShopping.OrderApi.FunctionalTest", "MicrShopping.OrderApi.FunctionalTest\MicrShopping.OrderApi.FunctionalTest.csproj", "{8EF8B029-6CAA-4005-B43C-973CA05AB423}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicrShopping.OrderApi.UnitTest", "MicrShopping.OrderApi.UnitTest\MicrShopping.OrderApi.UnitTest.csproj", "{AD34C533-BB26-4C98-B684-AEB86D0BEE60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicrShopping.OrderApi.UnitTest", "MicrShopping.OrderApi.UnitTest\MicrShopping.OrderApi.UnitTest.csproj", "{AD34C533-BB26-4C98-B684-AEB86D0BEE60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
